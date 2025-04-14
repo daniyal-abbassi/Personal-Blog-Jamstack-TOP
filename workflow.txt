@@ -1,0 +1,20 @@
+back-end for blog posts (api)
+MAIN FUNCTIONS:
+-create posts - edit delete update them
+-admin panel - protected with JWT
+-admin can signUp and signIn to admin panel
+-users can : comment on posts(should have data & username)
+-users can read posts and search posts(tags)
+...
+
+WORKFLOW
+a-admin should signUp to admin panel - (create/with JWT token)
+    1-create router for signUp admin
+    2-create controller for signUp admin
+    3-create logIn router for admin
+    4-create logIn controller for admin
+    5-protected router for post dashboard -jwt
+b-add data to database (prisma)
+c-admin can logIn to panel (with jwt token)
+d-read data from database (prisma)
+e-admin can create posts (title-time)
