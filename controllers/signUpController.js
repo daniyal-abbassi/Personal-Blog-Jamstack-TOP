@@ -13,15 +13,16 @@ const signUpController = {
             } else {
                 const hashedPass = await bcrypt.hash(password,10);
                 const user = await dbClient.createUser(username,hashedPass);
-               jwt.sign({user},'secretkey',(err,token)=>{
+                const payload = {userId: user.user_id,username: user.username}
+               jwt.sign(payload,process.env.JWT_SECRET,(err,token)=>{
                 res.json({token})
                }) 
                console.log('user is: ',user)
             }
 
         } catch (error) {
-            console.error('server error: ',error)
-            res.status(500).send('server error, creating user: ',error)
+            console.error('Server error during signup:', error)
+            res.status(500).send('Server error during user creation.')
         }
     }
 }
