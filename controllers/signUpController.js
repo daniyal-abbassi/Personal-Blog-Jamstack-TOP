@@ -14,7 +14,7 @@ const signUpController = {
                 const hashedPass = await bcrypt.hash(password,10);
                 const user = await dbClient.createUser(username,hashedPass);
                 const payload = {userId: user.user_id,username: user.username}
-               jwt.sign(payload,process.env.JWT_SECRET,(err,token)=>{
+               jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '1d'},(err,token)=>{
                 res.json({token})
                })
                //console.log the user to test 
