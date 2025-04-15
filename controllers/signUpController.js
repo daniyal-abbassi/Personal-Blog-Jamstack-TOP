@@ -1,5 +1,6 @@
 const dbClient = require('../db/dbClient');
 const jwt = require('jsonwebtoken');
+const bcrypt = require('bcrypt');
 
 
 const signUpController = {
@@ -10,7 +11,8 @@ const signUpController = {
             if(existingUser) {
                 res.status(400).send('User already exists!!!')
             } else {
-                const user = await dbClient.createUser(username,password);
+                const hashedPass = await bcrypt.hash(password,10);
+                const user = await dbClient.createUser(username,hashedPass);
                jwt.sign({user},'secretkey',(err,token)=>{
                 res.json({token})
                }) 
