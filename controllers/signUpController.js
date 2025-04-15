@@ -16,7 +16,8 @@ const signUpController = {
                 const payload = {userId: user.user_id,username: user.username}
                jwt.sign(payload,process.env.JWT_SECRET,(err,token)=>{
                 res.json({token})
-               }) 
+               })
+               //console.log the user to test 
                console.log('user is: ',user)
             }
 
