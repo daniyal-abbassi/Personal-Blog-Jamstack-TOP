@@ -1,5 +1,5 @@
-const {prismaClient} = require('@prisma/client');
-const prisma = new prismaClient();
+const {PrismaClient} = require('@prisma/client');
+const prisma = new PrismaClient();
 
 const dbClient = {
     createUser: async(username,password) => {
