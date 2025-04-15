@@ -1,8 +1,8 @@
-const {PrismaClient} = require('@prisma/client');
+const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const dbClient = {
-    createUser: async(username,password) => {
+    createUser: async (username, password) => {
         try {
             const user = await prisma.user.create({
                 data: {
@@ -15,9 +15,22 @@ const dbClient = {
             console.error(`ERROR CREATING USER: ${error}`)
             throw error
         }
+    },
+    searchUser: async (username) => {
+        try {
+            const user = await prisma.user.findFirst({
+                where: {
+                    username
+                }
+            })
+            return user;
+        } catch (error) {
+            console.error(`ERROR SEARCHING USER: ${error}`)
+            throw error
+        }
     }
 }
 
 
 
-module.exports=dbClient;
+module.exports = dbClient;
