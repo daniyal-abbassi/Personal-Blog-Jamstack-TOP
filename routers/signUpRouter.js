@@ -1,11 +1,12 @@
 const {Router} = require('express')
 const signupRouter = Router();
-const dbClient = require('../db/dbClient');
+const signUpController = require('../controllers/signUpController');
+
+
+
 signupRouter.get('/',(req,res)=>res.render('signup'))
 
-signupRouter.post('/',(req,res)=>{
-    const {username,password} = req.body;
-    
-})
+//sign the jwt and pass it as token
+signupRouter.post('/',signUpController.signUpPost)
 
 module.exports=signupRouter;
