@@ -2,6 +2,7 @@ const express = require('express');
 require('dotenv').config();
 const dbClient = require('./db/dbClient');
 const app = express();
+const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const signupRouter = require('./routers/signUpRouter')
 const loginRouter = require('./routers/loginRouter');
@@ -14,8 +15,11 @@ app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))
 app.set('view engine','ejs')
 
-
-
+const corsOptions = {
+    origin: 'http://localhost:5173',
+    credentials: true
+}
+app.use(cors(corsOptions))
 
 app.get('/',(req,res)=>res.send('express workking fine'))
 app.use('/api/sign-up',signupRouter)
