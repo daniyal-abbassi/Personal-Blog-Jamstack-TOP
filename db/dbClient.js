@@ -28,6 +28,23 @@ const dbClient = {
             console.error(`ERROR SEARCHING USER: ${error}`)
             throw error
         }
+    },
+
+    createPost: async(title,content,published,author_id) => {
+        try {
+            const post = await prisma.post.create({
+                data: {
+                    title,
+                    content,
+                    published,
+                    author_id
+                }
+            })
+            return post;
+        } catch (error) {
+            console.error('ERROR CREATING POST: ',error)
+            throw error
+        }
     }
 }
 
