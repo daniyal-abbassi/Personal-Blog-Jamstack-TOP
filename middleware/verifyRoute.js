@@ -1,17 +1,22 @@
 //verify toke and pass it to req object
+const jwt = require('jsonwebtoken');
+
 
 function verifyToken(req,res,next) {
-    const bearerHeader = req.headers['authorization'];
-    if(typeof bearerHeader !== 'undefined') {
-        const bearer = bearerHeader.spilt(' ');
-        const bearerToken = bearer[1];
-        req.token = bearerToken;
-        next();
-    } else {
-        res.json({
-            message: '403, Forbidden'
-        })
-    }
+    const token = req.cookies.token;
+    
+       if(token) {
+           jwt.verify(token,process.env.JWT_SECRET,(err,user)=>{
+               if(err) {
+                   return res.status(401).json({ message: 'Invalid token' });
+               };
+               req.user = user;
+               next();
+           })
+   
+       } else {
+           return res.status(401).json({ message: 'No token provided' });
+       }
 }
 
 module.exports=verifyToken;

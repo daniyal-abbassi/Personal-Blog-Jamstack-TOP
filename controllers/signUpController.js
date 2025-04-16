@@ -4,21 +4,21 @@ const bcrypt = require('bcrypt');
 
 
 const signUpController = {
-    signUpPost: async(req,res)=>{
+    signUpPost: async (req, res) => {
         try {
-            const {username,password} = req.body;
+            const { username, password } = req.body;
             const existingUser = await dbClient.searchUser(username);
-            if(existingUser) {
+            if (existingUser) {
                 res.status(400).send('User already exists!!!')
             } else {
-                const hashedPass = await bcrypt.hash(password,10);
-                const user = await dbClient.createUser(username,hashedPass);
-                const payload = {userId: user.user_id,username: user.username}
-               jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '1d'},(err,token)=>{
-                res.json({token})
-               })
-               //console.log the user to test 
-               console.log('user is: ',user)
+                const hashedPass = await bcrypt.hash(password, 10);
+                const user = await dbClient.createUser(username, hashedPass);
+                const payload = { userId: user.user_id, username: user.username }
+                const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
+                res.cookie('token', token, { httpOnly: true });
+                res.json({ token })
+                //console.log the user to test 
+                console.log('user is: ', user)
             }
 
         } catch (error) {
@@ -30,4 +30,4 @@ const signUpController = {
 
 
 
-module.exports=signUpController;
+module.exports = signUpController;

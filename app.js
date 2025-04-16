@@ -2,10 +2,13 @@ const express = require('express');
 require('dotenv').config();
 const dbClient = require('./db/dbClient');
 const app = express();
+const cookieParser = require('cookie-parser');
 const signupRouter = require('./routers/signUpRouter')
 const loginRouter = require('./routers/loginRouter');
 const postsRouter = require('./routers/postsRouter');
 
+
+app.use(cookieParser())
 
 app.use(express.static('public'))
 app.use(express.urlencoded({extended: true}))

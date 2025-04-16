@@ -2,6 +2,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const dbClient = require('../db/dbClient');
 
+
+
 const loginController = {
     loginPost: async(req,res)=>{
         try {
@@ -13,9 +15,9 @@ const loginController = {
                 const matchPass = await bcrypt.compare(password,existingUser.password);
                 if(matchPass) {
                     const payload = {userId: existingUser.user_id,username: existingUser.username}
-                   jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '1d'},(err,token)=>{
-                    res.json({token})
-                   })
+                   const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '1d'})
+                   res.cookie('token', token, { httpOnly: true });
+                   res.json({ token });
                    //console.log the user to test 
                    console.log('user is: ',existingUser)
                 } else {
