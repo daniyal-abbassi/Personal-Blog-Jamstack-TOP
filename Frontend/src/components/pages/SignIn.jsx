@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Divider from '@mui/material/Divider';
 import FormLabel from '@mui/material/FormLabel';
 import FormControl from '@mui/material/FormControl';
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
 import Stack from '@mui/material/Stack';
@@ -15,6 +15,7 @@ import { styled } from '@mui/material/styles';
 import AppTheme from '../../shared-theme/AppTheme';
 import ColorModeSelect from '../../shared-theme/ColorModeSelect';
 import { useState } from 'react';
+import { singIn } from '../../api/auth';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -66,18 +67,7 @@ export default function SignIn(props) {
 
 
  
-
-  const handleSubmit = (event) => {
-    if (usernameError || passwordError) {
-      event.preventDefault();
-      return;
-    }
-    const data = new FormData(event.currentTarget);
-    console.log({
-      username: data.get('username'),
-      password: data.get('password'),
-    });
-  };
+  
 
   const validateInputs = () => {
     const username = document.getElementById('username');
@@ -106,6 +96,26 @@ export default function SignIn(props) {
     return isValid;
   };
 
+  const navigate = useNavigate();
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!validateInputs) {
+      event.preventDefault();
+      return;
+    }
+    const username = document.getElementById('username').value;
+    const password = document.getElementById('password').value;
+    const values = {username,password};
+    try {
+      const data = await singIn(values,navigate)
+      console.log({
+        username,
+        password,
+      },'data is: ',data);
+    } catch (error) {
+      console.error('Sign-in failed: ',error)
+    }
+  };
   return (
     <AppTheme {...props}>
       <CssBaseline enableColorScheme />
