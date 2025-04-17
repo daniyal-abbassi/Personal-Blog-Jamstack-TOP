@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const signUpController = {
     signUpPost: async (req, res) => {
         try {
+            console.log('this is req.body: ',req.body)
             const { username, password } = req.body;
             const existingUser = await dbClient.searchUser(username);
             if (existingUser) {

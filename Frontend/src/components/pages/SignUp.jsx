@@ -15,6 +15,7 @@ import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from "../../shared-theme/ColorModeSelect";
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { signUp } from "../../api/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -103,21 +104,23 @@ export default function SignUp(props) {
     return isValid;
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    if (usernameError || emailError || passwordError) {
-      event.preventDefault();
+    if (!validateInputs) {
       return;
     }
-    const email = document.getElementById("email").value;
+    
     const password = document.getElementById("password").value;
     const username = document.getElementById("username").value;
-    // const data = new FormData(event.currentTarget);
+    const values = {
+      username,
+      password,
+    }
+    const singTest = await signUp(values);
     console.log({
       username,
-      email,
       password,
-    });
+    },singTest);
   };
 
   return (
