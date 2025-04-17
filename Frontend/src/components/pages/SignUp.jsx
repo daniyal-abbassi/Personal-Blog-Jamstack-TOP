@@ -104,16 +104,19 @@ export default function SignUp(props) {
   };
 
   const handleSubmit = (event) => {
+    event.preventDefault();
     if (usernameError || emailError || passwordError) {
       event.preventDefault();
       return;
     }
-    const data = new FormData(event.currentTarget);
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const username = document.getElementById("username").value;
+    // const data = new FormData(event.currentTarget);
     console.log({
-      username: data.get("username"),
-      lastusername: data.get("lastusername"),
-      email: data.get("email"),
-      password: data.get("password"),
+      username,
+      email,
+      password,
     });
   };
 
