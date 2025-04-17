@@ -14,7 +14,7 @@ import { styled } from "@mui/material/styles";
 import AppTheme from "../../shared-theme/AppTheme";
 import ColorModeSelect from "../../shared-theme/ColorModeSelect";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { signUp } from "../../api/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -104,6 +104,7 @@ export default function SignUp(props) {
     return isValid;
   };
 
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateInputs) {
@@ -116,11 +117,13 @@ export default function SignUp(props) {
       username,
       password,
     }
-    const singTest = await signUp(values);
-    console.log({
-      username,
-      password,
-    },singTest);
+    try {
+      const singTest = await signUp(values, navigate); // Pass navigate
+      console.log({ username, password }, singTest);
+    } catch (error) {
+      console.error(error.message);
+      // Handle signup error in the component's state and UI
+    }
   };
 
   return (
