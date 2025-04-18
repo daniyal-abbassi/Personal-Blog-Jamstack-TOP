@@ -87,7 +87,7 @@ export default function AppAppBar({isAuthenticated}) {
          }}
        >
          <Link to="/Log-out">
-         <Button color="primary" variant="outlined" size="small">
+         <Button color="error" variant="outlined" size="small">
            Log Out
          </Button>
          </Link>

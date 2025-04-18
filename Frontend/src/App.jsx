@@ -7,30 +7,16 @@ import { useEffect, useState } from "react";
 export default function App() {
     const [isAuthenticated,setIsAuthenticated] = useState(false);
 
-    useEffect(() => {
-      // Function to check if a cookie with a given name exists
-      const checkCookie = (name) => {
-        const nameEQ = name + "=";
-        const ca = document.cookie.split(';');
-        for(let i = 0; i < ca.length; i++) {
-          let c = ca[i];
-          while (c.charAt(0) === ' ') c = c.substring(1, c.length);
-          if (c.indexOf(nameEQ) === 0) return true; // We only care if it exists
-        }
-        return false;
-      }
-  
-      if (checkCookie('token')) {
+    useEffect(()=>{
+      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
+      if (token) {
         setIsAuthenticated(true);
-        console.log('Token cookie found on load.');
       } else {
         setIsAuthenticated(false);
-        console.log('Token cookie not found on load.');
       }
-    }, []);
+    },[]);
 
     const handleAuthChange = (status) => {
-      console.log('handleAtuhChange is ',status)
       setIsAuthenticated(status)
     }
   return (
