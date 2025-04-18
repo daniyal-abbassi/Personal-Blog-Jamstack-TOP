@@ -59,7 +59,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignUp(props) {
+export default function SignUp({props,onAuthChange}) {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -120,6 +120,8 @@ export default function SignUp(props) {
     try {
       const singTest = await signUp(values, navigate); // Pass navigate
       console.log({ username, password }, singTest);
+      //update authentication stauts
+      onAuthChange(true)
     } catch (error) {
       console.error(error.message);
       // Handle signup error in the component's state and UI
