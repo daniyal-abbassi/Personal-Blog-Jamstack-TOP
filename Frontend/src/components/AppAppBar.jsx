@@ -14,7 +14,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
-import { singIn,signUp } from "../api/auth";
+
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -31,7 +31,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar() {
+export default function AppAppBar({isAuthenticated}) {
   const [open, setOpen] = useState(false);
 
   const toggleDrawer = (newOpen) => () => {
@@ -78,26 +78,48 @@ export default function AppAppBar() {
             </Box>
           </Box>
       {/* conditional rendering if user is sign-in */}
-      
-          <Box
-            sx={{
-              display: { xs: 'none', md: 'flex' },
-              gap: 1,
-              alignItems: 'center',
-            }}
-          >
-            <Link to="/sign-in">
-            <Button color="primary" variant="text" size="small">
-              Sign in
-            </Button>
-            </Link>
-            <Link to="/sign-up">
-            <Button color="primary" variant="contained" size="small">
-              Sign up
-            </Button>
-            </Link>
-            <ColorModeIconDropdown />
-          </Box>
+      { isAuthenticated ? (
+         <Box
+         sx={{
+           display: { xs: 'none', md: 'flex' },
+           gap: 1,
+           alignItems: 'center',
+         }}
+       >
+         <Link to="/Log-out">
+         <Button color="primary" variant="outlined" size="small">
+           Log Out
+         </Button>
+         </Link>
+         <Link to="/admin">
+         <Button color="primary" variant="contained" size="small">
+           Admin
+         </Button>
+         </Link>
+         <ColorModeIconDropdown />
+       </Box>
+      ) : (
+         <Box
+         sx={{
+           display: { xs: 'none', md: 'flex' },
+           gap: 1,
+           alignItems: 'center',
+         }}
+       >
+         <Link to="/sign-in">
+         <Button color="primary" variant="text" size="small">
+           Sign in
+         </Button>
+         </Link>
+         <Link to="/sign-up">
+         <Button color="primary" variant="contained" size="small">
+           Sign up
+         </Button>
+         </Link>
+         <ColorModeIconDropdown />
+       </Box>
+      ) }
+         
 
 
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
