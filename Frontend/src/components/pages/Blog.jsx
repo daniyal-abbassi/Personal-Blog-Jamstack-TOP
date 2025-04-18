@@ -7,10 +7,11 @@ import Latest from "../Latest";
 import AppTheme from "../../shared-theme/AppTheme";
 
 export default function Blog() {
+  
   return (
     <AppTheme>
       <CssBaseline enableColorScheme />
-      <AppAppBar />
+      <AppAppBar/>
       <Container
         maxWidth="lg"
         component="main"

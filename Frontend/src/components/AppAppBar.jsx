@@ -14,7 +14,7 @@ import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
 import { Link } from "react-router-dom";
 import { useState } from 'react';
-
+import { singIn,signUp } from "../api/auth";
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -37,6 +37,9 @@ export default function AppAppBar() {
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
+
+  
+
 
   return (
     <AppBar
@@ -74,6 +77,8 @@ export default function AppAppBar() {
               </Button>
             </Box>
           </Box>
+      {/* conditional rendering if user is sign-in */}
+      
           <Box
             sx={{
               display: { xs: 'none', md: 'flex' },
@@ -93,6 +98,8 @@ export default function AppAppBar() {
             </Link>
             <ColorModeIconDropdown />
           </Box>
+
+
           <Box sx={{ display: { xs: 'flex', md: 'none' }, gap: 1 }}>
             <ColorModeIconDropdown size="medium" />
             <IconButton aria-label="Menu button" onClick={toggleDrawer(true)}>
