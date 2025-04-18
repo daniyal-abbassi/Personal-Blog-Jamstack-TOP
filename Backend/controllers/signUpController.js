@@ -16,7 +16,7 @@ const signUpController = {
                 const user = await dbClient.createUser(username, hashedPass);
                 const payload = { userId: user.user_id, username: user.username }
                 const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1d' })
-                res.cookie('token', token, { httpOnly: true });
+                res.cookie('token', token, { httpOnly: false });
                 res.json({ token })
                 //console.log the user to test 
                 console.log('user is: ', user)

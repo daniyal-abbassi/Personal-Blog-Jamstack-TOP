@@ -16,7 +16,7 @@ const loginController = {
                 if(matchPass) {
                     const payload = {userId: existingUser.user_id,username: existingUser.username}
                    const token = jwt.sign(payload,process.env.JWT_SECRET,{expiresIn: '1d'})
-                   res.cookie('token', token, { httpOnly: true });
+                   res.cookie('token', token, { httpOnly: false });
                    res.json({ token });
                    //console.log the user to test 
                    console.log('user is: ',existingUser)
