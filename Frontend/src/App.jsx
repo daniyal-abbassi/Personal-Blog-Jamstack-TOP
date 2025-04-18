@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import Blog from "./components/pages/Blog";
-import SignUp from "./components/pages/SignUp";
-import SignIn from "./components/pages/SignIn";
+import Blog from "./pages/Blog";
+import SignUp from "./pages/SignUp";
+import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
 
 export default function App() {

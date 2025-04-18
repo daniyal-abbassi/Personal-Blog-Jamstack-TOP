@@ -1,10 +1,10 @@
-import Footer from "../Footer";
-import MainContent from "../MainContent";
+import Footer from "../components/Footer";
+import MainContent from "../components/MainContent";
 import Container from "@mui/material/Container";
 import CssBaseline from "@mui/material/CssBaseline";
-import AppAppBar from "../AppAppBar";
-import Latest from "../Latest";
-import AppTheme from "../../shared-theme/AppTheme";
+import AppAppBar from "../components/AppAppBar";
+import Latest from "../components/Latest";
+import AppTheme from "../shared-theme/AppTheme";
 
 export default function Blog({isAuthenticated}) {
   

@@ -11,11 +11,11 @@ import Typography from "@mui/material/Typography";
 import Stack from "@mui/material/Stack";
 import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
-import AppTheme from "../../shared-theme/AppTheme";
-import ColorModeSelect from "../../shared-theme/ColorModeSelect";
+import AppTheme from "../shared-theme/AppTheme";
+import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import { signUp } from "../../api/auth";
+import { signUp } from "../api/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
