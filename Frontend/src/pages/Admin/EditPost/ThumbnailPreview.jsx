@@ -4,7 +4,7 @@ import {
     AlertDialogContent,
     AlertDialogFooter,
     AlertDialogTrigger,
-  } from "@/components/ui/alert-dialog.jsx";
+  } from "../../../components/ui/alert-dialog";
   import PropTypes from "prop-types";
   
   function ThumbnailPreview({ imageUrl }) {

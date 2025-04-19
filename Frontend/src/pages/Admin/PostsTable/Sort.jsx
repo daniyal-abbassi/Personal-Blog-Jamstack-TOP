@@ -4,7 +4,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select.jsx";
+} from "../../../components/ui/select.jsx";
 import PropTypes from "prop-types";
 
 function Sort({ setSortValue, setOrder }) {

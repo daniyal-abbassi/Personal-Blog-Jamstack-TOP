@@ -1,16 +1,16 @@
-import CommentList from "@/pages/Admin/EditPost/CommentList.jsx";
-import ThumbnailPreview from "@/pages/Admin/EditPost/ThumbnailPreview.jsx";
-import TinyEditor from "@/pages/Admin/TinyEditor.jsx";
-import fileToBase64 from "@/utils/fileToBase64.js";
-import { postSchema } from "@/utils/zodSchemas.js";
+import CommentList from "./CommentList";
+import ThumbnailPreview from "./ThumbnailPreview";
+import TinyEditor from "../Editor";
+import fileToBase64 from "../../../utils/fileToBase64";
+import { postSchema } from "../../../utils/zodSchemas";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useToast } from "@/hooks/use-toast.js";
+import { useToast } from "../../../hooks/useToast";
 import { Loader2 } from "lucide-react";
-import { Input } from "@/components/ui/input.jsx";
-import { Checkbox } from "@/components/ui/checkbox.jsx";
-import { Button } from "@/components/ui/button.jsx";
+import { Input } from "../../../components/ui/input";
+import { Checkbox } from "../../../components/ui/checkbox";
+import { Button } from "../../../components/ui/button";
 import {
   Form,
   FormControl,
@@ -19,11 +19,12 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form.jsx";
+} from "../../../components/ui/form";
 import PropTypes from "prop-types";
-import { editPost } from "@/api/posts.js";
-import { deleteComment } from "@/api/comments.js";
-import useComments from "@/hooks/useComments.js";
+//should adjust the api for reletad stuff
+import { editPost } from "../../../api/pots";
+import { deleteComment } from "../../../api/potscomments";
+import useComments from "../../../hooks/useComments";
 
 function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
   const [loading, setLoading] = useState(false);

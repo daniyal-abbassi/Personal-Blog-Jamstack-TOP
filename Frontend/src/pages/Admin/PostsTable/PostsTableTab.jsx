@@ -5,12 +5,12 @@ import {
     CardFooter,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card.jsx";
-  import Sort from "@/pages/Admin/PostsTable/Sort.jsx";
-  import { Input } from "@/components/ui/input.jsx";
-  import { Button } from "@/components/ui/button.jsx";
-  import Pages from "@/pages/Admin/PostsTable/Pages.jsx";
-  import { TabsContent } from "@/components/ui/tabs.jsx";
+  } from "../../../components/ui/card";
+  import Sort from "../PostsTable/Sort";
+  import { Input } from "../../../components/ui/input";
+  import { Button } from "../../../components/ui/button";
+  import Pages from "./Pages";
+  import { TabsContent } from "../../../components/ui/tabs";
   import PropTypes from "prop-types";
   
   function PostsTableTab({

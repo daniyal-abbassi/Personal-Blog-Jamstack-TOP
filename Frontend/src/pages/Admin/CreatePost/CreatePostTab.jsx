@@ -1,11 +1,11 @@
-import { TabsContent } from "@/components/ui/tabs.jsx";
+import { TabsContent } from "../../../components/ui/tabs";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card.jsx";
+} from "../../../components/ui/card";
 import PropTypes from "prop-types";
 
 function CreatePostTab({ children }) {

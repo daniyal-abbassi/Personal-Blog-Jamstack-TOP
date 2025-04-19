@@ -5,7 +5,7 @@ import {
     PaginationLink,
     PaginationNext,
     PaginationPrevious,
-  } from "@/components/ui/pagination.jsx";
+  } from "../../../components/ui/pagination";
   import PropTypes from "prop-types";
   
   function Pages({ currentPage, totalPages }) {

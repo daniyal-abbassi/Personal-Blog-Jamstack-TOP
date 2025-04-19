@@ -1,17 +1,18 @@
-import Header from "@/components/Header.jsx";
-import PostsTableTab from "@/pages/Admin/PostsTable/PostsTableTab.jsx";
-import PostsTable from "@/pages/Admin/PostsTable/PostsTable.jsx";
-import EditPostTab from "@/pages/Admin/EditPost/EditPostTab.jsx";
-import CreatePostTab from "@/pages/Admin/CreatePost/CreatePostTab.jsx";
-import CreatePostForm from "@/pages/Admin/CreatePost/CreatePostForm.jsx";
-import EditPost from "@/pages/Admin/EditPost/EditPost.jsx";
+
+import PostsTableTab from "./PostsTable/PostsTableTab.jsx";
+import PostsTable from "./PostsTable/PostsTable.jsx";
+import EditPostTab from "./EditPost/EditPostTab.jsx";
+import CreatePostTab from "./CreatePost/CreatePostTab.jsx";
+import CreatePostForm from "./CreatePost/CreatePostForm.jsx";
+import EditPost from "./EditPost/EditPost.jsx";
 import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import usePosts from "@/hooks/usePosts.js";
+import usePosts from "./hooks/usePosts.js";
 import { Loader2 } from "lucide-react";
 
-import { UserContext } from "@/UserProvider.jsx";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs.jsx";
+import { UserContext } from "./UserProvider.jsx";
+// import tabs from radix-ui
+import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs.jsx";
 
 function Admin() {
   const navigate = useNavigate();
@@ -19,7 +20,9 @@ function Admin() {
   const [sortValue, setSortValue] = useState("createdAt");
   const [order, setOrder] = useState("asc");
   const [search, setSearch] = useState("");
+  // get the posts
   const { postsLoading, posts, setPosts } = usePosts(sortValue, order, search);
+  // get user authentication
   const { loading, user, setUser } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("posts");
   const [selectedPost, setSelectedPost] = useState(null);
@@ -27,7 +30,7 @@ function Admin() {
   if (loading || postsLoading)
     return (
       <div>
-        <Header />
+        
         <div className="min-h-[85vh] flex justify-center items-center">
           <Loader2 className="animate-spin" width={50} height={50} />
         </div>
@@ -49,7 +52,7 @@ function Admin() {
   const paginatedPosts = posts.slice(skip, skip + pageSize);
   return (
     <>
-      <Header user={user} />
+      
       <main className="p-4">
         <Tabs
           onValueChange={setActiveTab}

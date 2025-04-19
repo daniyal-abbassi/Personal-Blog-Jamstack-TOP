@@ -3,16 +3,16 @@ import {
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
-  } from "@/components/ui/accordion.jsx";
+  } from "../../../components/ui/accordion";
   
-  import convertTimestamp from "@/utils/convertTimestamp.js";
+  import convertTimestamp from "../../../utils/convertTimestamp";
   import { Trash2 } from "lucide-react";
   import {
     Avatar,
     AvatarFallback,
     AvatarImage,
-  } from "@/components/ui/avatar.jsx";
-  import { Button } from "@/components/ui/button.jsx";
+  } from "../../../components/ui/avatar";
+  import { Button } from "../../../components/ui/button";
   import PropTypes from "prop-types";
   
   function Comment({

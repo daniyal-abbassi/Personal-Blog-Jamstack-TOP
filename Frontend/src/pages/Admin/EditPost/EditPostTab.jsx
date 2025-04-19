@@ -4,8 +4,8 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-  } from "@/components/ui/card.jsx";
-  import { TabsContent } from "@/components/ui/tabs.jsx";
+  } from "../../../components/ui/form";
+  import { TabsContent } from "../../../components/ui/tabs";
   import PropTypes from "prop-types";
   
   function EditPostTab({ selectedPost, children }) {
