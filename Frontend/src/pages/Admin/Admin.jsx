@@ -24,7 +24,7 @@ function Admin() {
   // get the posts
   const { postsLoading, posts, setPosts } = usePosts(sortValue, order, search);
   // get user authentication
-  const { loading, user, setUser } = useContext(UserContext);
+  const { loading, user, isAuthenticated, setUser } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("posts");
   const [selectedPost, setSelectedPost] = useState(null);
 
@@ -38,7 +38,7 @@ function Admin() {
       </div>
     );
 
-  if (!user) return navigate("/");
+  if (!isAuthenticated ||!user) return navigate("/");
 
   const pageSize = 6;
   const currentPage = Math.max(1, Number(page));

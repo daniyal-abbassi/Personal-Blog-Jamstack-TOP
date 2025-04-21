@@ -3,29 +3,19 @@ import Blog from "./pages/Blog";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Admin from "./pages/Admin/Admin";
-import { useEffect, useState } from "react";
+import { useContext} from "react";
+import { UserContext } from "./UserProviders";
 
 export default function App() {
-    const [isAuthenticated,setIsAuthenticated] = useState(false);
+    const {isAuthenticated} = useContext(UserContext);
 
-    useEffect(()=>{
-      const token = document.cookie.replace(/(?:(?:^|.*;\s*)token\s*=\s*([^;]*).*$)|^.*$/, "$1");
-      if (token) {
-        setIsAuthenticated(true);
-      } else {
-        setIsAuthenticated(false);
-      }
-    },[]);
-
-    const handleAuthChange = (status) => {
-      setIsAuthenticated(status)
-    }
+    
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Blog isAuthenticated={isAuthenticated}/>} />
-        <Route path="/sign-up" element={<SignUp onAuthChange={handleAuthChange}/>} />
-        <Route path="/sign-in" element={<SignIn onAuthChange={handleAuthChange}/>} />
+        <Route path="/sign-up" element={<SignUp/>} />
+        <Route path="/sign-in" element={<SignIn/>} />
         <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
