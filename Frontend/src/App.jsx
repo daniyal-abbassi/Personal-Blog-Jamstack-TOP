@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Blog from "./pages/Blog";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import Admin from "./pages/Admin/Admin";
 import { useEffect, useState } from "react";
 
 export default function App() {
@@ -25,6 +26,7 @@ export default function App() {
         <Route path="/" element={<Blog isAuthenticated={isAuthenticated}/>} />
         <Route path="/sign-up" element={<SignUp onAuthChange={handleAuthChange}/>} />
         <Route path="/sign-in" element={<SignIn onAuthChange={handleAuthChange}/>} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
     </BrowserRouter>
   );
