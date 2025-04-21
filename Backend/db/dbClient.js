@@ -29,6 +29,19 @@ const dbClient = {
             throw error
         }
     },
+    searchUserById: async (userId) => {
+        try {
+            const user = await prisma.user.findFirst({
+                where: {
+                    user_id: userId
+                }
+            })
+            return user;
+        } catch (error) {
+            console.error(`ERROR SEARCHING USER WITH ID: ${error}`)
+            throw error
+        }
+    },
 
     createPost: async(title,content,published,author_id) => {
         try {
