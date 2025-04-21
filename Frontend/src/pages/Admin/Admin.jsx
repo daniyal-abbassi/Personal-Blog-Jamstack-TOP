@@ -16,6 +16,7 @@ import { Tabs, TabsList, TabsTrigger } from "./components/ui/tabs.jsx";
 
 function Admin() {
   const navigate = useNavigate();
+  //extract the page from URL
   const { page } = useParams();
   const [sortValue, setSortValue] = useState("createdAt");
   const [order, setOrder] = useState("asc");
