@@ -3,7 +3,7 @@ const API_BASE_URL = 'http://localhost:3001/api';
 
 export const getComments = async(postId) =>{
     try {
-        const response = await fetch(`${API_BASE_URL}/posts/${postId}`,{
+        const response = await fetch(`${API_BASE_URL}/posts/${postId}/comments?sortValue=asc`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -26,7 +26,7 @@ export const deleteComment = async(postId,commentId) => {
         })
         return await response.json();
     } catch (error) {
-        console.error('ERROR FETCHING COMMENTS: ',error)
+        console.error('ERROR DELETING COMMENT: ',error)
         throw error;
     }
 }
