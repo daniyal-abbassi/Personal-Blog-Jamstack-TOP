@@ -17,7 +17,7 @@ export const MyProvider = ({ children }) => {
   const { loading, error, user, setUser, isAuthenticated, setIsAuthenticated } = useUser();
 
   return (
-    <UserContext.Provider value={{ user, setUser, loading, error }}>
+    <UserContext.Provider value={{ user, setUser, loading, error,isAuthenticated, setIsAuthenticated }}>
       {children}
     </UserContext.Provider>
   );
@@ -27,4 +27,3 @@ MyProvider.propTypes = {
   children: PropTypes.node,
 };
 
-// export default MyProvider;

@@ -46,19 +46,21 @@ const dbClient = {
     showPosts: async()=>{
         try {
             const posts = await prisma.post.findMany();
+            console.log('dbClient showPosts posts are: ',posts)
             return posts;
         } catch (error) {
             console.error('ERROR GETTING ALL POSTS: ',error)
             throw error
         }
     },
-    createPost: async(title,content,published,author_id) => {
+    createPost: async(title,content,isPublished,imageUrl,author_id) => {
         try {
             const post = await prisma.post.create({
                 data: {
                     title,
                     content,
-                    published,
+                    isPublished,
+                    imageUrl,
                     author_id
                 }
             })
@@ -80,16 +82,17 @@ const dbClient = {
             throw error
         }
     },
-    editPost: async(post_id,title,content,published,user_id) => {
+    editPost: async(post_id,title,content,isPublished,imageUrl,user_id) => {
         try {
-            const editedPost = prisma.post.update({
+            const editedPost = await prisma.post.update({
                 where: {
                     post_id
                 },
                 data: {
                     title,
                     content,
-                    published,
+                    isPublished,
+                    imageUrl
                 }
             })
             return editedPost

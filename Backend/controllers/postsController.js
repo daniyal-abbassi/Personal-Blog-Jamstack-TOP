@@ -3,7 +3,8 @@ const dbClient = require('../db/dbClient');
 const postsController = {
     showPosts: async(req,res)=>{
         try {
-            const posts = dbClient.showPosts();
+            const posts = await dbClient.showPosts();
+            console.log('postsController showPosts controller returnin posts are: ',posts)
             res.json(posts)
         } catch (error) {
             res.status(500).json({message: 'ERROR IN GETTING POSTS ROUTE'})

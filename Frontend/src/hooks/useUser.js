@@ -31,6 +31,7 @@ function useUser() {
           }
           const data = await response.json();
           setUser(data)
+          console.log('from useUser: ',data)
         } else {
           setIsAuthenticated(false);
           setUser(null);

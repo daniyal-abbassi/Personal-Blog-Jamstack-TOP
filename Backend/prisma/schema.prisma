@@ -26,7 +26,8 @@ model Post {
   content String?
   created_at DateTime @default(now())
   updated_at DateTime @updatedAt
-  published PublishStatus
+  isPublished Boolean @default(false)
+  imageUrl String?
   author_id Int
   author User @relation(fields: [author_id],references: [user_id])
   comments Comment[]
@@ -40,7 +41,3 @@ model Comment {
   post Post @relation(fields: [comment_id],references: [post_id],onDelete: Cascade)
 }
 
-enum PublishStatus {
-  unpublished
-  published
-}

@@ -13,7 +13,8 @@ import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
 import { Link } from "react-router-dom";
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserContext } from "../UserProviders";
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -31,9 +32,9 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar({isAuthenticated}) {
+export default function AppAppBar() {
   const [open, setOpen] = useState(false);
-
+  const {isAuthenticated} = useContext(UserContext)
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };

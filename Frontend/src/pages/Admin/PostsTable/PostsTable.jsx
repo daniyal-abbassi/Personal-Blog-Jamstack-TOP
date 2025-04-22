@@ -22,15 +22,16 @@ import {
     const [selectedPostId, setSelectedPostId] = useState(null);
     const [loading, setLoading] = useState(false);
   
+    //DELETE POST FUNCTION
     async function handleDelete(e) {
       try {
         setLoading(true);
-        const { id } = e.target;
+        const { post_id } = e.target;
   
-        setPosts(posts.filter((post) => post.id !== id));
-        setSelectedPostId(id);
+        setPosts(posts.filter((post) => post.post_id !== post_id));
+        setSelectedPostId(post_id);
   
-        const data = await deletePost(id);
+        const data = await deletePost(post_id);
   
         toast({
           title: "Successfully deleted post!",
@@ -46,12 +47,13 @@ import {
         setLoading(false);
         setSelectedPostId(null);
       }
-    }
+    } //delete post function
   
+    //edit post function
     async function handleSwitch(post) {
       try {
         const data = await editPost({ ...post, isPublished: !post.isPublished });
-        const postIndex = posts.findIndex((post) => post.id === data.id);
+        const postIndex = posts.findIndex((post) => post.post_id === data.post_id);
         const postCopy = [...posts];
   
         postCopy[postIndex] = data;
@@ -71,7 +73,7 @@ import {
       } catch (err) {
         console.error("Error: ", err.message);
       }
-    }
+    } //edit post function
   
     return (
       <Table>
@@ -89,7 +91,7 @@ import {
         <TableBody>
           {posts &&
             posts.map((post) => (
-              <TableRow key={post.id}>
+              <TableRow key={post.post_id}>
                 <TableCell>
                   <img
                     className="rounded-sm"
@@ -100,8 +102,8 @@ import {
                 </TableCell>
                 <TableCell>{post.title}</TableCell>
                 <TableCell className="font-semibold">{author}</TableCell>
-                <TableCell>{convertTimestamp(post.createdAt)}</TableCell>
-                <TableCell>{convertTimestamp(post.updatedAt)}</TableCell>
+                <TableCell>{convertTimestamp(post.created_at)}</TableCell>
+                <TableCell>{convertTimestamp(post.updated_at)}</TableCell>
                 <TableCell className="">
                   <Switch
                     checked={post.isPublished}
@@ -124,10 +126,10 @@ import {
                   <Button
                     className="align-middle rounded-md h-min px-1 py-1"
                     variant={"destructive"}
-                    id={post.id}
+                    id={post.post_id}
                     onClick={handleDelete}
                   >
-                    {loading && selectedPostId === post.id ? (
+                    {loading && selectedPostId === post.post_id ? (
                       <Loader2 className="animate-spin" width={20} height={20} />
                     ) : (
                       <Trash2 />
