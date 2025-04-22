@@ -1,13 +1,12 @@
 import TinyEditor from "../Editor";
 import { useForm } from "react-hook-form";
-// import { zodResolver } from "../..hookform/resolvers/zod";
-import { useState } from "react";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useToast } from "../../hooks/useToast";
 import { Loader2 } from "lucide-react";
-// import { postSchema } from "../../utils/zodSchemas.js";
-import { Button } from "../../../components/ui/button.jsx";
-import { Input } from "../../../components/uiinput.jsx";
-import { Checkbox } from "../../../components/ui/checkbox.jsx";
+import { postSchema } from "../../utils/zodSchemas";
+import { Button } from "../../../components/ui/button";
+import { Input } from "../../../components/ui/input";
+import { Checkbox } from "../../../components/ui/checkbox";
 import {
   Form,
   FormControl,
@@ -16,16 +15,17 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "../../../components/ui/form.jsx";
+} from "../../../components/ui/form";
 import PropTypes from "prop-types";
-import { createPost } from "../../api/posts.js";
+import { createPost } from "../../api/posts";
+import { useState } from "react";
 
 function CreatePostForm({ setPosts, switchTab }) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   const form = useForm({
-    // resolver: zodResolver(postSchema),
+    resolver: zodResolver(postSchema),
     defaultValues: {
       title: "",
       content: "",

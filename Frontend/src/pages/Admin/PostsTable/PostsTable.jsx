@@ -15,7 +15,7 @@ import {
   import { useState } from "react";
   import PropTypes from "prop-types";
   // import posts api for fetching stuff
-  import { deletePost, editPost } from "@/api/posts.js";
+  import { deletePost, editPost } from "../../../api/posts";
   
   function PostsTable({ posts, setPosts, author, setSelectedPost, switchTab }) {
     const { toast } = useToast();

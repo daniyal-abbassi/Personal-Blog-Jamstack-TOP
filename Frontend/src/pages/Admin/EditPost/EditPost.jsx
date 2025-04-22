@@ -23,7 +23,8 @@ import {
 import PropTypes from "prop-types";
 //should adjust the api for reletad stuff
 import { editPost } from "../../../api/pots";
-import { deleteComment } from "../../../api/potscomments";
+// comments api and hook
+import { deleteComment } from "../../../api/comments";
 import useComments from "../../../hooks/useComments";
 
 function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
