@@ -4,11 +4,11 @@ const postsRouter = Router();
 const jwt = require('jsonwebtoken');
 const postsController = require('../controllers/postsController');
 
-postsRouter.get('/create',verifyToken,(req,res)=>{
-    res.render('createPost')
-})
+postsRouter.get('/',postsController.showPosts)
 
 postsRouter.post('/create',verifyToken,postsController.createPost)
+postsRouter.post('/edit',verifyToken,postsController.editPost)
+postsRouter.post('/delete',verifyToken,postsController.deletePost)
 
 
 module.exports=postsRouter;
