@@ -7,8 +7,8 @@ const postsController = require('../controllers/postsController');
 postsRouter.get('/',postsController.showPosts)
 
 postsRouter.post('/create',verifyToken,postsController.createPost)
-postsRouter.post('/edit',verifyToken,postsController.editPost)
-postsRouter.post('/delete',verifyToken,postsController.deletePost)
+postsRouter.put('/edit/postId',verifyToken,postsController.editPost)
+postsRouter.delete('/delete/postId',verifyToken,postsController.deletePost)
 
 
 module.exports=postsRouter;

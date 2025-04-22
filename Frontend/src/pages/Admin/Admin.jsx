@@ -7,7 +7,7 @@ import CreatePostForm from "./CreatePost/CreatePostForm.jsx";
 import EditPost from "./EditPost/EditPost.jsx";
 import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import usePosts from "./hooks/usePosts.js";
+import usePosts from "../../hooks/usePosts.js";
 import { Loader2 } from "lucide-react";
 
 import { UserContext } from "./UserProvider.jsx";

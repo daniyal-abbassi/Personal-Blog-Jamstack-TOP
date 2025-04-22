@@ -15,6 +15,7 @@ const postsController = {
         try {
             console.log(title,content,published,userId)
             const post = await dbClient.createPost(title,content,'published',userId);
+            res.status(201).json({post})
             console.log('this is post: ',post)
         } catch (error) {
             res.status(500).json({message: 'error in creating  post!!!'})
@@ -25,6 +26,7 @@ const postsController = {
             const {userId} = req.user;
             const {post_id} = req.params;
             await dbClient.deletePost(post_id,userId);
+            res.sendStatus(204); //No content for successful deletion
         } catch (error) {
             res.status(500).json({message: 'ERROR DELETING POST ROUTE'})
         }

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 //should create an api for fetching posts(send post requests to back-end)
-import { getPosts } from "@/api/posts.js";
+import { getPosts } from "../api/posts";
 
 const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
   const [posts, setPosts] = useState(null);
