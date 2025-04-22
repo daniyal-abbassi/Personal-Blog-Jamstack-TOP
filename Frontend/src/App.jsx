@@ -5,7 +5,8 @@ import SignIn from "./pages/SignIn";
 import Admin from "./pages/Admin/Admin";
 import { useContext} from "react";
 import { UserContext } from "./UserProviders";
-
+import ThemeProvider from "./components/ThemeProvider";
+import { Toaster } from "./components/ui/toaster";
 export default function App() {
     const {isAuthenticated} = useContext(UserContext);
 
@@ -16,7 +17,13 @@ export default function App() {
         <Route path="/" element={<Blog isAuthenticated={isAuthenticated}/>} />
         <Route path="/sign-up" element={<SignUp/>} />
         <Route path="/sign-in" element={<SignIn/>} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={
+          <ThemeProvider>
+            <Admin />
+            <Toaster />
+          </ThemeProvider>
+          
+          } />
       </Routes>
     </BrowserRouter>
   );

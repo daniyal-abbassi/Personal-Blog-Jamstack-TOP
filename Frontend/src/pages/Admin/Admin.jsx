@@ -11,7 +11,7 @@ import usePosts from "../../hooks/usePosts";
 import { Loader2 } from "lucide-react";
 import { UserContext } from "../../UserProviders";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
-
+import "../../index.css";
 function Admin() {
   const navigate = useNavigate();
   //extract the page from URL
