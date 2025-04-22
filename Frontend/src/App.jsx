@@ -5,7 +5,7 @@ import SignIn from "./pages/SignIn";
 import Admin from "./pages/Admin/Admin";
 import { useContext} from "react";
 import { UserContext } from "./UserProviders";
-import ThemeProvider from "./components/ThemeProvider";
+import {ThemeProvider} from "./components/ThemeProvider";
 import { Toaster } from "./components/ui/toaster";
 export default function App() {
     const {isAuthenticated} = useContext(UserContext);
