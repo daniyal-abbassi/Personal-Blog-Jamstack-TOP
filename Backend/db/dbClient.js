@@ -68,7 +68,7 @@ const dbClient = {
             throw error
         }
     },
-    deletePost: async(post_id)=>{
+    deletePost: async(post_id,user_id)=>{
         try {
             await prisma.post.delete({
                 where: {
@@ -80,7 +80,7 @@ const dbClient = {
             throw error
         }
     },
-    editPost: async(post_id,title,content,published) => {
+    editPost: async(post_id,title,content,published,user_id) => {
         try {
             const editedPost = prisma.post.update({
                 where: {
@@ -92,6 +92,7 @@ const dbClient = {
                     published,
                 }
             })
+            return editedPost
         } catch (error) {
             console.error('ERROR UPDATING POST: ',error)
             throw error
