@@ -1,9 +1,9 @@
-import * as React from "react";
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "../../lib/utils";
 import { buttonVariants } from "./button";
 import { Link } from "react-router-dom";
+import { forwardRef } from "react";
 
 const Pagination = ({ className, ...props }) => (
   <nav
@@ -15,7 +15,7 @@ const Pagination = ({ className, ...props }) => (
 );
 Pagination.displayName = "Pagination";
 
-const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
+const PaginationContent = forwardRef(({ className, ...props }, ref) => (
   <ul
     ref={ref}
     className={cn("flex flex-row items-center gap-1", className)}
@@ -24,7 +24,7 @@ const PaginationContent = React.forwardRef(({ className, ...props }, ref) => (
 ));
 PaginationContent.displayName = "PaginationContent";
 
-const PaginationItem = React.forwardRef(({ className, ...props }, ref) => (
+const PaginationItem = forwardRef(({ className, ...props }, ref) => (
   <li ref={ref} className={cn("", className)} {...props} />
 ));
 PaginationItem.displayName = "PaginationItem";

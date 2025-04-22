@@ -1,5 +1,5 @@
 
-import PostsTableTab from "./PostsTable/PostsTableTab.jsx";
+import PostsTableTab from "./PostsTable/PostsTableTab";
 import PostsTable from "./PostsTable/PostsTable.jsx";
 import EditPostTab from "./EditPost/EditPostTab.jsx";
 import CreatePostTab from "./CreatePost/CreatePostTab.jsx";
@@ -18,7 +18,7 @@ function Admin() {
   const navigate = useNavigate();
   //extract the page from URL
   const { page } = useParams();
-  const [sortValue, setSortValue] = useState("createdAt");
+  const [sortValue, setSortValue] = useState("created_at");
   const [order, setOrder] = useState("asc");
   const [search, setSearch] = useState("");
   // get the posts
