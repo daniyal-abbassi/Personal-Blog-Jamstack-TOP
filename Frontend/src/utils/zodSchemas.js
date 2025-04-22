@@ -1,5 +1,5 @@
 import * as z from "zod";
-import sanitizeField from "@/utils/sanitize.js";
+import sanitizeField from "./sanitize";
 
 const postSchema = z.object({
   title: z

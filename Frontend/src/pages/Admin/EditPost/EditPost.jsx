@@ -22,7 +22,7 @@ import {
 } from "../../../components/ui/form";
 import PropTypes from "prop-types";
 //should adjust the api for reletad stuff
-import { editPost } from "../../../api/pots";
+import { editPost } from "../../../api/posts";
 // comments api and hook
 import { deleteComment } from "../../../api/comments";
 import useComments from "../../../hooks/useComments";

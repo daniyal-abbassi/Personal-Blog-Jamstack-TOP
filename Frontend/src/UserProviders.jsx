@@ -13,7 +13,7 @@ export const UserContext = createContext({
 });
 
 // Custom Provider
-const MyProvider = ({ children }) => {
+export const MyProvider = ({ children }) => {
   const { loading, error, user, setUser, isAuthenticated, setIsAuthenticated } = useUser();
 
   return (
@@ -27,4 +27,4 @@ MyProvider.propTypes = {
   children: PropTypes.node,
 };
 
-export default MyProvider;
+// export default MyProvider;

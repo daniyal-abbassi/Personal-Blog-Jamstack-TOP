@@ -4,7 +4,7 @@ import {
     CardDescription,
     CardHeader,
     CardTitle,
-  } from "../../../components/ui/form";
+  } from "../../../components/ui/card";
   import { TabsContent } from "../../../components/ui/tabs";
   import PropTypes from "prop-types";
   
