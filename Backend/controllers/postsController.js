@@ -41,6 +41,28 @@ const postsController = {
         } catch (error) {
             res.status(500).json({message: 'ERROR EDITING POST ROUTE'})
         }
+    },
+    getCommnets: async(req,res)=>{
+        try {
+            const {postId} = req.params;
+            const comments = await dbClient.getComments(postId);
+            res.status(200).json(comments)
+        } catch (error) {
+            res.status(500).json({message: 'ERROR GETTING COMMENTS ROUTE'})
+        }
+    },
+    deleteComment: async(req,res)=>{
+        try {
+            const {postId,commentId} = req.params;
+            const deletedComment = await dbClient.deleteComment(postId,commentId);
+            if(deletedComment) {
+                res.status(200).json(deletedComment);
+            } else {
+                res.status(400).json('COMMNET NOT FOUND')
+            }
+        } catch (error) {
+            res.status(500).json({message: 'ERROR DELETING COMMENT ROUTE'})
+        }
     }
 }
 

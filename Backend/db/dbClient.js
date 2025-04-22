@@ -97,6 +97,34 @@ const dbClient = {
             console.error('ERROR UPDATING POST: ',error)
             throw error
         }
+    },
+    //comments 
+    getComments: async(postId)=>{
+        try {
+            const comments = await prisma.comment.findMany({
+                where: {
+                    post_id: postId
+                }
+            })
+            return comments;
+        } catch (error) {
+            console.error('ERROR GETTING COMMENTS DATABASE: ',error)
+            throw error
+        }
+    },
+    deleteComment: async(postId,commentId)=>{
+        try {
+            const deletedComment = await prisma.comment.delete({
+                where: {
+                    post_id: postId,
+                    comment_id: commentId
+                }
+            })
+            return deletedComment;
+        } catch (error) {
+            console.error('ERROR DELETING COMMENT: ',error)
+            throw error
+        }
     }
 }
 
