@@ -42,7 +42,16 @@ const dbClient = {
             throw error
         }
     },
-
+    //POSTS
+    showPosts: async()=>{
+        try {
+            const posts = await prisma.post.findMany();
+            return posts;
+        } catch (error) {
+            console.error('ERROR GETTING ALL POSTS: ',error)
+            throw error
+        }
+    },
     createPost: async(title,content,published,author_id) => {
         try {
             const post = await prisma.post.create({
@@ -56,6 +65,35 @@ const dbClient = {
             return post;
         } catch (error) {
             console.error('ERROR CREATING POST: ',error)
+            throw error
+        }
+    },
+    deletePost: async(post_id)=>{
+        try {
+            await prisma.post.delete({
+                where: {
+                    post_id
+                }
+            })
+        } catch (error) {
+            console.error('ERROR DELETING POST: ',error)
+            throw error
+        }
+    },
+    editPost: async(post_id,title,content,published) => {
+        try {
+            const editedPost = prisma.post.update({
+                where: {
+                    post_id
+                },
+                data: {
+                    title,
+                    content,
+                    published,
+                }
+            })
+        } catch (error) {
+            console.error('ERROR UPDATING POST: ',error)
             throw error
         }
     }
