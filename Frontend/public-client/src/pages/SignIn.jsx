@@ -14,9 +14,8 @@ import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import AppTheme from '../shared-theme/AppTheme';
 import ColorModeSelect from '../shared-theme/ColorModeSelect';
-import { useContext, useState } from 'react';
-import { singIn } from '../../../private-client/src/api/auth';
-import { UserContext } from '../../../private-client/src/UserProviders';
+import {   useState } from 'react';
+import { singIn } from '../api/auth';
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: 'flex',
@@ -65,11 +64,7 @@ export default function SignIn({props}) {
   const [usernameErrorMessage, setusernameErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
   const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
-  const { setIsAuthenticated } = useContext(UserContext);
-
- 
   
-
   const validateInputs = () => {
     const username = document.getElementById('username');
     const password = document.getElementById('password');
@@ -114,7 +109,7 @@ export default function SignIn({props}) {
         password,
       },'data is: ',data);
       //update authentication status
-      setIsAuthenticated(true);
+
     } catch (error) {
       console.error('Sign-in failed: ',error)
     }

@@ -12,9 +12,8 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
-import { Link } from "react-router-dom";
-import { useContext, useState } from 'react';
-import { UserContext } from "../UserProviders";
+import { Link,useNavigate } from "react-router-dom";
+import { useEffect, useState } from 'react';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   display: 'flex',
@@ -34,11 +33,32 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
 
 export default function AppAppBar() {
   const [open, setOpen] = useState(false);
-  const {isAuthenticated} = useContext(UserContext)
+  const [isAuth,setIsAuth] = useState(false);
+  const navigate = useNavigate();
+
+
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
 
+ 
+  useEffect(()=>{
+    const checkAdminCookie = ()=>{
+      const tokenCookie = document.cookie.split('; ').find(row=>row.startsWith('token='));
+      if(tokenCookie) {
+        setIsAuth(true)
+      } else {
+        setIsAuth(false);
+      }
+    }
+    checkAdminCookie();
+  },[])
+
+  const handleLogOut = () => {
+    document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+    setIsAuth(false);
+    navigate('/')
+  }
   
 
 
@@ -79,7 +99,7 @@ export default function AppAppBar() {
             </Box>
           </Box>
       {/* conditional rendering if user is sign-in */}
-      { isAuthenticated ? (
+      { isAuth ? (
          <Box
          sx={{
            display: { xs: 'none', md: 'flex' },
@@ -87,11 +107,11 @@ export default function AppAppBar() {
            alignItems: 'center',
          }}
        >
-         <Link to="/Log-out">
-         <Button color="error" variant="outlined" size="small">
+         
+         <Button onClick={handleLogOut} color="error" variant="outlined" size="small">
            Log Out
          </Button>
-         </Link>
+         
          <Link to="/admin">
          <Button color="primary" variant="contained" size="small">
            Admin

@@ -15,8 +15,7 @@ import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
 import { useContext, useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
-import { signUp } from "../../private-client/src/api/auth";
-import { UserContext } from "../UserProviders";
+import { signUp } from "../api/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
   display: "flex",
@@ -67,7 +66,7 @@ export default function SignUp({props}) {
   const [passwordErrorMessage, setPasswordErrorMessage] = useState("");
   const [usernameError, setusernameError] = useState(false);
   const [usernameErrorMessage, setusernameErrorMessage] = useState("");
-  const { setIsAuthenticated } = useContext(UserContext);
+
   const validateInputs = () => {
     const email = document.getElementById("email");
     const password = document.getElementById("password");
@@ -106,6 +105,7 @@ export default function SignUp({props}) {
   };
 
   const navigate = useNavigate();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     if (!validateInputs) {
@@ -122,7 +122,7 @@ export default function SignUp({props}) {
       const singTest = await signUp(values, navigate); // Pass navigate
       console.log({ username, password }, singTest);
       //update authentication stauts
-      setIsAuthenticated(true);
+      
     } catch (error) {
       console.error(error.message);
       // Handle signup error in the component's state and UI
