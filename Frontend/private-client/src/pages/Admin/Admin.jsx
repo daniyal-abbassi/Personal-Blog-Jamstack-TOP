@@ -1,4 +1,3 @@
-
 import PostsTableTab from "./PostsTable/PostsTableTab";
 import PostsTable from "./PostsTable/PostsTable";
 import EditPostTab from "./EditPost/EditPostTab";
@@ -11,7 +10,7 @@ import usePosts from "../../hooks/usePosts";
 import { Loader2 } from "lucide-react";
 import { UserContext } from "../../UserProviders";
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
-import "../../index.css";
+
 function Admin() {
   const navigate = useNavigate();
   //extract the page from URL
@@ -29,14 +28,16 @@ function Admin() {
   if (loading || postsLoading)
     return (
       <div>
-        
         <div className="min-h-[85vh] flex justify-center items-center">
           <Loader2 className="animate-spin" width={50} height={50} />
         </div>
       </div>
     );
 
-  if (!isAuthenticated ||!user) return navigate("/");
+  if (!isAuthenticated || !user) {
+    window.location.href = "/sign-in";
+    return null;
+  }
 
   const pageSize = 6;
   const currentPage = Math.max(1, Number(page));
@@ -51,7 +52,6 @@ function Admin() {
   const paginatedPosts = posts.slice(skip, skip + pageSize);
   return (
     <>
-      
       <main className="p-4">
         <Tabs
           onValueChange={setActiveTab}
