@@ -6,11 +6,11 @@ import AppAppBar from "../components/AppAppBar";
 import Latest from "../components/Latest";
 import AppTheme from "../shared-theme/AppTheme";
 
-export default function Blog({ isAuth }) {
+export default function Blog({ isAuth,setIsAuth }) {
   return (
     <AppTheme>
       <CssBaseline enableColorScheme />
-      <AppAppBar isAuth={isAuth} />
+      <AppAppBar isAuth={isAuth} setIsAuth={setIsAuth} />
       <Container
         maxWidth="lg"
         component="main"
