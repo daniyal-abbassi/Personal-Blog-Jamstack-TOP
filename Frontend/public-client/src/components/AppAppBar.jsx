@@ -12,7 +12,7 @@ import Drawer from '@mui/material/Drawer';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseRoundedIcon from '@mui/icons-material/CloseRounded';
 import ColorModeIconDropdown from '../shared-theme/ColorModeIconDropdown';
-import { Link} from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import {  useState } from 'react';
 
 const StyledToolbar = styled(Toolbar)(({ theme }) => ({
@@ -31,14 +31,18 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar({isAuth, handleLogOut }) {
+export default function AppAppBar({isAuth,setIsAuth}) {
   const [open, setOpen] = useState(false);
   
   const toggleDrawer = (newOpen) => () => {
     setOpen(newOpen);
   };
-
-
+  const navigate = useNavigate();
+  const handleLogOut = () => {
+    document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    setIsAuth(false);
+    navigate("/");
+  };
 
   return (
     <AppBar
