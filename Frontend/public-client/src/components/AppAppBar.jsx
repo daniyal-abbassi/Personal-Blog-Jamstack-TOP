@@ -43,7 +43,9 @@ export default function AppAppBar({ isAuth, setIsAuth }) {
     setIsAuth(false);
     navigate("/");
   };
-
+  const navigateToAdmin = () => {
+    window.location.href = 'http://localhost:5174/admin'; 
+  };
   return (
     <AppBar
       position="fixed"
@@ -110,11 +112,11 @@ export default function AppAppBar({ isAuth, setIsAuth }) {
                 Log Out
               </Button>
 
-              <Link to="/admin">
-                <Button color="primary" variant="contained" size="small">
+              
+                <Button onClick={navigateToAdmin} color="primary" variant="contained" size="small">
                   Admin
                 </Button>
-              </Link>
+              
               <ColorModeIconDropdown />
             </Box>
           ) : (
