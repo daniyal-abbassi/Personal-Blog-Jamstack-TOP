@@ -59,7 +59,7 @@ const SignInContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignIn({props}) {
+export default function SignIn({props,setIsAuth}) {
   const [usernameError, setusernameError] = useState(false);
   const [usernameErrorMessage, setusernameErrorMessage] = useState('');
   const [passwordError, setPasswordError] = useState(false);
@@ -109,7 +109,7 @@ export default function SignIn({props}) {
         password,
       },'data is: ',data);
       //update authentication status
-
+      setIsAuth(true)
     } catch (error) {
       console.error('Sign-in failed: ',error)
     }
