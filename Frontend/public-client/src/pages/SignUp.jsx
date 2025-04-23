@@ -13,7 +13,7 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
-import { useContext, useState } from "react";
+import {  useState } from "react";
 import { Link,useNavigate } from "react-router-dom";
 import { signUp } from "../api/auth";
 
