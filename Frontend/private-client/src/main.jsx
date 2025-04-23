@@ -10,7 +10,7 @@ createRoot(document.getElementById("root")).render(
   <StrictMode>
     <ThemeProvider>
       <UserProvider>
-        <BrowserRouter basename="/admin">
+        <BrowserRouter>
           <Admin />
           <Toaster />
         </BrowserRouter>

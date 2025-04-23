@@ -6,8 +6,8 @@ import useUser from "./hooks/useUser";
 export const UserContext = createContext({
   user: null,
   setUser: () => {},
-  isAuthenticated: false,
-  setIsAuthenticated: () => {},
+  // isAuthenticated: false,
+  // setIsAuthenticated: () => {},
   loading: true, // Add loading to default value
   error: null,   // Add error to default value
 });
