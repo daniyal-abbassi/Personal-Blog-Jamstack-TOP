@@ -8,7 +8,9 @@ import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import usePosts from "@/hooks/usePosts.js";
 import { Loader2 } from "lucide-react";
-import { UserContext } from "../../UserProviders";
+
+import { UserContext } from "@/UserProvider.jsx";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs.jsx";
 
 function Admin() {
   const navigate = useNavigate();

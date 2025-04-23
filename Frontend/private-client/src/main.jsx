@@ -4,7 +4,7 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { Toaster } from "./components/ui/toaster";
 import Admin from "./pages/Admin/Admin";
 import { BrowserRouter } from "react-router-dom";
-import { MyProvider as UserProvider } from "./UserProviders";
+import { MyProvider as UserProvider } from "./UserProvider";
 import './index.css';
 
 
