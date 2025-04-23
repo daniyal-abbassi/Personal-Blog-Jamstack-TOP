@@ -31,7 +31,7 @@ const StyledToolbar = styled(Toolbar)(({ theme }) => ({
   padding: '8px 12px',
 }));
 
-export default function AppAppBar({isAuth,setIsAuth}) {
+export default function AppAppBar({isAuth, handleLogOut }) {
   const [open, setOpen] = useState(false);
   
   const toggleDrawer = (newOpen) => () => {
