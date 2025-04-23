@@ -1,7 +1,7 @@
 import { Slot } from "@radix-ui/react-slot"
 import { Controller, FormProvider, useFormContext } from "react-hook-form";
 
-import { cn } from "../../../private-client/src/lib/utils"
+import { cn } from "../../lib/utils"
 import { Label } from "./label"
 import { createContext, forwardRef, useContext, useId } from "react";
 

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 //should create an api for fetching posts(send post requests to back-end)
-import { getPosts } from "../../private-client/src/api/posts";
+import { getPosts } from "../api/posts";
 
 const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
   //change posts from null to array 

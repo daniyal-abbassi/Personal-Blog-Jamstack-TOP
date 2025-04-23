@@ -1,6 +1,6 @@
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
-import { cn } from "../../../private-client/src/lib/utils"
+import { cn } from "../../lib/utils"
 import { forwardRef } from "react"
 
 const Avatar = forwardRef(({ className, ...props }, ref) => (

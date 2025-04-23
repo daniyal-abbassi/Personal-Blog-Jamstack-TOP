@@ -1,6 +1,6 @@
 import { ChevronLeft, ChevronRight, MoreHorizontal } from "lucide-react";
 
-import { cn } from "../../../private-client/src/lib/utils";
+import { cn } from "../../lib/utils"
 import { buttonVariants } from "./button";
 import { Link } from "react-router-dom";
 import { forwardRef } from "react";

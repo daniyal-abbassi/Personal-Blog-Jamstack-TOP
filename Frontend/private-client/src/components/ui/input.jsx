@@ -1,5 +1,5 @@
 
-import { cn } from "../../../private-client/src/lib/utils"
+import { cn } from "../../lib/utils"
 import { forwardRef } from "react";
 
 const Input = forwardRef(({ className, type, ...props }, ref) => {
