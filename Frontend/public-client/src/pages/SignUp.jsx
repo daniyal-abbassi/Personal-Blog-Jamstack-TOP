@@ -13,8 +13,8 @@ import MuiCard from "@mui/material/Card";
 import { styled } from "@mui/material/styles";
 import AppTheme from "../shared-theme/AppTheme";
 import ColorModeSelect from "../shared-theme/ColorModeSelect";
-import {  useState } from "react";
-import { Link,useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { signUp } from "../api/auth";
 
 const Card = styled(MuiCard)(({ theme }) => ({
@@ -59,7 +59,7 @@ const SignUpContainer = styled(Stack)(({ theme }) => ({
   },
 }));
 
-export default function SignUp({props,setIsAuth}) {
+export default function SignUp({ props, setIsAuth }) {
   const [emailError, setEmailError] = useState(false);
   const [emailErrorMessage, setEmailErrorMessage] = useState("");
   const [passwordError, setPasswordError] = useState(false);
@@ -111,18 +111,18 @@ export default function SignUp({props,setIsAuth}) {
     if (!validateInputs) {
       return;
     }
-    
+
     const password = document.getElementById("password").value;
     const username = document.getElementById("username").value;
     const values = {
       username,
       password,
-    }
+    };
     try {
       const singTest = await signUp(values, navigate); // Pass navigate
       console.log({ username, password }, singTest);
       //update authentication stauts
-      setIsAuth(true)
+      setIsAuth(true);
     } catch (error) {
       console.error(error.message);
       // Handle signup error in the component's state and UI
