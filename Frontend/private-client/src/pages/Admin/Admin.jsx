@@ -1,15 +1,14 @@
-import PostsTableTab from "./PostsTable/PostsTableTab";
-import PostsTable from "./PostsTable/PostsTable";
-import EditPostTab from "./EditPost/EditPostTab";
-import CreatePostTab from "./CreatePost/CreatePostTab";
-import CreatePostForm from "./CreatePost/CreatePostForm";
-import EditPost from "./EditPost/EditPost";
+import PostsTableTab from "@/pages/Admin/PostsTable/PostsTableTab.jsx";
+import PostsTable from "@/pages/Admin/PostsTable/PostsTable.jsx";
+import EditPostTab from "@/pages/Admin/EditPost/EditPostTab.jsx";
+import CreatePostTab from "@/pages/Admin/CreatePost/CreatePostTab.jsx";
+import CreatePostForm from "@/pages/Admin/CreatePost/CreatePostForm.jsx";
+import EditPost from "@/pages/Admin/EditPost/EditPost.jsx";
 import { useContext, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import usePosts from "../../hooks/usePosts";
+import usePosts from "@/hooks/usePosts.js";
 import { Loader2 } from "lucide-react";
 import { UserContext } from "../../UserProviders";
-import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 
 function Admin() {
   const navigate = useNavigate();
