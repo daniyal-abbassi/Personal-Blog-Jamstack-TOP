@@ -37,7 +37,6 @@ function CreatePostForm({ setPosts, switchTab }) {
 
   //submit form function for creating the post
   async function onSubmit(values) {
-    console.log('this is in onSubmit in CreatePostForm.jsx file: values: ',values)
     try {
       setLoading(true);
       //api call for creating post
@@ -45,7 +44,6 @@ function CreatePostForm({ setPosts, switchTab }) {
       //handle front-end posts array, add new created post to it
       setPosts((posts) => [post, ...posts]);
 
-    console.log('this is in onSubmit in CreatePostForm.jsx file: post: ',post)
       toast({
         title: "Successfully created post!",
         description: `Title: ${post.title}`,

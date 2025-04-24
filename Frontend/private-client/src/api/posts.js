@@ -24,8 +24,7 @@ export const getPosts = async(queries = '') => {
 }
 //CREATE POST API
 export const createPost = async(postData)=>{
-    console.log('this postData from posts api: ',postData)
-    console.log('and this is its JSON.stringify thing: ',JSON.stringify(postData))
+    
     try {
         const response = await fetch(`${API_BASE_URL}/posts/create`,{
             method: 'POST',
