@@ -1,3 +1,4 @@
+//POSTS ARE LISTING IN THIS COMPONENT
 import {
     Table,
     TableBody,
@@ -49,7 +50,8 @@ import {
       }
     } //delete post function
   
-    //edit post function
+    //switch the published state of post function
+    //NEED TO HANDLE API CALL editPost
     async function handleSwitch(post) {
       try {
         const data = await editPost({ ...post, isPublished: !post.isPublished });
@@ -88,6 +90,7 @@ import {
             <TableHead colSpan={2}></TableHead>
           </TableRow>
         </TableHeader>
+
         <TableBody>
           {posts &&
             posts.map((post) => (

@@ -5,7 +5,7 @@ import CreatePostTab from "@/pages/Admin/CreatePost/CreatePostTab.jsx";
 import CreatePostForm from "@/pages/Admin/CreatePost/CreatePostForm.jsx";
 import EditPost from "@/pages/Admin/EditPost/EditPost.jsx";
 import { useContext, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import usePosts from "@/hooks/usePosts.js";
 import { Loader2 } from "lucide-react";
 
@@ -13,14 +13,16 @@ import { UserContext } from "@/UserProvider.jsx";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs.jsx";
 
 function Admin() {
-  const navigate = useNavigate();
-  //extract the page from URL
-  const { page } = useParams();
-  const [sortValue, setSortValue] = useState("created_at");
-  const [order, setOrder] = useState("asc");
-  const [search, setSearch] = useState("");
-  // get the posts
-  const { postsLoading, posts, setPosts } = usePosts(sortValue, order, search);
+  
+  
+  // const { page } = useParams();
+  // const [sortValue, setSortValue] = useState("created_at");
+  // const [order, setOrder] = useState("asc");
+  // const [search, setSearch] = useState("");
+  
+  // const { postsLoading, posts, setPosts } = usePosts(sortValue, order, search);
+  const { postsLoading, posts, setPosts } = usePosts();
+
   // get user authentication
   const { loading, user, isAuthenticated, setUser } = useContext(UserContext);
   const [activeTab, setActiveTab] = useState("posts");
@@ -36,21 +38,21 @@ function Admin() {
     );
 
   if (!isAuthenticated || !user) {
-    // window.location.href = "http://localhost:5173/sign-in"; 
+    window.location.href = "http://localhost:5174/sign-in"; 
     return null;
   }
 
-  const pageSize = 6;
-  const currentPage = Math.max(1, Number(page));
-  const skip = (page - 1) * pageSize;
-  const totalPages = Math.ceil(posts.length / pageSize);
+  // const pageSize = 6;
+  // const currentPage = Math.max(1, Number(page));
+  // const skip = (page - 1) * pageSize;
+  // const totalPages = Math.ceil(posts.length / pageSize);
 
-  const metadata = {
-    currentPage,
-    totalPages,
-  };
+  // const metadata = {
+  //   currentPage,
+  //   totalPages,
+  // };
 
-  const paginatedPosts = posts.slice(skip, skip + pageSize);
+  // const paginatedPosts = posts.slice(skip, skip + pageSize);
   return (
     <>
       <main className="p-4">
@@ -58,6 +60,7 @@ function Admin() {
           onValueChange={setActiveTab}
           value={activeTab}
           className={`${activeTab === "posts" ? "max-w-[1200px]" : "max-w-[800px]"} mx-auto mt-8 shadow-lg transition-all duration-500 ease`}
+
         >
           <TabsList className="w-full flex">
             <TabsTrigger className="flex-1" value="posts">
@@ -66,24 +69,26 @@ function Admin() {
             <TabsTrigger className="flex-1" value="create">
               Create Post
             </TabsTrigger>
+            {/* 
             <TabsTrigger
               disabled={!selectedPost}
               className="flex-1"
               value="edit"
             >
               Edit Post
-            </TabsTrigger>
+            </TabsTrigger> */}
           </TabsList>
           <PostsTableTab
-            setSortValue={setSortValue}
-            setOrder={setOrder}
-            setSearch={setSearch}
-            metadata={metadata}
+            // setSortValue={setSortValue}
+            // setOrder={setOrder}
+            // setSearch={setSearch}
+            // metadata={metadata}
           >
             <PostsTable
               switchTab={setActiveTab}
               setSelectedPost={setSelectedPost}
-              posts={paginatedPosts}
+              // posts={paginatedPosts}
+              posts={posts}
               setPosts={setPosts}
               author={user.username}
             />
@@ -94,17 +99,17 @@ function Admin() {
               switchTab={() => setActiveTab("posts")}
             />
           </CreatePostTab>
-          <EditPostTab selectedPost={setSelectedPost}>
+          {/* <EditPostTab selectedPost={setSelectedPost}>
             {selectedPost && (
-              <EditPost
-                post={selectedPost}
-                setPosts={setPosts}
-                setActiveTab={setActiveTab}
-                setSelectedPost={setSelectedPost}
-                setUser={setUser}
-              />
+              // <EditPost
+              //   post={selectedPost}
+              //   setPosts={setPosts}
+              //   setActiveTab={setActiveTab}
+              //   setSelectedPost={setSelectedPost}
+              //   setUser={setUser}
+              // />
             )}
-          </EditPostTab>
+          </EditPostTab> */}
         </Tabs>
       </main>
     </>

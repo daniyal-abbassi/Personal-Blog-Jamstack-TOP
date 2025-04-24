@@ -1,3 +1,4 @@
+//STRUCTURE OF CREATE POST TAB
 import { TabsContent } from "../../../components/ui/tabs";
 import {
   Card,

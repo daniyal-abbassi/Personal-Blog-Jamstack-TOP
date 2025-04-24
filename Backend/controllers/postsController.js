@@ -11,11 +11,11 @@ const postsController = {
         }
     },
     createPost: async(req,res)=>{
-        const {title,content,published} = req.body;
+        const {title,content,isPublished,imageUrl} = req.body;
         const {userId} = req.user;
         try {
-            console.log(title,content,published,userId)
-            const post = await dbClient.createPost(title,content,'published',userId);
+            console.log('if all form data is correct the values are: ',title,content,isPublished,imageUrl,userId)
+            const post = await dbClient.createPost(title,content,isPublished,imageUrl,userId);
             res.status(201).json({post})
             console.log('this is post: ',post)
         } catch (error) {

@@ -1,3 +1,4 @@
+//MAIN POSTS TABLE, SEARCH + POSTS LIST(children) + FOOTER(pagination)
 import {
     Card,
     CardContent,

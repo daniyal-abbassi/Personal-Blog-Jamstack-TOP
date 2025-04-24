@@ -24,6 +24,8 @@ export const getPosts = async(queries = '') => {
 }
 //CREATE POST API
 export const createPost = async(postData)=>{
+    console.log('this postData from posts api: ',postData)
+    console.log('and this is its JSON.stringify thing: ',JSON.stringify(postData))
     try {
         const response = await fetch(`${API_BASE_URL}/posts/create`,{
             method: 'POST',
@@ -38,6 +40,7 @@ export const createPost = async(postData)=>{
             throw new Error('ERROR FETCH CREATING POST',response.status,errorData?.message)
         }
         const data = await response.json();
+        console.log('this is new created post:',data)
         return data;
     } catch (error) {
         console.error('ERROR CREATE POST',error);

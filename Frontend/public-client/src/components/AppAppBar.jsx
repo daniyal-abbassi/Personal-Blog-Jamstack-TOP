@@ -44,7 +44,7 @@ export default function AppAppBar({ isAuth, setIsAuth }) {
     navigate("/");
   };
   const navigateToAdmin = () => {
-    window.location.href = 'http://localhost:5174/admin'; 
+    window.location.href = 'http://localhost:5173/admin'; 
   };
   return (
     <AppBar

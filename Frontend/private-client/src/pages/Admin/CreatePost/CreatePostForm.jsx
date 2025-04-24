@@ -1,3 +1,4 @@
+//CREATE POST FORM COMPONENT (api call from here)
 import TinyEditor from "../Editor";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +25,7 @@ function CreatePostForm({ setPosts, switchTab }) {
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
+  //useForm custonHook
   const form = useForm({
     resolver: zodResolver(postSchema),
     defaultValues: {
@@ -33,13 +35,17 @@ function CreatePostForm({ setPosts, switchTab }) {
     },
   });
 
+  //submit form function for creating the post
   async function onSubmit(values) {
+    console.log('this is in onSubmit in CreatePostForm.jsx file: values: ',values)
     try {
       setLoading(true);
-
+      //api call for creating post
       const post = await createPost(values);
+      //handle front-end posts array, add new created post to it
       setPosts((posts) => [post, ...posts]);
 
+    console.log('this is in onSubmit in CreatePostForm.jsx file: post: ',post)
       toast({
         title: "Successfully created post!",
         description: `Title: ${post.title}`,
@@ -87,7 +93,7 @@ function CreatePostForm({ setPosts, switchTab }) {
         />
         <FormField
           control={form.control}
-          name="file"
+          name="imageUrl"
           render={() => (
             <FormItem>
               <FormLabel>Thumbnail</FormLabel>
