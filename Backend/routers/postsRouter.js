@@ -8,7 +8,7 @@ postsRouter.get('/',postsController.showPosts)
 
 postsRouter.post('/create',verifyToken,postsController.createPost)
 postsRouter.put('/edit/:postId',verifyToken,postsController.editPost)
-postsRouter.delete('/delete/:postId',verifyToken,postsController.deletePost)
+postsRouter.delete('/:postId',verifyToken,postsController.deletePost)
 
 
 postsRouter.get('/:postId/comments',postsController.getCommnets)

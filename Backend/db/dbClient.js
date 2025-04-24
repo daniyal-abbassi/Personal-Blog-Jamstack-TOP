@@ -71,12 +71,16 @@ const dbClient = {
         }
     },
     deletePost: async(post_id,user_id)=>{
+        const parsedPostId = parseInt(post_id);
+        const parsedUserId = parseInt(user_id);
         try {
-            await prisma.post.delete({
+            const deletedPost = await prisma.post.delete({
                 where: {
-                    post_id
+                    post_id: parsedPostId,
+                    author_id: parsedUserId
                 }
             })
+            return deletedPost;
         } catch (error) {
             console.error('ERROR DELETING POST: ',error)
             throw error

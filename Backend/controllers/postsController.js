@@ -16,17 +16,19 @@ const postsController = {
         try {
             const post = await dbClient.createPost(title,content,isPublished,imageUrl,userId);
             res.status(201).json({post})
-            console.log('this is post: ',post)
+           
         } catch (error) {
             res.status(500).json({message: 'error in creating  post!!!'})
         }
     },
     deletePost: async(req,res)=>{
         try {
+           
             const {userId} = req.user;
-            const {post_id} = req.params;
-            await dbClient.deletePost(post_id,userId);
-            res.sendStatus(204); //No content for successful deletion
+            const {postId} = req.params;
+            const deletedPost = await dbClient.deletePost(postId,userId);
+            
+            res.status(201).json({deletedPost}); 
         } catch (error) {
             res.status(500).json({message: 'ERROR DELETING POST ROUTE'})
         }

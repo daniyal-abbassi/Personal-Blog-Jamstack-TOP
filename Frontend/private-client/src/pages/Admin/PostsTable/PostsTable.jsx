@@ -25,10 +25,11 @@ import {
   
     //DELETE POST FUNCTION
     async function handleDelete(e) {
+      
       try {
         setLoading(true);
-        const { post_id } = e.target;
-  
+        const  post_id  = e.target.id;
+        
         setPosts(posts.filter((post) => post.post_id !== post_id));
         setSelectedPostId(post_id);
   

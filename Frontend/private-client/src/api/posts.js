@@ -39,7 +39,7 @@ export const createPost = async(postData)=>{
             throw new Error('ERROR FETCH CREATING POST',response.status,errorData?.message)
         }
         const data = await response.json();
-        console.log('this is new created post:',data)
+        
         return data;
     } catch (error) {
         console.error('ERROR CREATE POST',error);
@@ -49,16 +49,18 @@ export const createPost = async(postData)=>{
 //DELETE POST API
 export const deletePost = async(postId) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/posts/delete/${postId}`,{
+        const response = await fetch(`${API_BASE_URL}/posts/${parseInt(postId)}`,{
             method: 'DELETE',
             headers: {
                 'Content-Type': 'application/json',
-            }
+            },
+            credentials: 'include'
         })
         if(!response.ok) {
             const errorData = await response.json();
             throw new Error('ERROR FETCH DELETE POST',response.status,errorData?.message)
         }
+        console.log('this is data: ')
         const data = await response.json();
         return data;
     } catch (error) {
