@@ -69,14 +69,14 @@ function Admin() {
             <TabsTrigger className="flex-1" value="create">
               Create Post
             </TabsTrigger>
-            {/* 
+            
             <TabsTrigger
               disabled={!selectedPost}
               className="flex-1"
               value="edit"
             >
               Edit Post
-            </TabsTrigger> */}
+            </TabsTrigger>
           </TabsList>
           <PostsTableTab
             // setSortValue={setSortValue}
@@ -99,17 +99,17 @@ function Admin() {
               switchTab={() => setActiveTab("posts")}
             />
           </CreatePostTab>
-          {/* <EditPostTab selectedPost={setSelectedPost}>
+          <EditPostTab selectedPost={setSelectedPost}>
             {selectedPost && (
-              // <EditPost
-              //   post={selectedPost}
-              //   setPosts={setPosts}
-              //   setActiveTab={setActiveTab}
-              //   setSelectedPost={setSelectedPost}
-              //   setUser={setUser}
-              // />
+              <EditPost
+                post={selectedPost}
+                setPosts={setPosts}
+                setActiveTab={setActiveTab}
+                setSelectedPost={setSelectedPost}
+                setUser={setUser}
+              />
             )}
-          </EditPostTab> */}
+          </EditPostTab>
         </Tabs>
       </main>
     </>
