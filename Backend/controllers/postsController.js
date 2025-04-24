@@ -36,9 +36,9 @@ const postsController = {
     editPost: async(req,res)=>{
         try {
             const {userId} = req.user;
-            const {post_id} = req.params;
-            const {content,title,published} = req.body;
-            const editedPost = await dbClient.editPost(post_id,title,content,published,userId)
+            const {postId} = req.params;
+            const {content,title,isPublished,imageUrl} = req.body;
+            const editedPost = await dbClient.editPost(postId,title,content,isPublished,imageUrl,userId)
             res.json(editedPost)
         } catch (error) {
             res.status(500).json({message: 'ERROR EDITING POST ROUTE'})

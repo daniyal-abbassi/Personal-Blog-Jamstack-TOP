@@ -70,8 +70,10 @@ export const deletePost = async(postId) => {
 }
 //EDIT POST API
 
-export const editPost = async(post_id,postData) => {
+export const editPost = async(postData) => {
     try {
+        
+        const {post_id} = postData;
         const response = await fetch(`${API_BASE_URL}/posts/edit/${post_id}`,{
             method: 'PUT',
             headers: {
@@ -85,9 +87,12 @@ export const editPost = async(post_id,postData) => {
             throw new Error('ERROR FETCH EDITING POST', response.status, errorData?.message);
         }
         const data = await response.json();
+        console.log('editpost api: data is:  ',data)
         return data;
     } catch (error) {
         console.error('ERROR EDIT POST', error);
         throw error;
     }
 }
+
+//HANDLE isPublished post state

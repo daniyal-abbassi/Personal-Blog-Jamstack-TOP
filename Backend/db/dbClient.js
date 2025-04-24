@@ -86,11 +86,14 @@ const dbClient = {
             throw error
         }
     },
-    editPost: async(post_id,title,content,isPublished,imageUrl,user_id) => {
+    editPost: async(post_id,title,content,isPublished,imageUrl,userId) => {
+        const parsedPostId = parseInt(post_id);
+        const parsedUserId = parseInt(userId);
         try {
             const editedPost = await prisma.post.update({
                 where: {
-                    post_id
+                    post_id: parsedPostId,
+                    author_id: parsedUserId
                 },
                 data: {
                     title,

@@ -51,15 +51,17 @@ import {
       }
     } //delete post function
   
-    //switch the published state of post function
-    //NEED TO HANDLE API CALL editPost
+    //CHANGE IS PUBLISHED STATUS OF POST FUNCTION
     async function handleSwitch(post) {
       try {
         const data = await editPost({ ...post, isPublished: !post.isPublished });
+        //find post index
         const postIndex = posts.findIndex((post) => post.post_id === data.post_id);
+        //create a copy of posts
         const postCopy = [...posts];
-  
+        //re-placed old post with new edited isPublished post
         postCopy[postIndex] = data;
+        //re-arrange the posts with new post
         setPosts(postCopy);
   
         if (data.isPublished) {
