@@ -1,4 +1,4 @@
-// import * as React from 'react';
+// RENDER POSTS COMPONENT
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -19,6 +19,7 @@ import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
 import { useState } from 'react';
 
+//ISOLATE STYLINGS OF COMPONENTS  
 const cardData = [
   {
     img: 'https://picsum.photos/800/450?random=1',
@@ -176,6 +177,7 @@ export function Search() {
   );
 }
 
+//MAIN COMPONENT
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
 
@@ -199,6 +201,7 @@ export default function MainContent() {
         </Typography>
         <Typography>Stay in the loop with the latest about our products</Typography>
       </div>
+      {/* SEARCH BOX */}
       <Box
         sx={{
           display: { xs: 'flex', sm: 'none' },
@@ -213,6 +216,8 @@ export default function MainContent() {
           <RssFeedRoundedIcon />
         </IconButton>
       </Box>
+
+      {/* TAGS BOX */}
       <Box
         sx={{
           display: 'flex',
@@ -285,8 +290,12 @@ export default function MainContent() {
           </IconButton>
         </Box>
       </Box>
+      
+      {/* POSTS GRID */}
       <Grid container spacing={2} columns={12}>
+        {/* TOP-LEFT POST */}
         <Grid size={{ xs: 12, md: 6 }}>
+          {/* A SINGLE POST-CARD */}
           <SyledCard
             variant="outlined"
             onFocus={() => handleFocus(0)}
@@ -294,6 +303,7 @@ export default function MainContent() {
             tabIndex={0}
             className={focusedCardIndex === 0 ? 'Mui-focused' : ''}
           >
+            {/* POST-IMAGE */}
             <CardMedia
               component="img"
               alt="green iguana"
@@ -304,6 +314,7 @@ export default function MainContent() {
                 borderColor: 'divider',
               }}
             />
+            {/* POST-TEXTS */}
             <SyledCardContent>
               <Typography gutterBottom variant="caption" component="div">
                 {cardData[0].tag}
@@ -318,6 +329,8 @@ export default function MainContent() {
             <Author authors={cardData[0].authors} />
           </SyledCard>
         </Grid>
+
+          {/* TOP-RIGHT POST */}
         <Grid size={{ xs: 12, md: 6 }}>
           <SyledCard
             variant="outlined"
@@ -350,6 +363,7 @@ export default function MainContent() {
             <Author authors={cardData[1].authors} />
           </SyledCard>
         </Grid>
+
         <Grid size={{ xs: 12, md: 4 }}>
           <SyledCard
             variant="outlined"
@@ -382,10 +396,14 @@ export default function MainContent() {
             <Author authors={cardData[2].authors} />
           </SyledCard>
         </Grid>
+        
+          {/* TWO-POSTS-MIDDLE-WITHOUT-IMAGE */}
         <Grid size={{ xs: 12, md: 4 }}>
+          
           <Box
             sx={{ display: 'flex', flexDirection: 'column', gap: 2, height: '100%' }}
           >
+            {/* ABOVE-POST */}
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(3)}
@@ -420,6 +438,8 @@ export default function MainContent() {
               </SyledCardContent>
               <Author authors={cardData[3].authors} />
             </SyledCard>
+
+            {/* BELOW-POST */}
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(4)}
@@ -454,8 +474,11 @@ export default function MainContent() {
               </SyledCardContent>
               <Author authors={cardData[4].authors} />
             </SyledCard>
+
           </Box>
         </Grid>
+
+            {/* LAST-POST */}
         <Grid size={{ xs: 12, md: 4 }}>
           <SyledCard
             variant="outlined"
@@ -488,7 +511,10 @@ export default function MainContent() {
             <Author authors={cardData[5].authors} />
           </SyledCard>
         </Grid>
+
       </Grid>
+
+      {/* PAGINATION SECTION */}
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
         <Pagination hidePrevButton hideNextButton count={10} boundaryCount={10} />
       </Box>
