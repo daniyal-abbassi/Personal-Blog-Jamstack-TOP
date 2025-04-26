@@ -2,11 +2,13 @@ const {Router} = require('express');
 const verifyToken = require('../middleware/verifyRoute');
 const postsRouter = Router();
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 const postsController = require('../controllers/postsController');
 
+const upload = multer({storage: multer.memoryStorage()});
 postsRouter.get('/',postsController.showPosts)
 
-postsRouter.post('/create',verifyToken,postsController.createPost)
+postsRouter.post('/create',upload.single('file'),verifyToken,postsController.createPost)
 postsRouter.put('/edit/:postId',verifyToken,postsController.editPost)
 postsRouter.delete('/:postId',verifyToken,postsController.deletePost)
 
