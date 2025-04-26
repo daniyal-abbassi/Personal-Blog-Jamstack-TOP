@@ -1,4 +1,5 @@
 const dbClient = require('../db/dbClient');
+const cloudinary = require('../utils/cloudinaryConfig');
 
 const postsController = {
     showPosts: async(req,res)=>{
@@ -11,11 +12,24 @@ const postsController = {
         }
     },
     createPost: async(req,res)=>{
-        const {title,content,isPublished,imageUrl} = req.body;
+        const {title,content,isPublished} = req.body;
         const {userId} = req.user;
         try {
-            const post = await dbClient.createPost(title,content,isPublished,imageUrl,userId);
-            res.status(201).json({post})
+            //upload to cloudinary
+            const result = await cloudinary.uploader.upload_stream(
+                //type of file
+                {resource_type: "auto"},
+                //callback 
+                async(error,result) => {
+                    if(error) {
+                        return res.status(500).send('Failed to Upload file to clouds.')
+                    }
+                    const {url,public_id} = result;
+                    const post = await dbClient.createPost(title,content,isPublished,url,public_id,userId);
+
+                    res.status(201).json({post})
+                }
+            ).end(req.file.buffer)
            
         } catch (error) {
             res.status(500).json({message: 'error in creating  post!!!'})
