@@ -18,7 +18,7 @@ import { styled } from '@mui/material/styles';
 import SearchRoundedIcon from '@mui/icons-material/SearchRounded';
 import RssFeedRoundedIcon from '@mui/icons-material/RssFeedRounded';
 import { useState } from 'react';
-
+import usePosts from '../hooks/usePosts'
 //ISOLATE STYLINGS OF COMPONENTS  
 const cardData = [
   {
@@ -179,6 +179,9 @@ export function Search() {
 
 //MAIN COMPONENT
 export default function MainContent() {
+  //posts test section
+  const {postsLoading,posts,setPosts} = usePosts();
+  console.log('posts are: ',posts)
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
 
   const handleFocus = (index) => {
@@ -396,7 +399,7 @@ export default function MainContent() {
             <Author authors={cardData[2].authors} />
           </SyledCard>
         </Grid>
-        
+
           {/* TWO-POSTS-MIDDLE-WITHOUT-IMAGE */}
         <Grid size={{ xs: 12, md: 4 }}>
           

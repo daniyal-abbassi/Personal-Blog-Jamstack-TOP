@@ -16,6 +16,7 @@ export const getPosts = async(queries = '') => {
             throw new Error('ERROR TO FETCH POSTS',response.status)
         }
         const data = await response.json();
+        console.log('posts.js api, data is: ',data)
         return data;
     } catch (error) {
         console.error('ERROR FETCH POSTS',error);

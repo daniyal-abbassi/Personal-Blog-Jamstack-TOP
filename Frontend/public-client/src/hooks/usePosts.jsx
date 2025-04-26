@@ -11,7 +11,7 @@ const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
     order,
     search,
   }).toString();
-
+  
   useEffect(() => {
     const fetchPosts = async () => {
       try {
@@ -25,7 +25,6 @@ const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
       }
     };
     fetchPosts();
-
   }, [queries]);
 
   return { postsLoading, error, posts, setPosts };
