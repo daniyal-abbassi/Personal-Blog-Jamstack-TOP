@@ -1,4 +1,4 @@
-import CommentList from "./CommentList";
+// import CommentList from "./CommentList";
 import ThumbnailPreview from "./ThumbnailPreview";
 import TinyEditor from "../Editor";
 import fileToBase64 from "../../../utils/fileToBase64";
@@ -24,12 +24,12 @@ import PropTypes from "prop-types";
 //should adjust the api for reletad stuff
 import { editPost } from "../../../api/posts";
 // comments api and hook
-import { deleteComment } from "../../../api/comments";
-import useComments from "../../../hooks/useComments";
+// import { deleteComment } from "../../../api/comments";
+// import useComments from "../../../hooks/useComments";
 
 function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
   const [loading, setLoading] = useState(false);
-  const { comments, setComments } = useComments(post.id);
+  // const { comments, setComments } = useComments(post.id);
   const [thumbnailUrl, setThumbnailUrl] = useState(post.imageUrl);
   const { toast } = useToast();
 
@@ -45,8 +45,8 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
   async function onSubmit(values) {
     try {
       setLoading(true);
-      const data = await editPost({ id: post.id, ...values });
-      setPosts((posts) => [data, ...posts.filter((p) => p.id !== data.id)]);
+      const data = await editPost({ post_id: post.post_id, ...values });
+      setPosts((posts) => [data, ...posts.filter((p) => p.post_id !== data.post_id)]);
 
       toast({
         title: "Successfully edited post!",
@@ -65,19 +65,19 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
     }
   }
 
-  async function handleDeleteComment(id) {
-    try {
-      const data = await deleteComment(post.id, id);
-      setComments(comments.filter((comment) => comment.id !== data.id));
+  // async function handleDeleteComment(id) {
+  //   try {
+  //     const data = await deleteComment(post.id, id);
+  //     setComments(comments.filter((comment) => comment.id !== data.id));
 
-      toast({
-        title: "Comment successfully deleted!",
-        description: `Username: ${data.username}`,
-      });
-    } catch (err) {
-      console.error("Error deleting post: ", err.message);
-    }
-  }
+  //     toast({
+  //       title: "Comment successfully deleted!",
+  //       description: `Username: ${data.username}`,
+  //     });
+  //   } catch (err) {
+  //     console.error("Error deleting post: ", err.message);
+  //   }
+  // }
 
   return (
     <Form {...form}>
@@ -110,7 +110,7 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
         />
         <FormField
           control={form.control}
-          name="file"
+          name="imageUrl"
           render={() => (
             <FormItem>
               <FormLabel>Thumbnail</FormLabel>
@@ -153,12 +153,12 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
             </FormItem>
           )}
         />
-        {comments && (
+        {/* {comments && (
           <CommentList
             comments={comments}
             handleDeleteComment={handleDeleteComment}
           />
-        )}
+        )} */}
         <div className="flex items-center space-x-3">
           <Button type="submit" className="flex-1">
             {loading ? <Loader2 className="animate-spin" /> : "Submit"}
