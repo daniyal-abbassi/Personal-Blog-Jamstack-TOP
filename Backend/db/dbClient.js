@@ -45,12 +45,26 @@ const dbClient = {
     //POSTS
     showPosts: async()=>{
         try {
-            const posts = await prisma.post.findMany();
+            const posts = await prisma.post.findMany({include:{author}});
             console.log('dbClient showPosts posts are: ',posts)
             return posts;
         } catch (error) {
             console.error('ERROR GETTING ALL POSTS: ',error)
             throw error
+        }
+    },
+    getPost: async(postId)=>{
+        const parsedPostId = parseInt(postId);
+        try {
+            const post = await prisma.post.findUnique({
+                where: {
+                    post_id: parsedPostId
+                }
+            })
+            return post;
+        } catch (error) {
+            console.error('ERROR FINDING POST',error);
+            throw error;
         }
     },
     createPost: async(title,content,isPublished,url,coudinaryId,author_id) => {
@@ -89,7 +103,7 @@ const dbClient = {
             throw error
         }
     },
-    editPost: async(post_id,title,content,isPublished,imageUrl,userId) => {
+    editPostWithFile: async(post_id,title,content,isPublished,url,coudinaryId,userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
         try {
@@ -102,7 +116,29 @@ const dbClient = {
                     title,
                     content,
                     isPublished,
-                    imageUrl
+                    url,
+                    coudinaryId
+                }
+            })
+            return editedPost
+        } catch (error) {
+            console.error('ERROR UPDATING POST: ',error)
+            throw error
+        }
+    },
+    editPostWithOutFile: async(post_id,title,content,isPublished,userId) => {
+        const parsedPostId = parseInt(post_id);
+        const parsedUserId = parseInt(userId);
+        try {
+            const editedPost = await prisma.post.update({
+                where: {
+                    post_id: parsedPostId,
+                    author_id: parsedUserId
+                },
+                data: {
+                    title,
+                    content,
+                    isPublished,
                 }
             })
             return editedPost

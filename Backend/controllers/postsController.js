@@ -5,7 +5,6 @@ const postsController = {
     showPosts: async(req,res)=>{
         try {
             const posts = await dbClient.showPosts();
-            console.log('postsController showPosts controller returnin posts are: ',posts)
             res.json(posts)
         } catch (error) {
             res.status(500).json({message: 'ERROR IN GETTING POSTS ROUTE'})
@@ -54,9 +53,24 @@ const postsController = {
         try {
             const {userId} = req.user;
             const {postId} = req.params;
-            const {content,title,isPublished,imageUrl} = req.body;
-            const editedPost = await dbClient.editPost(postId,title,content,isPublished,imageUrl,userId)
-            res.json(editedPost)
+            const {content,title,isPublished} = req.body;
+            const {file} = req;
+            //if no file was edited
+            if(!file) {
+                const editedPost = await dbClient.editPostWithOutFile(postId,title,content,isPublished,userId);
+                res.json(editedPost)
+            }
+            //if new image uploaded
+            await cloudinary.uploader.upload(file.path,async(err,result)=>{
+                if(err) {
+                    return res.status(500).send('Failed to upload to cloud.')
+                }
+                //delete previous image
+                const previousPost = await dbClient.getPost(postId);
+                cloudinary.uploader.destroy(previousPost.coudinaryId);
+                const editedPost = await dbClient.editPostWithFile(postId,title,content,result.url,result.public_id,isPublished,userId);
+                res.json(editedPost);
+            })
         } catch (error) {
             res.status(500).json({message: 'ERROR EDITING POST ROUTE'})
         }
