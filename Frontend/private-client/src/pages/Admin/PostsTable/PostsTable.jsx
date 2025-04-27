@@ -101,9 +101,9 @@ import {
                 <TableCell>
                   <img
                     className="rounded-sm"
-                    src={post.imageUrl}
+                    src={post.url}
                     alt="image"
-                    width={30}
+                    width={45}
                   />
                 </TableCell>
                 <TableCell>{post.title}</TableCell>
