@@ -2,7 +2,7 @@ const {Router} = require('express');
 const verifyToken = require('../middleware/verifyRoute');
 const postsRouter = Router();
 const jwt = require('jsonwebtoken');
-const multer = require('multer');
+const upload = require('../middleware/multerConfig');
 const postsController = require('../controllers/postsController');
 
 const upload = multer({storage: multer.memoryStorage()});
