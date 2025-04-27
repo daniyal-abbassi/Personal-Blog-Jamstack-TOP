@@ -45,7 +45,16 @@ const dbClient = {
     //POSTS
     showPosts: async()=>{
         try {
-            const posts = await prisma.post.findMany({include:{author}});
+            const posts = await prisma.post.findMany({
+            include: {
+                author: {
+                    select: {
+                        username: true,
+                    }
+                }
+
+            }    
+            });
             console.log('dbClient showPosts posts are: ',posts)
             return posts;
         } catch (error) {
