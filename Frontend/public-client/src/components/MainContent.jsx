@@ -17,9 +17,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
-import { use, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
-import {useParams, useSearchParams} from "react-router-dom";
+import {useSearchParams} from "react-router-dom";
 //ISOLATE STYLINGS OF COMPONENTS
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",

@@ -1,4 +1,3 @@
-// import * as React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
@@ -9,6 +8,7 @@ import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import NavigateNextRoundedIcon from '@mui/icons-material/NavigateNextRounded';
 import { useState } from 'react';
+import usePosts from '../hooks/usePosts';
 
 const articleInfo = [
   {
@@ -152,17 +152,16 @@ function Author({ authors }) {
         sx={{ display: 'flex', flexDirection: 'row', gap: 1, alignItems: 'center' }}
       >
         <AvatarGroup max={3}>
-          {authors.map((author, index) => (
+         
             <Avatar
-              key={index}
-              alt={author.name}
-              src={author.avatar}
+              alt='Lain'
+              src='Lain'
               sx={{ width: 24, height: 24 }}
             />
-          ))}
+          
         </AvatarGroup>
         <Typography variant="caption">
-          {authors.map((author) => author.name).join(', ')}
+          Lain
         </Typography>
       </Box>
       <Typography variant="caption">July 14, 2021</Typography>
@@ -181,6 +180,28 @@ Author.propTypes = {
 
 export default function Latest() {
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
+  const { postsLoading, error, posts, setPosts } = usePosts();
+  if (postsLoading) {
+    return (
+      <Typography variant="h1" color="warning">
+        Loading Posts...
+      </Typography>
+    );
+  }
+  if (error) {
+    return (
+      <Typography color="error" variant="h2">
+        Error while trying to read posts.
+      </Typography>
+    );
+  }
+  if (!posts && posts.length === 0) {
+    return (
+      <Typography color="primary" variant="h4">
+        There is no post availble at the moment.
+      </Typography>
+    );
+  }
 
   const handleFocus = (index) => {
     setFocusedCardIndex(index);
@@ -196,7 +217,7 @@ export default function Latest() {
         Latest
       </Typography>
       <Grid container spacing={8} columns={12} sx={{ my: 4 }}>
-        {articleInfo.map((article, index) => (
+        {posts && posts.map((article, index) => (
           <Grid key={index} size={{ xs: 12, sm: 6 }}>
             <Box
               sx={{
@@ -208,7 +229,7 @@ export default function Latest() {
               }}
             >
               <Typography gutterBottom variant="caption" component="div">
-                {article.tag}
+                {article.title}
               </Typography>
               <TitleTypography
                 gutterBottom
@@ -225,16 +246,16 @@ export default function Latest() {
                 />
               </TitleTypography>
               <StyledTypography variant="body2" color="text.secondary" gutterBottom>
-                {article.description}
+                {article.content}
               </StyledTypography>
 
-              <Author authors={article.authors} />
+              <Author authors={article.author.username} />
             </Box>
           </Grid>
         ))}
       </Grid>
       <Box sx={{ display: 'flex', flexDirection: 'row', pt: 4 }}>
-        <Pagination hidePrevButton hideNextButton count={10} boundaryCount={10} />
+        <Pagination   count={10} boundaryCount={10} />
       </Box>
     </div>
   );
