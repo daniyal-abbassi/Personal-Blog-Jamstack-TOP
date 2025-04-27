@@ -106,6 +106,8 @@ const dbClient = {
     editPostWithFile: async(post_id,title,content,isPublished,url,coudinaryId,userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
+        if(isPublished==="true") isPublished=true
+        else isPublished=false
         try {
             const editedPost = await prisma.post.update({
                 where: {
@@ -129,6 +131,8 @@ const dbClient = {
     editPostWithOutFile: async(post_id,title,content,isPublished,userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
+        if(isPublished==="true") isPublished=true
+        else isPublished=false
         try {
             const editedPost = await prisma.post.update({
                 where: {
