@@ -54,6 +54,8 @@ const dbClient = {
         }
     },
     createPost: async(title,content,isPublished,url,coudinaryId,author_id) => {
+        if(isPublished==="true") isPublished=true
+        else isPublished=false
         try {
             const post = await prisma.post.create({
                 data: {

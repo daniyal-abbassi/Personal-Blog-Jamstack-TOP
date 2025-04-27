@@ -91,7 +91,7 @@ function CreatePostForm({ setPosts, switchTab }) {
         />
         <FormField
           control={form.control}
-          name="imageUrl"
+          name="file"
           render={() => (
             <FormItem>
               <FormLabel>Thumbnail</FormLabel>

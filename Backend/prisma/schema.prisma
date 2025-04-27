@@ -28,7 +28,7 @@ model Post {
   updated_at DateTime @updatedAt
   isPublished Boolean @default(false)
   url String?
-  coudinaryId Int?
+  coudinaryId String?
   author_id Int
   author User @relation(fields: [author_id],references: [user_id])
   comments Comment[]

@@ -14,11 +14,12 @@ const postsController = {
     createPost: async(req,res)=>{
         const {title,content,isPublished} = req.body;
         const {userId} = req.user;
+        const {file} = req;
+       
         try {
             //upload to cloudinary
-            const result = await cloudinary.uploader.upload_stream(
-                //type of file
-                {resource_type: "auto"},
+            const result = await cloudinary.uploader.upload(file.path,
+                
                 //callback 
                 async(error,result) => {
                     if(error) {
@@ -30,10 +31,11 @@ const postsController = {
                     console.log('this is result coudinary: j',result)
                     res.status(201).json({post})
                 }
-            ).end(req.file.buffer)
+            )
            
         } catch (error) {
-            res.status(500).json({message: 'error in creating  post!!!'})
+            res.status(500).json({message: 'error in creating  post!!!'});
+            console.error('Error creating post: ',error)
         }
     },
     deletePost: async(req,res)=>{

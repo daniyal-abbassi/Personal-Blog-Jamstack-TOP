@@ -5,7 +5,6 @@ const jwt = require('jsonwebtoken');
 const upload = require('../middleware/multerConfig');
 const postsController = require('../controllers/postsController');
 
-const upload = multer({storage: multer.memoryStorage()});
 postsRouter.get('/',postsController.showPosts)
 
 postsRouter.post('/create',upload.single('file'),verifyToken,postsController.createPost)
