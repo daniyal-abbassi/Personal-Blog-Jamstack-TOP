@@ -12,8 +12,8 @@ const userRouter = require('./routers/userRouter');
 app.use(cookieParser())
 
 app.use(express.static('public'))
-app.use(express.urlencoded({extended: true}))
-app.use(express.json())
+app.use(express.urlencoded({limit: '50mb',extended: true}))
+app.use(express.json({limit: '50mb'}))
 
 const corsOptions = {
     origin: ['http://localhost:5173','http://localhost:5174'],
