@@ -24,9 +24,7 @@ export const getPosts = async(queries = '') => {
 }
 //CREATE POST API
 export const createPost = async(postData)=>{
-    console.log('here are posts data in api: ',postData)
     const {title,content,isPublished,file} = postData;
-    console.log('again formData will be: j',title,content,isPublished,file)
     const formData = new FormData();
     formData.append("title",title);
     formData.append("content",content);
@@ -35,9 +33,6 @@ export const createPost = async(postData)=>{
     try {
         const response = await fetch(`${API_BASE_URL}/posts/create`,{
             method: 'POST',
-            // headers: {
-            //     'Content-Type': 'application/json',
-            // },
             body: formData,
             credentials: 'include'
         })
@@ -78,15 +73,18 @@ export const deletePost = async(postId) => {
 //EDIT POST API
 
 export const editPost = async(postData) => {
+    const {title,content,isPublished,file} = postData;
+    const formData = new FormData();
+    formData.append("title",title);
+    formData.append("content",content);
+    formData.append("file",file[0]);
+    formData.append("isPublished",isPublished ? "true" : "false");
     try {
-        
         const {post_id} = postData;
         const response = await fetch(`${API_BASE_URL}/posts/edit/${post_id}`,{
             method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData),
+            
+            body: formData,
             credentials: 'include'
         })
         if (!response.ok) {
@@ -94,7 +92,6 @@ export const editPost = async(postData) => {
             throw new Error('ERROR FETCH EDITING POST', response.status, errorData?.message);
         }
         const data = await response.json();
-        console.log('editpost api: data is:  ',data)
         return data;
     } catch (error) {
         console.error('ERROR EDIT POST', error);
