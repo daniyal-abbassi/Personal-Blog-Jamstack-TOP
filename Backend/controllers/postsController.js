@@ -26,7 +26,8 @@ const postsController = {
                     }
                     const {url,public_id} = result;
                     const post = await dbClient.createPost(title,content,isPublished,url,public_id,userId);
-
+                    //test
+                    console.log('this is result coudinary: j',result)
                     res.status(201).json({post})
                 }
             ).end(req.file.buffer)

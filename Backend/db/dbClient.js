@@ -53,14 +53,15 @@ const dbClient = {
             throw error
         }
     },
-    createPost: async(title,content,isPublished,imageUrl,author_id) => {
+    createPost: async(title,content,isPublished,url,coudinaryId,author_id) => {
         try {
             const post = await prisma.post.create({
                 data: {
                     title,
                     content,
                     isPublished,
-                    imageUrl,
+                    url,
+                    coudinaryId,
                     author_id
                 }
             })
