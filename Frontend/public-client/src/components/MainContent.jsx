@@ -19,64 +19,8 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
 import { use, useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
+import {useParams, useSearchParams} from "react-router-dom";
 //ISOLATE STYLINGS OF COMPONENTS
-const cardData = [
-  {
-    img: "https://picsum.photos/800/450?random=1",
-    tag: "Engineering",
-    title: "Revolutionizing software development with cutting-edge tools",
-    description:
-      "Our latest engineering tools are designed to streamline workflows and boost productivity. Discover how these innovations are transforming the software development landscape.",
-    authors: [
-      { name: "Remy Sharp", avatar: "/static/images/avatar/1.jpg" },
-      { name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=2",
-    tag: "Product",
-    title: "Innovative product features that drive success",
-    description:
-      "Explore the key features of our latest product release that are helping businesses achieve their goals. From user-friendly interfaces to robust functionality, learn why our product stands out.",
-    authors: [{ name: "Erica Johns", avatar: "/static/images/avatar/6.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=3",
-    tag: "Design",
-    title: "Designing for the future: trends and insights",
-    description:
-      "Stay ahead of the curve with the latest design trends and insights. Our design team shares their expertise on creating intuitive and visually stunning user experiences.",
-    authors: [{ name: "Kate Morrison", avatar: "/static/images/avatar/7.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=4",
-    tag: "Company",
-    title: "Our company's journey: milestones and achievements",
-    description:
-      "Take a look at our company's journey and the milestones we've achieved along the way. From humble beginnings to industry leader, discover our story of growth and success.",
-    authors: [{ name: "Cindy Baker", avatar: "/static/images/avatar/3.jpg" }],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=45",
-    tag: "Engineering",
-    title: "Pioneering sustainable engineering solutions",
-    description:
-      "Learn about our commitment to sustainability and the innovative engineering solutions we're implementing to create a greener future. Discover the impact of our eco-friendly initiatives.",
-    authors: [
-      { name: "Agnes Walker", avatar: "/static/images/avatar/4.jpg" },
-      { name: "Trevor Henderson", avatar: "/static/images/avatar/5.jpg" },
-    ],
-  },
-  {
-    img: "https://picsum.photos/800/450?random=6",
-    tag: "Product",
-    title: "Maximizing efficiency with our latest product updates",
-    description:
-      "Our recent product updates are designed to help you maximize efficiency and achieve more. Get a detailed overview of the new features and improvements that can elevate your workflow.",
-    authors: [{ name: "Travis Howard", avatar: "/static/images/avatar/2.jpg" }],
-  },
-];
-
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -172,13 +116,41 @@ export function Search() {
     </FormControl>
   );
 }
-
+//posts per page
+const POSTS_PER_PAGE = 6;
 //MAIN COMPONENT
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
   //posts test section
   const { postsLoading, error, posts, setPosts } = usePosts();
+  const [searchParams,setSearchParams] = useSearchParams();
+  const [currentPage,setCurrentPage ] = useState(1);
 
+  //useEffent for rendering when page changes
+  useEffect(()=>{
+    const pageParam = searchParams.get('page');
+    if(pageParam) {
+      const parsedPage = parseInt(pageParam,10);
+      if(!isNaN(parsedPage) && parsedPage > 0) {
+        setCurrentPage(parsedPage)
+      } else {
+        setCurrentPage(1)
+      }
+    } else {
+      setCurrentPage(1)
+    }
+  },[searchParams])
+
+  const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
+  const endIndex = startIndex + POSTS_PER_PAGE;
+  const displayedPosts = posts ? posts.slice(startIndex,endIndex) : [];
+  const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 1;
+  // console.log('didplaedposts : ',displayedPosts)
+  const hadnlePageChange = (event,newPage) => {
+    setCurrentPage(newPage);
+    searchParams.set('page',newPage.toString());
+    setSearchParams(searchParams)
+  }
   if (postsLoading) {
     return (
       <Typography variant="h1" color="warning">
@@ -318,7 +290,7 @@ export default function MainContent() {
         {/* TOP-LEFT POST */}
         <Grid size={{ xs: 12, md: 6 }}>
           {/* A SINGLE POST-CARD */}
-          {posts[0] && (
+          {displayedPosts[0] && (
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(0)}
@@ -330,7 +302,7 @@ export default function MainContent() {
               <CardMedia
                 component="img"
                 alt="green iguana"
-                image={posts[0].url}
+                image={displayedPosts[0].url}
                 sx={{
                   aspectRatio: "16 / 9",
                   borderBottom: "1px solid",
@@ -340,27 +312,27 @@ export default function MainContent() {
               {/* POST-TEXTS */}
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {posts[0].title}
+                  {displayedPosts[0].title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
-                  {posts[0].title}
+                  {displayedPosts[0].title}
                 </Typography>
                 <StyledTypography
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
                 >
-                  {posts[0].content}
+                  {displayedPosts[0].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={posts[0].author.username} />
+              <Author authors={displayedPosts[0].author.username} />
             </SyledCard>
           )}
         </Grid>
 
         {/* TOP-RIGHT POST */}
         <Grid size={{ xs: 12, md: 6 }}>
-          {posts[1] && (
+          {displayedPosts[1] && (
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(1)}
@@ -371,7 +343,7 @@ export default function MainContent() {
               <CardMedia
                 component="img"
                 alt="green iguana"
-                image={posts[1].url}
+                image={displayedPosts[1].url}
                 aspect-ratio="16 / 9"
                 sx={{
                   borderBottom: "1px solid",
@@ -380,26 +352,26 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {posts[1].title}
+                  {displayedPosts[1].title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
-                  {posts[1].title}
+                  {displayedPosts[1].title}
                 </Typography>
                 <StyledTypography
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
                 >
-                  {posts[1].content}
+                  {displayedPosts[1].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={posts[1].author.username} />
+              <Author authors={displayedPosts[1].author.username} />
             </SyledCard>
           )}
         </Grid>
 
         <Grid size={{ xs: 12, md: 4 }}>
-          {posts[2] && (
+          {displayedPosts[2] && (
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(2)}
@@ -411,7 +383,7 @@ export default function MainContent() {
               <CardMedia
                 component="img"
                 alt="green iguana"
-                image={posts[2].url}
+                image={displayedPosts[2].url}
                 sx={{
                   height: { sm: "auto", md: "50%" },
                   aspectRatio: { sm: "16 / 9", md: "" },
@@ -419,27 +391,27 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {posts[2].title}
+                  {displayedPosts[2].title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
-                  {posts[2].title}
+                  {displayedPosts[2].title}
                 </Typography>
                 <StyledTypography
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
                 >
-                  {posts[2].content}
+                  {displayedPosts[2].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={posts[2].author.username} />
+              <Author authors={displayedPosts[2].author.username} />
             </SyledCard>
           )}
         </Grid>
 
         {/* TWO-POSTS-MIDDLE-WITHOUT-IMAGE */}
         <Grid size={{ xs: 12, md: 4 }}>
-          {posts[3] && posts[4] && (
+          {displayedPosts[3] && displayedPosts[4] && (
             <Box
               sx={{
                 display: "flex",
@@ -467,21 +439,21 @@ export default function MainContent() {
                 >
                   <div>
                     <Typography gutterBottom variant="caption" component="div">
-                      {posts[3].title}
+                      {displayedPosts[3].title}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="div">
-                      {posts[3].title}
+                      {displayedPosts[3].title}
                     </Typography>
                     <StyledTypography
                       variant="body2"
                       color="text.secondary"
                       gutterBottom
                     >
-                      {posts[3].content}
+                      {displayedPosts[3].content}
                     </StyledTypography>
                   </div>
                 </SyledCardContent>
-                <Author authors={posts[3].author.username} />
+                <Author authors={displayedPosts[3].author.username} />
               </SyledCard>
 
               {/* BELOW-POST */}
@@ -503,21 +475,21 @@ export default function MainContent() {
                 >
                   <div>
                     <Typography gutterBottom variant="caption" component="div">
-                      {posts[4].title}
+                      {displayedPosts[4].title}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="div">
-                      {posts[4].title}
+                      {displayedPosts[4].title}
                     </Typography>
                     <StyledTypography
                       variant="body2"
                       color="text.secondary"
                       gutterBottom
                     >
-                      {posts[4].content}
+                      {displayedPosts[4].content}
                     </StyledTypography>
                   </div>
                 </SyledCardContent>
-                <Author authors={posts[4].author.username} />
+                <Author authors={displayedPosts[4].author.username} />
               </SyledCard>
             </Box>
           )}
@@ -525,7 +497,7 @@ export default function MainContent() {
 
         {/* LAST-POST */}
         <Grid size={{ xs: 12, md: 4 }}>
-          {posts[5] && (
+          {displayedPosts[5] && (
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(5)}
@@ -537,7 +509,7 @@ export default function MainContent() {
               <CardMedia
                 component="img"
                 alt="green iguana"
-                image={posts[5].url}
+                image={displayedPosts[5].url}
                 sx={{
                   height: { sm: "auto", md: "50%" },
                   aspectRatio: { sm: "16 / 9", md: "" },
@@ -545,20 +517,20 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {posts[5].title}
+                  {displayedPosts[5].title}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
-                  {posts[5].title}
+                  {displayedPosts[5].title}
                 </Typography>
                 <StyledTypography
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
                 >
-                  {posts[5].content}
+                  {displayedPosts[5].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={posts[5].author.username} />
+              <Author authors={displayedPosts[5].author.username} />
             </SyledCard>
           )}
         </Grid>
@@ -569,8 +541,11 @@ export default function MainContent() {
         <Pagination
           hidePrevButton
           hideNextButton
-          count={10}
-          boundaryCount={10}
+          count={totalPages}
+          page={currentPage}
+          onChange={hadnlePageChange}
+          boundaryCount={2}
+          siblingCount={1}
         />
       </Box>
     </Box>
