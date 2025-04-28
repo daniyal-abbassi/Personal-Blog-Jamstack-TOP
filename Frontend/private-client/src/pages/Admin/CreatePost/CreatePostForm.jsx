@@ -69,7 +69,7 @@ function ComboboxPopover() {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button variant="outline" className="w-[150px] justify-start">
-            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Select a Tag</>}
           </Button>
         </PopoverTrigger>
         <PopoverContent className="p-0" side="right" align="start">
@@ -87,6 +87,7 @@ function ComboboxPopover() {
                         statuses.find((priority) => priority.value === value) ||
                           null
                       );
+                      form.setValue("tag", value)
                       setOpen(false);
                     }}
                   >
