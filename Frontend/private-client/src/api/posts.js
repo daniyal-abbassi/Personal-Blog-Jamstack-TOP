@@ -24,11 +24,12 @@ export const getPosts = async(queries = '') => {
 }
 //CREATE POST API
 export const createPost = async(postData)=>{
-    const {title,content,isPublished,file} = postData;
+    const {title,content,isPublished,file,tag} = postData;
     const formData = new FormData();
     formData.append("title",title);
     formData.append("content",content);
     formData.append("file",file[0]);
+    formData.append('tag',tag)
     formData.append("isPublished",isPublished ? "true" : "false");
     try {
         const response = await fetch(`${API_BASE_URL}/posts/create`,{

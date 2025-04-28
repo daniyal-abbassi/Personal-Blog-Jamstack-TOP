@@ -2,6 +2,10 @@ import * as z from "zod";
 import sanitizeField from "./sanitize";
 
 const postSchema = z.object({
+  tag: z
+    .string()
+    .min(2, "Tag must be at least 2 characters")
+    .transform(sanitizeField),
   title: z
     .string()
     .min(2, "Title must be at least 2 characters")
