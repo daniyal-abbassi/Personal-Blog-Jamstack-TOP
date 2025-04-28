@@ -44,7 +44,7 @@ export default function AppAppBar({ isAuth, setIsAuth }) {
     navigate("/");
   };
   const navigateToAdmin = () => {
-    window.location.href = 'http://localhost:5173/admin'; 
+    window.location.href = 'http://localhost:5174/admin'; 
   };
   return (
     <AppBar
@@ -64,34 +64,16 @@ export default function AppAppBar({ isAuth, setIsAuth }) {
           >
             {/* <Sitemark /> */}
             <Box sx={{ display: { xs: "none", md: "flex" } }}>
+              <Link to='https://github.com/daniyal-abbassi' target="_blank">  
               <Button variant="text" color="info" size="small">
-                Features
+                GitHub
               </Button>
+              </Link>
+              <Link to='https://mastodon.social/@LainShady' target="_blank">  
               <Button variant="text" color="info" size="small">
-                Testimonials
+                Mostodon
               </Button>
-              <Button variant="text" color="info" size="small">
-                Highlights
-              </Button>
-              <Button variant="text" color="info" size="small">
-                Pricing
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                sx={{ minWidth: 0 }}
-              >
-                FAQ
-              </Button>
-              <Button
-                variant="text"
-                color="info"
-                size="small"
-                sx={{ minWidth: 0 }}
-              >
-                Blog
-              </Button>
+              </Link>
             </Box>
           </Box>
           {/* conditional rendering if user is sign-in */}
