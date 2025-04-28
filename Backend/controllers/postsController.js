@@ -52,11 +52,11 @@ const postsController = {
         try {
             const {userId} = req.user;
             const {postId} = req.params;
-            const {content,title,isPublished} = req.body;
+            const {content,title,tag,isPublished} = req.body;
             const {file} = req;
             //if no file was edited
             if(!file) {
-                const editedPost = await dbClient.editPostWithOutFile(postId,title,content,isPublished,userId);
+                const editedPost = await dbClient.editPostWithOutFile(postId,title,tag,content,isPublished,userId);
                 res.json(editedPost)
             }
             //if new image uploaded
@@ -67,7 +67,7 @@ const postsController = {
                 //delete previous image
                 const previousPost = await dbClient.getPost(postId);
                 cloudinary.uploader.destroy(previousPost.coudinaryId);
-                const editedPost = await dbClient.editPostWithFile(postId,title,content,result.url,result.public_id,isPublished,userId);
+                const editedPost = await dbClient.editPostWithFile(postId,title,tag,content,result.url,result.public_id,isPublished,userId);
                 res.json(editedPost);
             })
         } catch (error) {
