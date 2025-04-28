@@ -17,9 +17,90 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../components/ui/form";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+
 import PropTypes from "prop-types";
 import { createPost } from "../../../api/posts";
 import { useState } from "react";
+
+//for test component
+const statuses = [
+  {
+    value: "backlog",
+    label: "Backlog",
+  },
+  {
+    value: "todo",
+    label: "Todo",
+  },
+  {
+    value: "in progress",
+    label: "In Progress",
+  },
+  {
+    value: "done",
+    label: "Done",
+  },
+  {
+    value: "canceled",
+    label: "Canceled",
+  },
+];
+//test combobox component
+function ComboboxPopover() {
+  const [open, setOpen] = useState(false);
+  const [selectedStatus, setSelectedStatus] = useState(null);
+
+  return (
+    <div className="flex items-center space-x-4">
+      <p className="text-sm text-muted-foreground">Tag</p>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger asChild>
+          <Button variant="outline" className="w-[150px] justify-start">
+            {selectedStatus ? <>{selectedStatus.label}</> : <>+ Set status</>}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="p-0" side="right" align="start">
+          <Command>
+            <CommandInput placeholder="Search Tag..." />
+            <CommandList>
+              <CommandEmpty>No results found.</CommandEmpty>
+              <CommandGroup>
+                {statuses.map((status) => (
+                  <CommandItem
+                    key={status.value}
+                    value={status.value}
+                    onSelect={(value) => {
+                      setSelectedStatus(
+                        statuses.find((priority) => priority.value === value) ||
+                          null
+                      );
+                      setOpen(false);
+                    }}
+                  >
+                    {status.label}
+                  </CommandItem>
+                ))}
+              </CommandGroup>
+            </CommandList>
+          </Command>
+        </PopoverContent>
+      </Popover>
+    </div>
+  );
+}
 
 function CreatePostForm({ setPosts, switchTab }) {
   const [loading, setLoading] = useState(false);
@@ -63,22 +144,22 @@ function CreatePostForm({ setPosts, switchTab }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-      <FormField
+        <FormField
           control={form.control}
           name="tag"
           render={({ field }) => (
             <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
               <FormControl>
-                <Checkbox
-                  checked={field.value}
-                  onCheckedChange={field.onChange}
+                <ComboboxPopover />
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Create a new tag..."
+                  type=""
+                  {...field}
+                  className="w-50"
                 />
               </FormControl>
-              <div className="space-y-1 leading-none">
-                <FormLabel>new tag</FormLabel>
-                <FormMessage />
-              </div>
-              
             </FormItem>
           )}
         />
