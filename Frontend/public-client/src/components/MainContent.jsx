@@ -192,7 +192,7 @@ export default function MainContent() {
           Blog
         </Typography>
         <Typography>
-          Stay in the loop with the latest about our products
+          personal place for my life
         </Typography>
       </div>
       {/* SEARCH BOX */}
