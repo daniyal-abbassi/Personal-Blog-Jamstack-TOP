@@ -58,52 +58,17 @@ const statuses = [
     label: "Book",
   },
 ];
-//test combobox component
+// //test combobox component
 // function ComboboxPopover() {
-//   const [open, setOpen] = useState(false);
-//   const [selectedStatus, setSelectedStatus] = useState(null);
 
 //   return (
-//     <div className="flex items-center space-x-4">
-//       <p className="text-sm text-muted-foreground">Tag</p>
-//       <Popover open={open} onOpenChange={setOpen}>
-//         <PopoverTrigger asChild>
-//           <Button variant="outline" className="w-[150px] justify-start">
-//             {selectedStatus ? <>{selectedStatus.label}</> : <>+ Select a Tag</>}
-//           </Button>
-//         </PopoverTrigger>
-//         <PopoverContent className="p-0" side="right" align="start">
-//           <Command>
-//             <CommandInput placeholder="Search Tag..." />
-//             <CommandList>
-//               <CommandEmpty>No results found.</CommandEmpty>
-//               <CommandGroup>
-//                 {statuses.map((status) => (
-//                   <CommandItem
-//                     key={status.value}
-//                     value={status.value}
-//                     onSelect={(value) => {
-//                       setSelectedStatus(
-//                         statuses.find((priority) => priority.value === value) ||
-//                           null
-//                       );
-//                       // form.setValue("tag", value)
-//                       setOpen(false);
-//                     }}
-//                   >
-//                     {status.label}
-//                   </CommandItem>
-//                 ))}
-//               </CommandGroup>
-//             </CommandList>
-//           </Command>
-//         </PopoverContent>
-//       </Popover>
-//     </div>
+
 //   );
 // }
 
 function CreatePostForm({ setPosts, switchTab }) {
+  const [open, setOpen] = useState(false);
+  const [selectedTag, setselectedTag] = useState(null);
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
@@ -123,7 +88,7 @@ function CreatePostForm({ setPosts, switchTab }) {
     try {
       setLoading(true);
       //api call for creating post
-      console.log('onSubmit values are: ',values)
+      console.log("onSubmit values are: ", values);
       const post = await createPost(values);
       //handle front-end posts array, add new created post to it
       setPosts((posts) => [post, ...posts]);
@@ -151,13 +116,70 @@ function CreatePostForm({ setPosts, switchTab }) {
           control={form.control}
           name="tag"
           render={({ field }) => (
-            <FormItem className="flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4">
-              <FormLabel>Tag</FormLabel>
+            <FormItem className="flex flex-row space-x-4 rounded-md border p-2">
+              <FormControl>
+                <div className="flex items-center space-x-4">
+                  <p className="text-sm text-muted-foreground">Tag</p>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-[150px] justify-start"
+                      >
+                        {selectedTag ? (
+                          <>{selectedTag.label}</>
+                        ) : (
+                          <>+ Select a Tag</>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0" side="right" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search Tag..." />
+                        {selectedTag && (
+                          <CommandItem
+                            onSelect={() => {
+                              setselectedTag(null);
+                              form.setValue("tag", ""); // Clear the form value as well
+                              setOpen(false);
+                            }}
+                          >
+                            Clear Tag
+                          </CommandItem>
+                        )}
+                        <CommandList>
+                          <CommandEmpty>No results found.</CommandEmpty>
+                          <CommandGroup>
+                            {statuses.map((status) => (
+                              <CommandItem
+                                key={status.value}
+                                value={status.value}
+                                onSelect={(value) => {
+                                  setselectedTag(
+                                    statuses.find(
+                                      (priority) => priority.value === value
+                                    ) || null
+                                  );
+                                  form.setValue("tag", value);
+                                  setOpen(false);
+                                }}
+                              >
+                                {status.label}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </FormControl>
               <FormControl>
                 <Input
                   placeholder="Create a new tag..."
                   type=""
                   className="w-50"
+                  disabled={!!selectedTag}
                   {...field}
                 />
               </FormControl>
