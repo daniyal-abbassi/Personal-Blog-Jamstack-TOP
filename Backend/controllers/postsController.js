@@ -11,7 +11,7 @@ const postsController = {
         }
     },
     createPost: async(req,res)=>{
-        const {title,content,isPublished} = req.body;
+        const {title,tag,content,isPublished} = req.body;
         const {userId} = req.user;
         const {file} = req;
        
@@ -25,9 +25,8 @@ const postsController = {
                         return res.status(500).send('Failed to Upload file to clouds.')
                     }
                     const {url,public_id} = result;
-                    const post = await dbClient.createPost(title,content,isPublished,url,public_id,userId);
+                    const post = await dbClient.createPost(title,tag,content,isPublished,url,public_id,userId);
                     //test
-                    console.log('this is result coudinary: j',result)
                     res.status(201).json({post})
                 }
             )
