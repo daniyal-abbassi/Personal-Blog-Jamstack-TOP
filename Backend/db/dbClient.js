@@ -43,6 +43,15 @@ const dbClient = {
         }
     },
     //TAG
+    getTags: async()=>{
+        try {
+            const tags = await prisma.tag.findMany();
+            return tags;
+        } catch (error) {
+            console.error(`ERROR GETTING TAGS: ${error}`)
+            throw error 
+        }
+    }
     createTag: async(tag)=>{
         try {
             const newTag = await prisma.tag.create({
