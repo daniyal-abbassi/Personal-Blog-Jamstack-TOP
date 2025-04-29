@@ -122,10 +122,10 @@ const POSTS_PER_PAGE = 6;
 export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
   //posts test section
-  const { postsLoading, error, posts, setPosts } = usePosts();
+  const { postsLoading, error, posts, setPosts, tags } = usePosts();
   const [searchParams,setSearchParams] = useSearchParams();
   const [currentPage,setCurrentPage ] = useState(1);
-
+  console.log(tags)
   //useEffent for rendering when page changes
   useEffect(()=>{
     const pageParam = searchParams.get('page');
