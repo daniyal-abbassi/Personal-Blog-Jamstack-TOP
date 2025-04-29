@@ -200,12 +200,12 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
         />
         <FormField
           control={form.control}
-          name="imageUrl"
+          name="file"
           render={() => (
             <FormItem>
               <FormLabel>Thumbnail</FormLabel>
               <div className="flex items-center">
-                <ThumbnailPreview imageUrl={thumbnailUrl} />
+                <ThumbnailPreview file={thumbnailUrl} />
                 <FormControl>
                   <Input
                     type="file"
@@ -213,8 +213,8 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
                       const files = e.target.files;
                       form.setValue("file", files);
 
-                      const imageUrl = await fileToBase64(files[0]);
-                      setThumbnailUrl(imageUrl);
+                      const file = await fileToBase64(files[0]);
+                      setThumbnailUrl(file);
                     }}
                   />
                 </FormControl>

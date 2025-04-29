@@ -52,15 +52,16 @@ const postsController = {
         try {
             const {userId} = req.user;
             const {postId} = req.params;
-            const {content,title,tag,isPublished} = req.body;
+            const {title,tag,content,isPublished} = req.body;
             const {file} = req;
             //if no file was edited
             if(!file) {
                 const editedPost = await dbClient.editPostWithOutFile(postId,title,tag,content,isPublished,userId);
                 res.json(editedPost)
-            }
-            //if new image uploaded
-            await cloudinary.uploader.upload(file.path,async(err,result)=>{
+            } else {
+
+                //if new image uploaded
+                await cloudinary.uploader.upload(file.path,async(err,result)=>{
                 if(err) {
                     return res.status(500).send('Failed to upload to cloud.')
                 }
@@ -70,7 +71,9 @@ const postsController = {
                 const editedPost = await dbClient.editPostWithFile(postId,title,tag,content,result.url,result.public_id,isPublished,userId);
                 res.json(editedPost);
             })
+        }
         } catch (error) {
+            console.log('in controller problem',error)
             res.status(500).json({message: 'ERROR EDITING POST ROUTE'})
         }
     },

@@ -74,17 +74,18 @@ export const deletePost = async(postId) => {
 //EDIT POST API
 
 export const editPost = async(postData) => {
-    const {title,content,isPublished,file} = postData;
+    console.log('edit api: ',postData)
+    
+    const {title,content,isPublished,file,tag,post_id} = postData;
     const formData = new FormData();
     formData.append("title",title);
     formData.append("content",content);
-    formData.append("file",file[0]);
+    formData.append("file",file ? file[0] : "");
+    formData.append('tag',tag)
     formData.append("isPublished",isPublished ? "true" : "false");
     try {
-        const {post_id} = postData;
         const response = await fetch(`${API_BASE_URL}/posts/edit/${post_id}`,{
             method: 'PUT',
-            
             body: formData,
             credentials: 'include'
         })

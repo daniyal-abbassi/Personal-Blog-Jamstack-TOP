@@ -8,7 +8,7 @@ const postsController = require('../controllers/postsController');
 postsRouter.get('/',postsController.showPosts)
 
 postsRouter.post('/create',upload.single('file'),verifyToken,postsController.createPost)
-postsRouter.put('/edit/:postId',verifyToken,postsController.editPost)
+postsRouter.put('/edit/:postId',upload.single('file'),verifyToken,postsController.editPost)
 postsRouter.delete('/:postId',verifyToken,postsController.deletePost)
 
 
