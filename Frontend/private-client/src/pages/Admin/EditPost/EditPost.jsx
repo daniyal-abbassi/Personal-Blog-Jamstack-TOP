@@ -40,7 +40,7 @@ import { editPost } from "../../../api/posts";
 // import { deleteComment } from "../../../api/comments";
 // import useComments from "../../../hooks/useComments";
 
-function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
+function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
   const [open, setOpen] = useState(false);
   const [selectedTag, setselectedTag] = useState(post.tag);
   const [loading, setLoading] = useState(false);
@@ -52,6 +52,7 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
     resolver: zodResolver(postSchema),
     defaultValues: {
       title: post.title,
+      tag: post.tag,
       content: post.content,
       isPublished: post.isPublished,
     },
@@ -97,6 +98,7 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
   //   }
   // }
 
+  console.log(selectedTag)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
@@ -115,7 +117,7 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
                         className="w-[150px] justify-start"
                       >
                         {selectedTag ? (
-                          <>{selectedTag.label}</>
+                          <>{selectedTag}</>
                         ) : (
                           <>+ Select a Tag</>
                         )}
