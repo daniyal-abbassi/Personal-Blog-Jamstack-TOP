@@ -73,9 +73,7 @@ export const deletePost = async(postId) => {
 }
 //EDIT POST API
 
-export const editPost = async(postData) => {
-    console.log('edit api: ',postData)
-    
+export const editPost = async(postData) => {    
     const {title,content,isPublished,file,tag,post_id} = postData;
     const formData = new FormData();
     formData.append("title",title);

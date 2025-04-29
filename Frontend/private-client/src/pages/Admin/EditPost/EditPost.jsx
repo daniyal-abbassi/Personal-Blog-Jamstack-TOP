@@ -42,7 +42,7 @@ import { editPost } from "../../../api/posts";
 
 function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
   const [open, setOpen] = useState(false);
-  const [selectedTag, setselectedTag] = useState(post.tag);
+  const [selectedTag, setselectedTag] = useState(post.tag.tag);
   const [loading, setLoading] = useState(false);
   // const { comments, setComments } = useComments(post.id);
   const [thumbnailUrl, setThumbnailUrl] = useState(post.url);
@@ -52,7 +52,7 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
     resolver: zodResolver(postSchema),
     defaultValues: {
       title: post.title,
-      tag: post.tag,
+      tag: post.tag.tag,
       content: post.content,
       isPublished: post.isPublished,
     },
@@ -83,7 +83,17 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
       setActiveTab("posts");
     }
   }
-
+//unique tags array
+let tags = [];
+if(posts&&posts.length>0) {
+  posts.map((post)=>{
+    if(post.tag&&post.tag.tag) {
+      tags.push(post.tag.tag)
+    }
+  })
+  tags = new Set(tags);
+  tags = [...tags]
+}
   // async function handleDeleteComment(id) {
   //   try {
   //     const data = await deleteComment(post.id, id);
@@ -98,7 +108,7 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
   //   }
   // }
 
-  console.log(selectedTag)
+  // console.log(selectedTag)
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
@@ -140,17 +150,17 @@ function EditPost({ posts, post, setPosts, setActiveTab, setSelectedPost }) {
                         <CommandList>
                           <CommandEmpty>No results found.</CommandEmpty>
                           <CommandGroup>
-                            {posts.map((post) => (
+                            {tags.map((tag) => (
                               <CommandItem
-                                key={post.tag}
-                                value={post.tag}
+                                key={tag}
+                                value={tag}
                                 onSelect={(value) => {
-                                  setselectedTag(post.tag);
+                                  setselectedTag(tag);
                                   form.setValue("tag", value);
                                   setOpen(false);
                                 }}
                               >
-                                {post.tag}
+                                {tag}
                               </CommandItem>
                             ))}
                           </CommandGroup>
