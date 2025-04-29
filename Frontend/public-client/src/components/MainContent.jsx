@@ -141,11 +141,11 @@ export default function MainContent() {
     }
   },[searchParams])
 
+  //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
   const displayedPosts = posts ? posts.slice(startIndex,endIndex) : [];
   const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 1;
-  // console.log('didplaedposts : ',displayedPosts)
   const hadnlePageChange = (event,newPage) => {
     setCurrentPage(newPage);
     searchParams.set('page',newPage.toString());
@@ -223,6 +223,7 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
+        {/* TAG-BOX */}
         <Box
           sx={{
             display: "inline-flex",
@@ -231,6 +232,7 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
+          {/* EACH SINGLE TAG */}
           <Chip onClick={handleClick} size="medium" label="All categories" />
           <Chip
             onClick={handleClick}
@@ -269,6 +271,7 @@ export default function MainContent() {
             }}
           />
         </Box>
+        {/* SEARCH-SECTION */}
         <Box
           sx={{
             display: { xs: "none", sm: "flex" },
@@ -283,6 +286,7 @@ export default function MainContent() {
             <RssFeedRoundedIcon />
           </IconButton>
         </Box>
+
       </Box>
 
       {/* POSTS GRID */}
