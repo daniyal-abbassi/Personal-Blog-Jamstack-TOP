@@ -19,15 +19,15 @@ const postsController = {
             //look for existing tag
             var exisTag = await dbClient.searchTag(tag);
             if (exisTag) {
-                console.error('pre-tag: ',exisTag)
                 var { tag_id } = exisTag;
-                console.warn('tag_id: ',tag_id)
             } else {
-                console.warn('no pre tag',exisTag)
                 var { tag_id } = await dbClient.createTag(tag);
             }
 
-
+            if(!file) {
+                const post = await dbClient.createPost(title, tag_id, content, isPublished, url=null, public_id=null, userId);
+                res.status(201).json({ post })
+            }
             //upload to cloudinary
             const result = await cloudinary.uploader.upload(file.path,
 
@@ -38,7 +38,7 @@ const postsController = {
                     }
                     const { url, public_id } = result;
                     const post = await dbClient.createPost(title, tag_id, content, isPublished, url, public_id, userId);
-                    //test
+                    
                     res.status(201).json({ post })
                 }
             )
