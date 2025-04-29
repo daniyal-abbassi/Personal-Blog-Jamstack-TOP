@@ -97,7 +97,7 @@ function CreatePostForm({ posts,setPosts, switchTab }) {
                         className="w-[150px] justify-start"
                       >
                         {selectedTag ? (
-                          <>{selectedTag.label}</>
+                          <>{selectedTag}</>
                         ) : (
                           <>+ Select a Tag</>
                         )}

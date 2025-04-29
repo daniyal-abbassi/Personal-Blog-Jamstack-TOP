@@ -16,6 +16,7 @@ const postsController = {
         const {file} = req;
        
         try {
+            const {tag_id} = await dbClient.createTag(tag);
             //upload to cloudinary
             const result = await cloudinary.uploader.upload(file.path,
                 
@@ -25,7 +26,7 @@ const postsController = {
                         return res.status(500).send('Failed to Upload file to clouds.')
                     }
                     const {url,public_id} = result;
-                    const post = await dbClient.createPost(title,tag,content,isPublished,url,public_id,userId);
+                    const post = await dbClient.createPost(title,tag_id,content,isPublished,url,public_id,userId);
                     //test
                     res.status(201).json({post})
                 }

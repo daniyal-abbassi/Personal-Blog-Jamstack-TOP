@@ -42,6 +42,21 @@ const dbClient = {
             throw error
         }
     },
+    //TAG
+    createTag: async(tag)=>{
+        try {
+            const newTag = await prisma.tag.create({
+                data: {
+                    tag
+                }
+            });
+            return newTag;
+        } catch (error) {
+            console.error(`ERROR CREATING TAG: ${error}`)
+            throw error
+            
+        }
+    },
     //POSTS
     showPosts: async()=>{
         try {
@@ -51,8 +66,8 @@ const dbClient = {
                     select: {
                         username: true,
                     }
-                }
-
+                },
+                tag: true,
             }    
             });
             return posts;
@@ -75,14 +90,14 @@ const dbClient = {
             throw error;
         }
     },
-    createPost: async(title,tag,content,isPublished,url,coudinaryId,author_id) => {
+    createPost: async(title,tag_id,content,isPublished,url,coudinaryId,author_id) => {
         if(isPublished==="true") isPublished=true
         else isPublished=false
         try {
             const post = await prisma.post.create({
                 data: {
                     title,
-                    tag,
+                    tag_id,
                     content,
                     isPublished,
                     url,
