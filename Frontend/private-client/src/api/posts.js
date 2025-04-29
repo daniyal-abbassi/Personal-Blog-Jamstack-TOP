@@ -28,7 +28,7 @@ export const createPost = async(postData)=>{
     const formData = new FormData();
     formData.append("title",title);
     formData.append("content",content);
-    formData.append("file",file[0]);
+    formData.append("file",file ? file[0] : "");
     formData.append('tag',tag)
     formData.append("isPublished",isPublished ? "true" : "false");
     try {

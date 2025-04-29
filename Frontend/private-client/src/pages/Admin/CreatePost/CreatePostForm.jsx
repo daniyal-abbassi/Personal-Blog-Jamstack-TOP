@@ -78,7 +78,17 @@ function CreatePostForm({ posts,setPosts, switchTab }) {
       switchTab();
     }
   }
-
+  //unique tags array
+  let tags = [];
+  if(posts&&posts.length>0) {
+    posts.map((post)=>{
+      if(post.tag&&post.tag.tag) {
+        tags.push(post.tag.tag)
+      }
+    })
+    tags = new Set(tags);
+    tags = [...tags]
+  }
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
@@ -120,17 +130,17 @@ function CreatePostForm({ posts,setPosts, switchTab }) {
                         <CommandList>
                           <CommandEmpty>No results found.</CommandEmpty>
                           <CommandGroup>
-                            {posts.map((post) => (
+                            {tags.map((tag) => (
                               <CommandItem
-                                key={post.tag}
-                                value={post.tag}
+                                key={tag}
+                                value={tag}
                                 onSelect={(value) => {
-                                  setselectedTag(post.tag);
+                                  setselectedTag(tag);
                                   form.setValue("tag", value);
                                   setOpen(false);
                                 }}
                               >
-                                {post.tag}
+                                {tag}
                               </CommandItem>
                             ))}
                           </CommandGroup>
