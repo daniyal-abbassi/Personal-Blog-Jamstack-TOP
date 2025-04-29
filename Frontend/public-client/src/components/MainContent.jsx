@@ -312,7 +312,7 @@ export default function MainContent() {
               {/* POST-TEXTS */}
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[0].title}
+                  {displayedPosts[0].tag.tag}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[0].title}
@@ -352,7 +352,7 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[1].title}
+                  {displayedPosts[1].tag.tag}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[1].title}
@@ -391,7 +391,7 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[2].title}
+                  {displayedPosts[2].tag.tag}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[2].title}
@@ -439,7 +439,7 @@ export default function MainContent() {
                 >
                   <div>
                     <Typography gutterBottom variant="caption" component="div">
-                      {displayedPosts[3].title}
+                      {displayedPosts[3].tag.tag}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="div">
                       {displayedPosts[3].title}
@@ -475,7 +475,7 @@ export default function MainContent() {
                 >
                   <div>
                     <Typography gutterBottom variant="caption" component="div">
-                      {displayedPosts[4].title}
+                      {displayedPosts[4].tag.tag}
                     </Typography>
                     <Typography gutterBottom variant="h6" component="div">
                       {displayedPosts[4].title}
@@ -517,7 +517,7 @@ export default function MainContent() {
               />
               <SyledCardContent>
                 <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[5].title}
+                  {displayedPosts[5].tag.tag}
                 </Typography>
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[5].title}
