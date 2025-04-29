@@ -20,6 +20,19 @@ import {
   FormLabel,
   FormMessage,
 } from "../../../components/ui/form";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 import PropTypes from "prop-types";
 //should adjust the api for reletad stuff
 import { editPost } from "../../../api/posts";
@@ -28,9 +41,11 @@ import { editPost } from "../../../api/posts";
 // import useComments from "../../../hooks/useComments";
 
 function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
+  const [open, setOpen] = useState(false);
+  const [selectedTag, setselectedTag] = useState(post.tag);
   const [loading, setLoading] = useState(false);
   // const { comments, setComments } = useComments(post.id);
-  const [thumbnailUrl, setThumbnailUrl] = useState(post.imageUrl);
+  const [thumbnailUrl, setThumbnailUrl] = useState(post.url);
   const { toast } = useToast();
 
   const form = useForm({
@@ -46,7 +61,10 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
     try {
       setLoading(true);
       const data = await editPost({ post_id: post.post_id, ...values });
-      setPosts((posts) => [data, ...posts.filter((p) => p.post_id !== data.post_id)]);
+      setPosts((posts) => [
+        data,
+        ...posts.filter((p) => p.post_id !== data.post_id),
+      ]);
 
       toast({
         title: "Successfully edited post!",
@@ -82,6 +100,76 @@ function EditPost({ post, setPosts, setActiveTab, setSelectedPost }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+        <FormField
+          control={form.control}
+          name="tag"
+          render={({ field }) => (
+            <FormItem className="flex flex-row space-x-4 rounded-md border p-2">
+              <FormControl>
+                <div className="flex items-center space-x-4">
+                  <p className="text-sm text-muted-foreground">Tag</p>
+                  <Popover open={open} onOpenChange={setOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        className="w-[150px] justify-start"
+                      >
+                        {selectedTag ? (
+                          <>{selectedTag.label}</>
+                        ) : (
+                          <>+ Select a Tag</>
+                        )}
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="p-0" side="right" align="start">
+                      <Command>
+                        <CommandInput placeholder="Search Tag..." />
+                        {selectedTag && (
+                          <CommandItem
+                            onSelect={() => {
+                              setselectedTag(null);
+                              form.setValue("tag", ""); // Clear the form value as well
+                              setOpen(false);
+                            }}
+                          >
+                            Clear Tag
+                          </CommandItem>
+                        )}
+                        <CommandList>
+                          <CommandEmpty>No results found.</CommandEmpty>
+                          <CommandGroup>
+                            {posts.map((post) => (
+                              <CommandItem
+                                key={post.tag}
+                                value={post.tag}
+                                onSelect={(value) => {
+                                  setselectedTag(post.tag);
+                                  form.setValue("tag", value);
+                                  setOpen(false);
+                                }}
+                              >
+                                {post.tag}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                </div>
+              </FormControl>
+              <FormControl>
+                <Input
+                  placeholder="Create a new tag..."
+                  type=""
+                  className="w-50"
+                  disabled={!!selectedTag}
+                  {...field}
+                />
+              </FormControl>
+            </FormItem>
+          )}
+        />
         <FormField
           control={form.control}
           name="title"

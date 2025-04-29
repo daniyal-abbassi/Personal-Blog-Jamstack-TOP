@@ -103,6 +103,7 @@ function Admin() {
           <EditPostTab selectedPost={setSelectedPost}>
             {selectedPost && (
               <EditPost
+              posts={posts}
                 post={selectedPost}
                 setPosts={setPosts}
                 setActiveTab={setActiveTab}
