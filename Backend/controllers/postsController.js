@@ -16,7 +16,12 @@ const postsController = {
         const {file} = req;
        
         try {
-            const {tag_id} = await dbClient.createTag(tag);
+            //look for existing tag
+            let {tag_id} = await dbClient.searchTag(tag);
+            //if there was no tag, create one
+            if(!tag_id) {
+                let {tag_id} = await dbClient.createTag(tag);
+            }
             //upload to cloudinary
             const result = await cloudinary.uploader.upload(file.path,
                 

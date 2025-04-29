@@ -57,6 +57,18 @@ const dbClient = {
             
         }
     },
+    searchTag: async(tag)=>{
+        try {
+            const exiTag = await prisma.tag.findFirst({
+                where: {tag}
+            })
+            return exiTag;
+        } catch (error) {
+            console.error(`ERROR SEARCHING TAG: ${error}`)
+            throw error
+            
+        }
+    },
     //POSTS
     showPosts: async()=>{
         try {
