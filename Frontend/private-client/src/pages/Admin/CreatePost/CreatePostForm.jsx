@@ -35,38 +35,8 @@ import PropTypes from "prop-types";
 import { createPost } from "../../../api/posts";
 import { useState } from "react";
 
-//for test component
-const statuses = [
-  {
-    value: "programming",
-    label: "Programming",
-  },
-  {
-    value: "life",
-    label: "Life",
-  },
-  {
-    value: "anime",
-    label: "Anime",
-  },
-  {
-    value: "film",
-    label: "Film",
-  },
-  {
-    value: "book",
-    label: "Book",
-  },
-];
-// //test combobox component
-// function ComboboxPopover() {
 
-//   return (
-
-//   );
-// }
-
-function CreatePostForm({ setPosts, switchTab }) {
+function CreatePostForm({ posts,setPosts, switchTab }) {
   const [open, setOpen] = useState(false);
   const [selectedTag, setselectedTag] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -150,21 +120,17 @@ function CreatePostForm({ setPosts, switchTab }) {
                         <CommandList>
                           <CommandEmpty>No results found.</CommandEmpty>
                           <CommandGroup>
-                            {statuses.map((status) => (
+                            {posts.map((post) => (
                               <CommandItem
-                                key={status.value}
-                                value={status.value}
+                                key={post.tag}
+                                value={post.tag}
                                 onSelect={(value) => {
-                                  setselectedTag(
-                                    statuses.find(
-                                      (priority) => priority.value === value
-                                    ) || null
-                                  );
+                                  setselectedTag(post.tag);
                                   form.setValue("tag", value);
                                   setOpen(false);
                                 }}
                               >
-                                {status.label}
+                                {post.tag}
                               </CommandItem>
                             ))}
                           </CommandGroup>

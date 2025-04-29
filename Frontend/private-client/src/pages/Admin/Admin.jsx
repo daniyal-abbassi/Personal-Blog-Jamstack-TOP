@@ -95,6 +95,7 @@ function Admin() {
           </PostsTableTab>
           <CreatePostTab>
             <CreatePostForm
+              posts={posts}
               setPosts={setPosts}
               switchTab={() => setActiveTab("posts")}
             />
