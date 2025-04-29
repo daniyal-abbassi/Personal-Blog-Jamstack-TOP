@@ -10,36 +10,43 @@ generator client {
 
 datasource db {
   provider = "postgresql"
-  url      = env("DATABASE_URL") 
+  url      = env("DATABASE_URL")
 }
-
 
 model User {
-  user_id Int @id @default(autoincrement())
-  username String 
+  user_id  Int    @id @default(autoincrement())
+  username String
   password String
-  posts Post[]
-}
-model Post {
-  post_id Int @id @default(autoincrement())
-  title String
-  tag String @default("")
-  content String?
-  created_at DateTime @default(now())
-  updated_at DateTime @updatedAt
-  isPublished Boolean @default(false)
-  url String?
-  coudinaryId String?
-  author_id Int
-  author User @relation(fields: [author_id],references: [user_id])
-  comments Comment[]
-}
-model Comment {
-  comment_id Int @id @default(autoincrement())
-  created_at DateTime @default(now())
-  name String?
-  content String?
-  post_id Int
-  post Post @relation(fields: [comment_id],references: [post_id],onDelete: Cascade)
+  posts    Post[]
 }
 
+model Tag {
+  tag_id Int    @id @default(autoincrement())
+  tag    String
+  posts  Post[]
+}
+
+model Post {
+  post_id     Int       @id @default(autoincrement())
+  title       String
+  content     String?
+  created_at  DateTime  @default(now())
+  updated_at  DateTime  @updatedAt
+  isPublished Boolean   @default(false)
+  url         String?
+  coudinaryId String?
+  author_id   Int
+  author      User      @relation(fields: [author_id], references: [user_id])
+  tag_id      Int
+  tag         Tag       @relation(fields: [tag_id], references: [tag_id])
+  comments    Comment[]
+}
+
+model Comment {
+  comment_id Int      @id @default(autoincrement())
+  created_at DateTime @default(now())
+  name       String?
+  content    String?
+  post_id    Int
+  post       Post     @relation(fields: [comment_id], references: [post_id], onDelete: Cascade)
+}
