@@ -66,9 +66,18 @@ const postsController = {
             const { postId } = req.params;
             const { title, tag, content, isPublished } = req.body;
             const { file } = req;
+            //search for existing tag
+            var exisTag = await dbClient.searchTag(tag);
+            if (exisTag) {
+                var { tag_id } = exisTag;
+            } else {
+                //if tag is new
+                var { tag_id } = await dbClient.createTag(tag);
+            }
+
             //if no file was edited
             if (!file) {
-                const editedPost = await dbClient.editPostWithOutFile(postId, title, tag, content, isPublished, userId);
+                const editedPost = await dbClient.editPostWithOutFile(postId, title, tag_id, content, isPublished, userId);
                 res.json(editedPost)
             } else {
 
@@ -80,7 +89,7 @@ const postsController = {
                     //delete previous image
                     const previousPost = await dbClient.getPost(postId);
                     cloudinary.uploader.destroy(previousPost.coudinaryId);
-                    const editedPost = await dbClient.editPostWithFile(postId, title, tag, content, result.url, result.public_id, isPublished, userId);
+                    const editedPost = await dbClient.editPostWithFile(postId, title, tag_id, content, result.url, result.public_id, isPublished, userId);
                     res.json(editedPost);
                 })
             }

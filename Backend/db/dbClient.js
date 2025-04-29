@@ -139,7 +139,7 @@ const dbClient = {
             throw error
         }
     },
-    editPostWithFile: async(post_id,title,tag,content,isPublished,url,coudinaryId,userId) => {
+    editPostWithFile: async(post_id,title,tag_id,content,isPublished,url,coudinaryId,userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
         if(isPublished==="true") isPublished=true
@@ -152,7 +152,7 @@ const dbClient = {
                 },
                 data: {
                     title,
-                    tag,
+                    tag_id,
                     content,
                     isPublished,
                     url,
@@ -165,7 +165,7 @@ const dbClient = {
             throw error
         }
     },
-    editPostWithOutFile: async(post_id,title,tag,content,isPublished,userId) => {
+    editPostWithOutFile: async(post_id,title,tag_id,content,isPublished,userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
         if(isPublished==="true") isPublished=true
@@ -178,7 +178,7 @@ const dbClient = {
                 },
                 data: {
                     title,
-                    tag,
+                    tag_id,
                     content,
                     isPublished,
                 }
