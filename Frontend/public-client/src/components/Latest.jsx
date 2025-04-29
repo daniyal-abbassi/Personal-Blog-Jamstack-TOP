@@ -242,7 +242,7 @@ export default function Latest() {
                 }}
               >
                 <Typography gutterBottom variant="caption" component="div">
-                  {article.title}
+                  {article.tag.tag}
                 </Typography>
                 <TitleTypography
                   gutterBottom
