@@ -17,9 +17,9 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { styled } from "@mui/material/styles";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
-import {  useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
-import {useSearchParams} from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 //ISOLATE STYLINGS OF COMPONENTS
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -123,34 +123,33 @@ export default function MainContent() {
   const [focusedCardIndex, setFocusedCardIndex] = useState(null);
   //posts test section
   const { postsLoading, error, posts, setPosts, tags } = usePosts();
-  const [searchParams,setSearchParams] = useSearchParams();
-  const [currentPage,setCurrentPage ] = useState(1);
-  console.log(tags)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [currentPage, setCurrentPage] = useState(1);
   //useEffent for rendering when page changes
-  useEffect(()=>{
-    const pageParam = searchParams.get('page');
-    if(pageParam) {
-      const parsedPage = parseInt(pageParam,10);
-      if(!isNaN(parsedPage) && parsedPage > 0) {
-        setCurrentPage(parsedPage)
+  useEffect(() => {
+    const pageParam = searchParams.get("page");
+    if (pageParam) {
+      const parsedPage = parseInt(pageParam, 10);
+      if (!isNaN(parsedPage) && parsedPage > 0) {
+        setCurrentPage(parsedPage);
       } else {
-        setCurrentPage(1)
+        setCurrentPage(1);
       }
     } else {
-      setCurrentPage(1)
+      setCurrentPage(1);
     }
-  },[searchParams])
+  }, [searchParams]);
 
   //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const displayedPosts = posts ? posts.slice(startIndex,endIndex) : [];
+  const displayedPosts = posts ? posts.slice(startIndex, endIndex) : [];
   const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 1;
-  const hadnlePageChange = (event,newPage) => {
+  const hadnlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
-    searchParams.set('page',newPage.toString());
-    setSearchParams(searchParams)
-  }
+    searchParams.set("page", newPage.toString());
+    setSearchParams(searchParams);
+  };
   if (postsLoading) {
     return (
       <Typography variant="h1" color="warning">
@@ -191,9 +190,7 @@ export default function MainContent() {
         <Typography variant="h1" gutterBottom>
           Blog
         </Typography>
-        <Typography>
-          personal place for my life
-        </Typography>
+        <Typography>personal place for my life</Typography>
       </div>
       {/* SEARCH BOX */}
       <Box
@@ -234,42 +231,30 @@ export default function MainContent() {
         >
           {/* EACH SINGLE TAG */}
           <Chip onClick={handleClick} size="medium" label="All categories" />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Company"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Product"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Design"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
-          <Chip
-            onClick={handleClick}
-            size="medium"
-            label="Engineering"
-            sx={{
-              backgroundColor: "transparent",
-              border: "none",
-            }}
-          />
+          {tags && tags.length > 0 ? (
+            tags.map((tag, i) => (
+              <Chip
+                key={i}
+                onClick={handleClick}
+                size="medium"
+                label={tag}
+                sx={{
+                  backgroundColor: "transparent",
+                  border: "none",
+                }}
+              />
+            ))
+          ) : (
+            <Chip
+              onClick={handleClick}
+              size="medium"
+              label="No Posts"
+              sx={{
+                backgroundColor: "transparent",
+                border: "none",
+              }}
+            />
+          )}
         </Box>
         {/* SEARCH-SECTION */}
         <Box
@@ -286,7 +271,6 @@ export default function MainContent() {
             <RssFeedRoundedIcon />
           </IconButton>
         </Box>
-
       </Box>
 
       {/* POSTS GRID */}
