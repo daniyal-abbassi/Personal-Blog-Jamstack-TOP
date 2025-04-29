@@ -143,7 +143,7 @@ export default function MainContent() {
   //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  const displayedPosts = posts ? posts.slice(startIndex, endIndex) : [];
+  let displayedPosts = posts ? posts.slice(startIndex, endIndex) : [];
   const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 1;
   const hadnlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
@@ -180,8 +180,9 @@ export default function MainContent() {
     setFocusedCardIndex(null);
   };
 
-  const handleClick = () => {
-    console.info("You clicked the filter chip.");
+  const handleClick = (e) => {
+    let clickedTag = e.target.textContent;
+    console.info("Clicked tag is: ",clickedTag);
   };
 
   return (
