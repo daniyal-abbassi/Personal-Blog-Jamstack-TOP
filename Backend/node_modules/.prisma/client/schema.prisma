@@ -22,7 +22,7 @@ model User {
 
 model Tag {
   tag_id Int    @id @default(autoincrement())
-  tag    String
+  tag    String @unique
   posts  Post[]
 }
 
