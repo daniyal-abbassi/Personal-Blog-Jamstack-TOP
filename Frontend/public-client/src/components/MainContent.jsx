@@ -96,7 +96,8 @@ Author.propTypes = {
   ).isRequired,
 };
 
-export function Search() {
+export function Search({handleSearch,searchTitles}) {
+
   return (
     <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
       <OutlinedInput
@@ -104,6 +105,8 @@ export function Search() {
         id="search"
         placeholder="Search…"
         sx={{ flexGrow: 1 }}
+        onChange={handleSearch}
+        value={searchTitles}
         startAdornment={
           <InputAdornment position="start" sx={{ color: "text.primary" }}>
             <SearchRoundedIcon fontSize="small" />
@@ -115,6 +118,10 @@ export function Search() {
       />
     </FormControl>
   );
+}
+Search.prototype = {
+  searchTitles: PropTypes.string.isRequired,
+  handleSearch: PropTypes.func.isRequired,
 }
 //posts per page
 const POSTS_PER_PAGE = 6;
@@ -129,11 +136,18 @@ export default function MainContent() {
   const [activeTag, setActiveTag] = useState(
     searchParams.get("tag") || "All categories"
   );
+  //read search from searchParam
+  const [searchTitles,setSearchTitles] = useState(
+    searchParams.get("search") || ""
+  )
   //rendering when page changes
   useEffect(() => {
     const pageParam = searchParams.get("page");
     //get tag from url
     const tagParam = searchParams.get("tag");
+    //get search from url
+    const searchTitleParam = searchParams.get("search");
+
     if (pageParam) {
       const parsedPage = parseInt(pageParam, 10);
       if (!isNaN(parsedPage) && parsedPage > 0) {
@@ -162,15 +176,33 @@ export default function MainContent() {
       //set default to all tags
       setActiveTag("All categories");
     }
-  }, [searchParams, tags, setSearchParams]);
+
+    //update search state based on searchPrams-url
+    if(searchTitleParam && posts.some(post=>post.title===searchTitleParam)) {
+      setSearchTitles(searchTitleParam)
+    } else if(searchTitleParam) {
+      setSearchTitles("");
+      searchParams.delete("search");
+      setSearchParams(searchParams);
+    } else {
+      setSearchTitles("");
+    }
+  }, [searchParams, tags, setSearchParams,setSearchTitles]);
 
   //filter posts based on tag
-  const filteredPosts = (posts || []).filter((post) => {
+  const tagFilteredPosts = (posts || []).filter((post) => {
+   
     if (activeTag === "All categories") {
       return true;
     }
     return post.tag && post.tag.tag === activeTag;
   });
+  const filteredPosts = (tagFilteredPosts.filter(post => {
+    if(!searchTitles.trim()) {
+      return true;
+    }
+    return post.title.toLowerCase().includes(searchTitles.toLowerCase());
+  }))
   //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
@@ -226,7 +258,20 @@ export default function MainContent() {
   const handleBlur = () => {
     setFocusedCardIndex(null);
   };
+  const handleSearch = (event) => {
+    let searchTerm = event.target.value;
+    setSearchTitles(searchTerm);
+    setCurrentPage(1);
 
+    if(searchTerm.trim()==="") {
+      searchParams.delete("search");
+    } else {
+      searchParams.set("search",searchTerm)
+    }
+
+    searchParams.delete("search");
+    setSearchParams(searchParams)
+  }
   const handleClick = (clickedTag) => {
     setActiveTag(clickedTag);
     setCurrentPage(1);
@@ -260,10 +305,8 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search />
-        <IconButton size="small" aria-label="RSS feed">
-          <RssFeedRoundedIcon />
-        </IconButton>
+        <Search handleSearch={handleSearch} searchTitles={searchTitles}/>
+       
       </Box>
 
       {/* TAGS BOX */}
@@ -323,10 +366,8 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search />
-          <IconButton size="small" aria-label="RSS feed">
-            <RssFeedRoundedIcon />
-          </IconButton>
+          <Search  handleSearch={handleSearch} searchTitles={searchTitles}/>
+         
         </Box>
       </Box>
 
