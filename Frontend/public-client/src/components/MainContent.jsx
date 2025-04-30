@@ -125,31 +125,78 @@ export default function MainContent() {
   const { postsLoading, error, posts, setPosts, tags } = usePosts();
   const [searchParams, setSearchParams] = useSearchParams();
   const [currentPage, setCurrentPage] = useState(1);
-  //useEffent for rendering when page changes
+  //read tag from searchParams on initial load
+  const [activeTag, setActiveTag] = useState(
+    searchParams.get("tag") || "All categories"
+  );
+  //rendering when page changes
   useEffect(() => {
     const pageParam = searchParams.get("page");
+    //get tag from url
+    const tagParam = searchParams.get("tag");
     if (pageParam) {
       const parsedPage = parseInt(pageParam, 10);
       if (!isNaN(parsedPage) && parsedPage > 0) {
         setCurrentPage(parsedPage);
       } else {
         setCurrentPage(1);
+        //clean-up invalid params
+        searchParams.delete("page");
+        setSearchParams(searchParams);
       }
     } else {
       setCurrentPage(1);
     }
-  }, [searchParams]);
+    //update active tag based on search-params
+    if (
+      tagParam &&
+      (tagParam === "All categories" || (tags && tags.includes(tagParam)))
+    ) {
+      setActiveTag(tagParam);
+    } else if (tagParam) {
+      //if tag in invalid
+      setActiveTag("All categories");
+      searchParams.delete("tag");
+      setSearchParams(searchParams);
+    } else {
+      //set default to all tags
+      setActiveTag("All categories");
+    }
+  }, [searchParams, tags, setSearchParams]);
 
+  //filter posts based on tag
+  const filteredPosts = (posts || []).filter((post) => {
+    if (activeTag === "All categories") {
+      return true;
+    }
+    return post.tag && post.tag.tag === activeTag;
+  });
   //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
-  let displayedPosts = posts ? posts.slice(startIndex, endIndex) : [];
-  const totalPages = posts ? Math.ceil(posts.length / POSTS_PER_PAGE) : 1;
+  //use filterPost for desplaying posts
+  let displayedPosts = filteredPosts
+    ? filteredPosts.slice(startIndex, endIndex)
+    : [];
+  const totalPages = Math.ceil(filteredPosts.length / POSTS_PER_PAGE);
+  //alwats page 1 is accessible
+  const trueTotalPage = totalPages > 0 ? totalPages : 1;
+
   const hadnlePageChange = (event, newPage) => {
     setCurrentPage(newPage);
     searchParams.set("page", newPage.toString());
     setSearchParams(searchParams);
   };
+  //if filteredPosts is empty
+  if (!postsLoading && !error && filteredPosts.length === 0) {
+    return (
+      <Typography color="primary" variant="h4">
+        {activeTag === "All categories"
+          ? "There are no posts available at the moment."
+          : `No posts found with the tag "${activeTag}"`}
+      </Typography>
+    );
+  }
   if (postsLoading) {
     return (
       <Typography variant="h1" color="warning">
@@ -180,9 +227,20 @@ export default function MainContent() {
     setFocusedCardIndex(null);
   };
 
-  const handleClick = (e) => {
-    let clickedTag = e.target.textContent;
-    console.info("Clicked tag is: ",clickedTag);
+  const handleClick = (clickedTag) => {
+    console.info("Clicked tag is: ", clickedTag);
+    setActiveTag(clickedTag);
+    setCurrentPage(1);
+
+    //update search params
+    if (clickedTag === "All categories") {
+      searchParams.delete("tag");
+    } else {
+      searchParams.set("tag", clickedTag);
+    }
+    //reset page
+    searchParams.delete("page");
+    setSearchParams(searchParams);
   };
 
   return (
@@ -231,31 +289,30 @@ export default function MainContent() {
           }}
         >
           {/* EACH SINGLE TAG */}
-          <Chip onClick={handleClick} size="medium" label="All categories" />
-          {tags && tags.length > 0 ? (
-            tags.map((tag, i) => (
-              <Chip
-                key={i}
-                onClick={handleClick}
-                size="medium"
-                label={tag}
-                sx={{
-                  backgroundColor: "transparent",
-                  border: "none",
-                }}
-              />
-            ))
-          ) : (
-            <Chip
-              onClick={handleClick}
-              size="medium"
-              label="No Posts"
-              sx={{
-                backgroundColor: "transparent",
-                border: "none",
-              }}
-            />
-          )}
+          <Chip
+            onClick={() => handleClick("All categories")}
+            size="medium"
+            label="All categories"
+            color={activeTag === "All categories" ? "primary" : "default"}
+            variant={activeTag === "All categories" ? "filled" : "outlined"}
+          />
+          {/* render specific tag */}
+          {tags && tags.length > 0
+            ? tags.map((tag, i) => (
+                <Chip
+                  key={i}
+                  onClick={() => handleClick(tag)}
+                  size="medium"
+                  label={tag}
+                  color={activeTag === tag ? "primary" : "default"}
+                  variant={activeTag === tag ? "filled" : "outlined"}
+                  // sx={{
+                  //   backgroundColor: "transparent",
+                  //   border: "none",
+                  // }}
+                />
+              ))
+            : null}
         </Box>
         {/* SEARCH-SECTION */}
         <Box
@@ -275,34 +332,36 @@ export default function MainContent() {
       </Box>
 
       {/* POSTS GRID */}
+      {/* POSTS GRID - Rendering maximum 6 posts with fixed layout */}
       <Grid container spacing={2} columns={12}>
-        {/* TOP-LEFT POST */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          {/* A SINGLE POST-CARD */}
-          {displayedPosts[0] && (
+        {/* Post 0 (Top Left) - md={6} */}
+        {displayedPosts[0] && (
+          <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[0].post_id}>
             <SyledCard
               variant="outlined"
-              onFocus={() => handleFocus(0)}
+              onFocus={() => handleFocus(0)} // Index 0
               onBlur={handleBlur}
               tabIndex={0}
               className={focusedCardIndex === 0 ? "Mui-focused" : ""}
             >
-              {/* POST-IMAGE */}
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={displayedPosts[0].url}
-                sx={{
-                  aspectRatio: "16 / 9",
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
-                }}
-              />
-              {/* POST-TEXTS */}
+              {displayedPosts[0].url && (
+                <CardMedia
+                  component="img"
+                  alt={displayedPosts[0].title}
+                  image={displayedPosts[0].url}
+                  sx={{
+                    aspectRatio: "16 / 9",
+                    borderBottom: "1px solid",
+                    borderColor: "divider",
+                  }}
+                />
+              )}
               <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[0].tag.tag}
-                </Typography>
+                {displayedPosts[0].tag && displayedPosts[0].tag.tag && (
+                  <Typography gutterBottom variant="caption" component="div">
+                    {displayedPosts[0].tag.tag}
+                  </Typography>
+                )}
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[0].title}
                 </Typography>
@@ -314,35 +373,48 @@ export default function MainContent() {
                   {displayedPosts[0].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={displayedPosts[0].author.username} />
+              {displayedPosts[0].author && (
+                <Author
+                  authors={[
+                    {
+                      name: displayedPosts[0].author.username,
+                      avatar: displayedPosts[0].author.avatarUrl || "",
+                    },
+                  ]}
+                />
+              )}
             </SyledCard>
-          )}
-        </Grid>
+          </Grid>
+        )}
 
-        {/* TOP-RIGHT POST */}
-        <Grid size={{ xs: 12, md: 6 }}>
-          {displayedPosts[1] && (
+        {/* Post 1 (Top Right) - md={6} */}
+        {displayedPosts[1] && (
+          <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[1].post_id}>
             <SyledCard
               variant="outlined"
-              onFocus={() => handleFocus(1)}
+              onFocus={() => handleFocus(1)} // Index 1
               onBlur={handleBlur}
               tabIndex={0}
               className={focusedCardIndex === 1 ? "Mui-focused" : ""}
             >
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={displayedPosts[1].url}
-                aspect-ratio="16 / 9"
-                sx={{
-                  borderBottom: "1px solid",
-                  borderColor: "divider",
-                }}
-              />
+              {displayedPosts[1].url && (
+                <CardMedia
+                  component="img"
+                  alt={displayedPosts[1].title}
+                  image={displayedPosts[1].url}
+                  aspect-ratio="16 / 9"
+                  sx={{
+                    borderBottom: "1px solid",
+                    borderColor: "divider",
+                  }}
+                />
+              )}
               <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[1].tag.tag}
-                </Typography>
+                {displayedPosts[1].tag && displayedPosts[1].tag.tag && (
+                  <Typography gutterBottom variant="caption" component="div">
+                    {displayedPosts[1].tag.tag}
+                  </Typography>
+                )}
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[1].title}
                 </Typography>
@@ -354,34 +426,48 @@ export default function MainContent() {
                   {displayedPosts[1].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={displayedPosts[1].author.username} />
+              {displayedPosts[1].author && (
+                <Author
+                  authors={[
+                    {
+                      name: displayedPosts[1].author.username,
+                      avatar: displayedPosts[1].author.avatarUrl || "",
+                    },
+                  ]}
+                />
+              )}
             </SyledCard>
-          )}
-        </Grid>
+          </Grid>
+        )}
 
-        <Grid size={{ xs: 12, md: 4 }}>
-          {displayedPosts[2] && (
+        {/* Post 2 (Middle Left) - md={4} */}
+        {displayedPosts[2] && (
+          <Grid item size={{ xs: 12, md: 4 }} key={displayedPosts[2].post_id}>
             <SyledCard
               variant="outlined"
-              onFocus={() => handleFocus(2)}
+              onFocus={() => handleFocus(2)} // Index 2
               onBlur={handleBlur}
               tabIndex={0}
               className={focusedCardIndex === 2 ? "Mui-focused" : ""}
               sx={{ height: "100%" }}
             >
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={displayedPosts[2].url}
-                sx={{
-                  height: { sm: "auto", md: "50%" },
-                  aspectRatio: { sm: "16 / 9", md: "" },
-                }}
-              />
+              {displayedPosts[2].url && (
+                <CardMedia
+                  component="img"
+                  alt={displayedPosts[2].title}
+                  image={displayedPosts[2].url}
+                  sx={{
+                    height: { sm: "auto", md: "50%" },
+                    aspectRatio: { sm: "16 / 9", md: "" },
+                  }}
+                />
+              )}
               <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[2].tag.tag}
-                </Typography>
+                {displayedPosts[2].tag && displayedPosts[2].tag.tag && (
+                  <Typography gutterBottom variant="caption" component="div">
+                    {displayedPosts[2].tag.tag}
+                  </Typography>
+                )}
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[2].title}
                 </Typography>
@@ -393,14 +479,26 @@ export default function MainContent() {
                   {displayedPosts[2].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={displayedPosts[2].author.username} />
+              {displayedPosts[2].author && (
+                <Author
+                  authors={[
+                    {
+                      name: displayedPosts[2].author.username,
+                      avatar: displayedPosts[2].author.avatarUrl || "",
+                    },
+                  ]}
+                />
+              )}
             </SyledCard>
-          )}
-        </Grid>
+          </Grid>
+        )}
 
-        {/* TWO-POSTS-MIDDLE-WITHOUT-IMAGE */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          {displayedPosts[3] && displayedPosts[4] && (
+        {/* Posts 3 and 4 (Middle Stacked) - md={4} - Render as ONE Grid Item */}
+        {/* Check if BOTH post 3 and post 4 exist before rendering this combined block */}
+        {displayedPosts[3] && displayedPosts[4] && (
+          <Grid item size={{ xs: 12, md: 4 }} key={`posts-3-4-stacked`}>
+            {" "}
+            {/* Unique key for the combined item */}
             <Box
               sx={{
                 display: "flex",
@@ -409,10 +507,10 @@ export default function MainContent() {
                 height: "100%",
               }}
             >
-              {/* ABOVE-POST */}
+              {/* Card for Post 3 (Above) - No Image */}
               <SyledCard
                 variant="outlined"
-                onFocus={() => handleFocus(3)}
+                onFocus={() => handleFocus(3)} // Index 3
                 onBlur={handleBlur}
                 tabIndex={0}
                 className={focusedCardIndex === 3 ? "Mui-focused" : ""}
@@ -427,9 +525,15 @@ export default function MainContent() {
                   }}
                 >
                   <div>
-                    <Typography gutterBottom variant="caption" component="div">
-                      {displayedPosts[3].tag.tag}
-                    </Typography>
+                    {displayedPosts[3].tag && displayedPosts[3].tag.tag && (
+                      <Typography
+                        gutterBottom
+                        variant="caption"
+                        component="div"
+                      >
+                        {displayedPosts[3].tag.tag}
+                      </Typography>
+                    )}
                     <Typography gutterBottom variant="h6" component="div">
                       {displayedPosts[3].title}
                     </Typography>
@@ -442,13 +546,22 @@ export default function MainContent() {
                     </StyledTypography>
                   </div>
                 </SyledCardContent>
-                <Author authors={displayedPosts[3].author.username} />
+                {displayedPosts[3].author && (
+                  <Author
+                    authors={[
+                      {
+                        name: displayedPosts[3].author.username,
+                        avatar: displayedPosts[3].author.avatarUrl || "",
+                      },
+                    ]}
+                  />
+                )}
               </SyledCard>
 
-              {/* BELOW-POST */}
+              {/* Card for Post 4 (Below) - No Image */}
               <SyledCard
                 variant="outlined"
-                onFocus={() => handleFocus(4)}
+                onFocus={() => handleFocus(4)} // Index 4
                 onBlur={handleBlur}
                 tabIndex={0}
                 className={focusedCardIndex === 4 ? "Mui-focused" : ""}
@@ -463,9 +576,15 @@ export default function MainContent() {
                   }}
                 >
                   <div>
-                    <Typography gutterBottom variant="caption" component="div">
-                      {displayedPosts[4].tag.tag}
-                    </Typography>
+                    {displayedPosts[4].tag && displayedPosts[4].tag.tag && (
+                      <Typography
+                        gutterBottom
+                        variant="caption"
+                        component="div"
+                      >
+                        {displayedPosts[4].tag.tag}
+                      </Typography>
+                    )}
                     <Typography gutterBottom variant="h6" component="div">
                       {displayedPosts[4].title}
                     </Typography>
@@ -478,36 +597,49 @@ export default function MainContent() {
                     </StyledTypography>
                   </div>
                 </SyledCardContent>
-                <Author authors={displayedPosts[4].author.username} />
+                {displayedPosts[4].author && (
+                  <Author
+                    authors={[
+                      {
+                        name: displayedPosts[4].author.username,
+                        avatar: displayedPosts[4].author.avatarUrl || "",
+                      },
+                    ]}
+                  />
+                )}
               </SyledCard>
             </Box>
-          )}
-        </Grid>
+          </Grid>
+        )}
 
-        {/* LAST-POST */}
-        <Grid size={{ xs: 12, md: 4 }}>
-          {displayedPosts[5] && (
+        {/* Post 5 (Middle Right / Bottom Left) - md={4} */}
+        {displayedPosts[5] && (
+          <Grid item size={{ xs: 12, md: 4 }} key={displayedPosts[5].post_id}>
             <SyledCard
               variant="outlined"
-              onFocus={() => handleFocus(5)}
+              onFocus={() => handleFocus(5)} // Index 5
               onBlur={handleBlur}
               tabIndex={0}
               className={focusedCardIndex === 5 ? "Mui-focused" : ""}
               sx={{ height: "100%" }}
             >
-              <CardMedia
-                component="img"
-                alt="green iguana"
-                image={displayedPosts[5].url}
-                sx={{
-                  height: { sm: "auto", md: "50%" },
-                  aspectRatio: { sm: "16 / 9", md: "" },
-                }}
-              />
+              {displayedPosts[5].url && (
+                <CardMedia
+                  component="img"
+                  alt={displayedPosts[5].title}
+                  image={displayedPosts[5].url}
+                  sx={{
+                    height: { sm: "auto", md: "50%" },
+                    aspectRatio: { sm: "16 / 9", md: "" },
+                  }}
+                />
+              )}
               <SyledCardContent>
-                <Typography gutterBottom variant="caption" component="div">
-                  {displayedPosts[5].tag.tag}
-                </Typography>
+                {displayedPosts[5].tag && displayedPosts[5].tag.tag && (
+                  <Typography gutterBottom variant="caption" component="div">
+                    {displayedPosts[5].tag.tag}
+                  </Typography>
+                )}
                 <Typography gutterBottom variant="h6" component="div">
                   {displayedPosts[5].title}
                 </Typography>
@@ -519,10 +651,19 @@ export default function MainContent() {
                   {displayedPosts[5].content}
                 </StyledTypography>
               </SyledCardContent>
-              <Author authors={displayedPosts[5].author.username} />
+              {displayedPosts[5].author && (
+                <Author
+                  authors={[
+                    {
+                      name: displayedPosts[5].author.username,
+                      avatar: displayedPosts[5].author.avatarUrl || "",
+                    },
+                  ]}
+                />
+              )}
             </SyledCard>
-          )}
-        </Grid>
+          </Grid>
+        )}
       </Grid>
 
       {/* PAGINATION SECTION */}
@@ -530,7 +671,7 @@ export default function MainContent() {
         <Pagination
           hidePrevButton
           hideNextButton
-          count={totalPages}
+          count={trueTotalPage}
           page={currentPage}
           onChange={hadnlePageChange}
           boundaryCount={2}
