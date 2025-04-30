@@ -228,7 +228,6 @@ export default function MainContent() {
   };
 
   const handleClick = (clickedTag) => {
-    console.info("Clicked tag is: ", clickedTag);
     setActiveTag(clickedTag);
     setCurrentPage(1);
 
