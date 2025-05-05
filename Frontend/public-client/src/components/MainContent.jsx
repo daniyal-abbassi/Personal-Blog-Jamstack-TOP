@@ -197,6 +197,7 @@ export default function MainContent() {
     }
     return post.tag && post.tag.tag === activeTag;
   });
+  //filter posts based on search
   const filteredPosts = (tagFilteredPosts.filter(post => {
     if(!searchTitles.trim()) {
       return true;
@@ -224,7 +225,7 @@ export default function MainContent() {
     return (
       <Typography color="primary" variant="h4">
         {activeTag === "All categories"
-          ? "There are no posts available at the moment."
+          ? "No posts found with that data."
           : `No posts found with the tag "${activeTag}"`}
       </Typography>
     );
@@ -262,6 +263,7 @@ export default function MainContent() {
     let searchTerm = event.target.value;
     setSearchTitles(searchTerm);
     setCurrentPage(1);
+
 
     if(searchTerm.trim()==="") {
       searchParams.delete("search");
