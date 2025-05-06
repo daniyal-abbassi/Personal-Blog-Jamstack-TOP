@@ -5,8 +5,9 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppAppBar from "../components/AppAppBar";
 import Latest from "../components/Latest";
 import AppTheme from "../shared-theme/AppTheme";
+import Post from "./Post";
 
-export default function Blog({ isAuth,setIsAuth }) {
+export default function Blog({ isAuth, setIsAuth }) {
   return (
     <AppTheme>
       <CssBaseline enableColorScheme />
@@ -16,8 +17,9 @@ export default function Blog({ isAuth,setIsAuth }) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        <MainContent />
-        <Latest />
+        {/* <MainContent />
+        <Latest /> */}
+        <Post />
       </Container>
       <Footer />
     </AppTheme>
