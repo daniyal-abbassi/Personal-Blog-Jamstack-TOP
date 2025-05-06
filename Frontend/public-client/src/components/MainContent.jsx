@@ -19,7 +19,8 @@ import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import RssFeedRoundedIcon from "@mui/icons-material/RssFeedRounded";
 import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
-import { useSearchParams } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
+import { Button } from "@mui/material";
 //ISOLATE STYLINGS OF COMPONENTS
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -227,7 +228,11 @@ export default function MainContent() {
         {activeTag === "All categories"
           ? "No posts found with that data."
           : `No posts found with the tag "${activeTag}"`}
+          <Link to='/' reloadDocument>
+          <Button>ALL POSTS</Button>
+          </Link>
       </Typography>
+      
     );
   }
   if (postsLoading) {
