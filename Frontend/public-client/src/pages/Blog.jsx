@@ -17,9 +17,9 @@ export default function Blog({ isAuth, setIsAuth }) {
         component="main"
         sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
-        {/* <MainContent />
-        <Latest /> */}
-        <Post />
+        <MainContent />
+        <Latest />
+        {/* <Post /> */}
       </Container>
       <Footer />
     </AppTheme>

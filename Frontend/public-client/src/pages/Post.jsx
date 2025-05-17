@@ -10,38 +10,37 @@ import {
   Typography,
 } from "@mui/material";
 
-export default function Post() {
+export default function Post({post}) {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <Chip
         size="medium"
-        label="Programming"
+        label={post.tag.tag}
         color="primary"
         variant="outlined"
         sx={{ width: { xs: "100%", md: "fit-content", overflow: "auto" } }}
       />
 
       <Typography variant="h1">
-        How We Can Render A Single Post ??? Full Tuturial By Slim Shady
+        {post.title}
       </Typography>
       <CardContent>
         <Typography variant="body2" color="primary">
-          By Slim Shady
+          By {post.author.username}
         </Typography>
         <Typography variant="caption" color="warning">
-          5 May 2025
+          {post.created_at}
         </Typography>
       </CardContent>
       <CardMedia
         component="img"
         alt="Aroan Showarts"
-        image={test}
+        image={post.url}
         aspect-ratio="16 / 9"
         sx={{ maxWidth: "90%", maxHeight: "90%",borderRadius: "10px" }}
       />
       <Typography variant="h4">
-        This is the main blog text that will show in the single blog page, and
-        it is as follows so listen up.. hear we go again...
+        {post.content}
       </Typography>
     </Box>
   );

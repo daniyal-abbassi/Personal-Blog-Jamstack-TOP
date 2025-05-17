@@ -21,6 +21,7 @@ import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@mui/material";
+import Post from "../pages/Post";
 //ISOLATE STYLINGS OF COMPONENTS
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
@@ -384,6 +385,7 @@ export default function MainContent() {
         {/* Post 0 (Top Left) - md={6} */}
         {displayedPosts[0] && (
           <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[0].post_id}>
+            <Link to={`/post/${displayedPosts[0].post_id}`}>
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(0)} // Index 0
@@ -431,6 +433,7 @@ export default function MainContent() {
                 />
               )}
             </SyledCard>
+            </Link>
           </Grid>
         )}
 
