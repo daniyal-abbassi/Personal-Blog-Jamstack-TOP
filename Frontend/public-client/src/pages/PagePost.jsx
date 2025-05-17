@@ -1,5 +1,5 @@
 //Single Post component
-import test from "../assets/test.jpg";
+import DOMPurify from "dompurify";
 import Box from "@mui/material/Box";
 import {
   Card,
@@ -69,9 +69,9 @@ export default function PagePost() {
         aspect-ratio="16 / 9"
         sx={{ maxWidth: "90%", maxHeight: "90%",borderRadius: "10px" }}
       />
-      <Typography variant="h4">
-        {post.content}
-      </Typography>
+      <Typography variant="h4" component="div" dangerouslySetInnerHTML={{
+        __html: DOMPurify.sanitize(post.content),
+      }} />
     </Box>
   );
 }
