@@ -1,4 +1,5 @@
 // RENDER POSTS COMPONENT
+import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
@@ -415,9 +416,10 @@ export default function MainContent() {
                     variant="body2"
                     color="text.secondary"
                     gutterBottom
-                  >
-                    {displayedPosts[0].content}
-                  </StyledTypography>
+                    dangerouslySetInnerHTML={{
+                      __html: DOMPurify.sanitize(displayedPosts[0].content)
+                    }}
+                  />
                 </SyledCardContent>
                 {displayedPosts[0].author && (
                   <Author
@@ -470,9 +472,10 @@ export default function MainContent() {
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
-                >
-                  {displayedPosts[1].content}
-                </StyledTypography>
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(displayedPosts[1].content)
+                  }}
+                />
               </SyledCardContent>
               {displayedPosts[1].author && (
                 <Author
@@ -525,9 +528,10 @@ export default function MainContent() {
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
-                >
-                  {displayedPosts[2].content}
-                </StyledTypography>
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(displayedPosts[2].content)
+                  }}
+                />
               </SyledCardContent>
               {displayedPosts[2].author && (
                 <Author
@@ -593,9 +597,10 @@ export default function MainContent() {
                       variant="body2"
                       color="text.secondary"
                       gutterBottom
-                    >
-                      {displayedPosts[3].content}
-                    </StyledTypography>
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(displayedPosts[3].content)
+                      }}
+                    />
                   </div>
                 </SyledCardContent>
                 {displayedPosts[3].author && (
@@ -645,9 +650,10 @@ export default function MainContent() {
                       variant="body2"
                       color="text.secondary"
                       gutterBottom
-                    >
-                      {displayedPosts[4].content}
-                    </StyledTypography>
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(displayedPosts[4].content)
+                      }}
+                    />
                   </div>
                 </SyledCardContent>
                 {displayedPosts[4].author && (
@@ -702,9 +708,10 @@ export default function MainContent() {
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
-                >
-                  {displayedPosts[5].content}
-                </StyledTypography>
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(displayedPosts[5].content)
+                  }}
+                />
               </SyledCardContent>
               {displayedPosts[5].author && (
                 <Author
