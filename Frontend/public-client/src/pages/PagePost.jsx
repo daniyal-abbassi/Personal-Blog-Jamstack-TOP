@@ -10,7 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getPost } from "../api/posts";
 
 export default function PagePost() {
