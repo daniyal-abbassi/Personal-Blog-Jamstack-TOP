@@ -103,6 +103,14 @@ const dbClient = {
             const post = await prisma.post.findUnique({
                 where: {
                     post_id: parsedPostId
+                },
+                include: {
+                    author: {
+                        select: {
+                            username: true,
+                        }
+                    },
+                    tag: true,
                 }
             })
             return post;
