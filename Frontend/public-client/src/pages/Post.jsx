@@ -37,7 +37,7 @@ export default function Post() {
         alt="Aroan Showarts"
         image={test}
         aspect-ratio="16 / 9"
-        sx={{ maxWidth: "90%", maxHeight: "90%" }}
+        sx={{ maxWidth: "90%", maxHeight: "90%",borderRadius: "10px" }}
       />
       <Typography variant="h4">
         This is the main blog text that will show in the single blog page, and
