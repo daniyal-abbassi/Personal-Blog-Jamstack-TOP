@@ -26,7 +26,7 @@ export const getPosts = async(queries = '') => {
 //GET A SINGLE POST
 export const getPost = async(postId) => {
     try {
-        const response = await fetch(`${API_BASE_URL}/posts/post/:${postId}`,{
+        const response = await fetch(`${API_BASE_URL}/posts/post/${postId}`,{
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

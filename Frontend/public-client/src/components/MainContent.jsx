@@ -21,7 +21,6 @@ import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@mui/material";
-import Post from "../pages/Post";
 //ISOLATE STYLINGS OF COMPONENTS
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",

@@ -5,7 +5,7 @@ import CssBaseline from "@mui/material/CssBaseline";
 import AppAppBar from "../components/AppAppBar";
 import Latest from "../components/Latest";
 import AppTheme from "../shared-theme/AppTheme";
-import Post from "./Post";
+import Post from "./PagePost";
 
 export default function Blog({ isAuth, setIsAuth }) {
   return (

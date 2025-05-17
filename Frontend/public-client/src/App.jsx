@@ -27,6 +27,7 @@ export default function App() {
         <Route path="/" element={<Blog isAuth={isAuth} setIsAuth={setIsAuth} />} />
         <Route path="/sign-up" element={<SignUp setIsAuth={setIsAuth} />} />
         <Route path="/sign-in" element={<SignIn setIsAuth={setIsAuth} />} />
+        
       </Routes>
     </BrowserRouter>
   );

@@ -9,8 +9,38 @@ import {
   Chip,
   Typography,
 } from "@mui/material";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
+import { getPost } from "../api/posts";
 
-export default function Post({post}) {
+export default function PagePost() {
+  const {postId} = useParams();
+  const [post, setPost] = useState(null);
+  const [loading,setLoading] = useState(null);
+  const [error, setError] = useState(null);
+  useEffect(()=>{
+    const fetchPost = async()=>{
+      try {
+        const postData = await getPost(postId);
+        setPost(postData);
+      } catch (error) {
+        setError(`Failed to fetch post: ${error}`)
+      } finally {
+        setLoading(false)
+      }
+    };
+    fetchPost();
+  },[postId])
+
+  if(loading) {
+    return <Typography>Loading...</Typography>
+  }
+  if(error) {
+    return <Typography color="error">{error}</Typography>
+  }
+  if(!post) {
+    return <Typography>Post Not Found.</Typography>
+  }
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <Chip
