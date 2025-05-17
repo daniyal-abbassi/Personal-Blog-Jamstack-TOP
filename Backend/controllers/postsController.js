@@ -10,6 +10,15 @@ const postsController = {
             res.status(500).json({ message: 'ERROR IN GETTING POSTS ROUTE' })
         }
     },
+    getPost: async(req,res) => {
+        const {postId} = req.params;
+        try {
+            const post = await dbClient.getPost(postId);
+            res.json(post)
+        } catch (error) {
+            res.status(500).json({message: 'ERROR GETTING POST'})
+        }
+    },
     createPost: async (req, res) => {
         const { title, tag, content, isPublished } = req.body;
         const { userId } = req.user;
