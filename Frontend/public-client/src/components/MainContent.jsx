@@ -98,8 +98,7 @@ Author.propTypes = {
   ).isRequired,
 };
 
-export function Search({handleSearch,searchTitles}) {
-
+export function Search({ handleSearch, searchTitles }) {
   return (
     <FormControl sx={{ width: { xs: "100%", md: "25ch" } }} variant="outlined">
       <OutlinedInput
@@ -124,7 +123,7 @@ export function Search({handleSearch,searchTitles}) {
 Search.prototype = {
   searchTitles: PropTypes.string.isRequired,
   handleSearch: PropTypes.func.isRequired,
-}
+};
 //posts per page
 const POSTS_PER_PAGE = 6;
 //MAIN COMPONENT
@@ -139,9 +138,9 @@ export default function MainContent() {
     searchParams.get("tag") || "All categories"
   );
   //read search from searchParam
-  const [searchTitles,setSearchTitles] = useState(
+  const [searchTitles, setSearchTitles] = useState(
     searchParams.get("search") || ""
-  )
+  );
   //rendering when page changes
   useEffect(() => {
     const pageParam = searchParams.get("page");
@@ -180,32 +179,34 @@ export default function MainContent() {
     }
 
     //update search state based on searchPrams-url
-    if(searchTitleParam && posts.some(post=>post.title===searchTitleParam)) {
-      setSearchTitles(searchTitleParam)
-    } else if(searchTitleParam) {
+    if (
+      searchTitleParam &&
+      posts.some((post) => post.title === searchTitleParam)
+    ) {
+      setSearchTitles(searchTitleParam);
+    } else if (searchTitleParam) {
       setSearchTitles("");
       searchParams.delete("search");
       setSearchParams(searchParams);
     } else {
       setSearchTitles("");
     }
-  }, [searchParams, tags, setSearchParams,setSearchTitles]);
+  }, [searchParams, tags, setSearchParams, setSearchTitles]);
 
   //filter posts based on tag
   const tagFilteredPosts = (posts || []).filter((post) => {
-   
     if (activeTag === "All categories") {
       return true;
     }
     return post.tag && post.tag.tag === activeTag;
   });
   //filter posts based on search
-  const filteredPosts = (tagFilteredPosts.filter(post => {
-    if(!searchTitles.trim()) {
+  const filteredPosts = tagFilteredPosts.filter((post) => {
+    if (!searchTitles.trim()) {
       return true;
     }
     return post.title.toLowerCase().includes(searchTitles.toLowerCase());
-  }))
+  });
   //CALCULATE POSTS PER PAGE
   const startIndex = (currentPage - 1) * POSTS_PER_PAGE;
   const endIndex = startIndex + POSTS_PER_PAGE;
@@ -229,11 +230,10 @@ export default function MainContent() {
         {activeTag === "All categories"
           ? "No posts found with that data."
           : `No posts found with the tag "${activeTag}"`}
-          <Link to='/' reloadDocument>
+        <Link to="/" reloadDocument>
           <Button>ALL POSTS</Button>
-          </Link>
+        </Link>
       </Typography>
-      
     );
   }
   if (postsLoading) {
@@ -270,16 +270,15 @@ export default function MainContent() {
     setSearchTitles(searchTerm);
     setCurrentPage(1);
 
-
-    if(searchTerm.trim()==="") {
+    if (searchTerm.trim() === "") {
       searchParams.delete("search");
     } else {
-      searchParams.set("search",searchTerm)
+      searchParams.set("search", searchTerm);
     }
 
     searchParams.delete("search");
-    setSearchParams(searchParams)
-  }
+    setSearchParams(searchParams);
+  };
   const handleClick = (clickedTag) => {
     setActiveTag(clickedTag);
     setCurrentPage(1);
@@ -313,8 +312,7 @@ export default function MainContent() {
           overflow: "auto",
         }}
       >
-        <Search handleSearch={handleSearch} searchTitles={searchTitles}/>
-       
+        <Search handleSearch={handleSearch} searchTitles={searchTitles} />
       </Box>
 
       {/* TAGS BOX */}
@@ -374,8 +372,7 @@ export default function MainContent() {
             overflow: "auto",
           }}
         >
-          <Search  handleSearch={handleSearch} searchTitles={searchTitles}/>
-         
+          <Search handleSearch={handleSearch} searchTitles={searchTitles} />
         </Box>
       </Box>
 
@@ -385,54 +382,55 @@ export default function MainContent() {
         {/* Post 0 (Top Left) - md={6} */}
         {displayedPosts[0] && (
           <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[0].post_id}>
+            {/* navigate to specific post*/}
             <Link to={`/post/${displayedPosts[0].post_id}`}>
-            <SyledCard
-              variant="outlined"
-              onFocus={() => handleFocus(0)} // Index 0
-              onBlur={handleBlur}
-              tabIndex={0}
-              className={focusedCardIndex === 0 ? "Mui-focused" : ""}
-            >
-              {displayedPosts[0].url && (
-                <CardMedia
-                  component="img"
-                  alt={displayedPosts[0].title}
-                  image={displayedPosts[0].url}
-                  sx={{
-                    aspectRatio: "16 / 9",
-                    borderBottom: "1px solid",
-                    borderColor: "divider",
-                  }}
-                />
-              )}
-              <SyledCardContent>
-                {displayedPosts[0].tag && displayedPosts[0].tag.tag && (
-                  <Typography gutterBottom variant="caption" component="div">
-                    {displayedPosts[0].tag.tag}
-                  </Typography>
+              <SyledCard
+                variant="outlined"
+                onFocus={() => handleFocus(0)} // Index 0
+                onBlur={handleBlur}
+                tabIndex={0}
+                className={focusedCardIndex === 0 ? "Mui-focused" : ""}
+              >
+                {displayedPosts[0].url && (
+                  <CardMedia
+                    component="img"
+                    alt={displayedPosts[0].title}
+                    image={displayedPosts[0].url}
+                    sx={{
+                      aspectRatio: "16 / 9",
+                      borderBottom: "1px solid",
+                      borderColor: "divider",
+                    }}
+                  />
                 )}
-                <Typography gutterBottom variant="h6" component="div">
-                  {displayedPosts[0].title}
-                </Typography>
-                <StyledTypography
-                  variant="body2"
-                  color="text.secondary"
-                  gutterBottom
-                >
-                  {displayedPosts[0].content}
-                </StyledTypography>
-              </SyledCardContent>
-              {displayedPosts[0].author && (
-                <Author
-                  authors={[
-                    {
-                      name: displayedPosts[0].author.username,
-                      avatar: displayedPosts[0].author.avatarUrl || "",
-                    },
-                  ]}
-                />
-              )}
-            </SyledCard>
+                <SyledCardContent>
+                  {displayedPosts[0].tag && displayedPosts[0].tag.tag && (
+                    <Typography gutterBottom variant="caption" component="div">
+                      {displayedPosts[0].tag.tag}
+                    </Typography>
+                  )}
+                  <Typography gutterBottom variant="h6" component="div">
+                    {displayedPosts[0].title}
+                  </Typography>
+                  <StyledTypography
+                    variant="body2"
+                    color="text.secondary"
+                    gutterBottom
+                  >
+                    {displayedPosts[0].content}
+                  </StyledTypography>
+                </SyledCardContent>
+                {displayedPosts[0].author && (
+                  <Author
+                    authors={[
+                      {
+                        name: displayedPosts[0].author.username,
+                        avatar: displayedPosts[0].author.avatarUrl || "",
+                      },
+                    ]}
+                  />
+                )}
+              </SyledCard>
             </Link>
           </Grid>
         )}
