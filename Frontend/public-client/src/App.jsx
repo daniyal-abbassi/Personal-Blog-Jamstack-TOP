@@ -3,6 +3,7 @@ import Blog from "./pages/Blog";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import { useEffect, useState } from "react";
+import PagePost from "./pages/PagePost";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -27,7 +28,7 @@ export default function App() {
         <Route path="/" element={<Blog isAuth={isAuth} setIsAuth={setIsAuth} />} />
         <Route path="/sign-up" element={<SignUp setIsAuth={setIsAuth} />} />
         <Route path="/sign-in" element={<SignIn setIsAuth={setIsAuth} />} />
-        
+        <Route path="/post/:postId" element={<PagePost />} />
       </Routes>
     </BrowserRouter>
   );
