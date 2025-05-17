@@ -7,7 +7,7 @@ const postsController = require('../controllers/postsController');
 
 postsRouter.get('/',postsController.showPosts)
 //get a single post
-postsRouter.get('/post/:postId',postsController)
+postsRouter.get('/post/:postId',postsController.getPost)
 postsRouter.post('/create',upload.single('file'),verifyToken,postsController.createPost)
 postsRouter.put('/edit/:postId',upload.single('file'),verifyToken,postsController.editPost)
 postsRouter.delete('/:postId',verifyToken,postsController.deletePost)
