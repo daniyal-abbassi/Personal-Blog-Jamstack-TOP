@@ -12,8 +12,12 @@ const postsController = {
     },
     getPost: async(req,res) => {
         const {postId} = req.params;
+        //test
+        console.log('this is post id for single post: ',postId)
         try {
             const post = await dbClient.getPost(postId);
+            //test
+            console.log('this is returned post: ',post)
             res.json(post)
         } catch (error) {
             res.status(500).json({message: 'ERROR GETTING POST'})
