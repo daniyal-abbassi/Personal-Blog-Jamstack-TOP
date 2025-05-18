@@ -1,5 +1,6 @@
 //Single Post component
 import DOMPurify from "dompurify";
+import { format } from "date-fns";
 import Box from "@mui/material/Box";
 import {
   Card,
@@ -59,7 +60,8 @@ export default function PagePost() {
           By {post.author.username}
         </Typography>
         <Typography variant="caption" color="warning">
-          {post.created_at}
+          
+          {format(new Date(post.created_at), 'dd MMMM yyyy')}
         </Typography>
       </CardContent>
       <CardMedia
