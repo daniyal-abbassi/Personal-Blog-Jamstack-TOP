@@ -1,3 +1,4 @@
+import DOMPurify from "dompurify";
 import PropTypes from "prop-types";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
@@ -9,6 +10,7 @@ import { styled } from "@mui/material/styles";
 import NavigateNextRoundedIcon from "@mui/icons-material/NavigateNextRounded";
 import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
+import { Link } from "react-router-dom";
 
 const articleInfo = [
   {
@@ -244,6 +246,7 @@ export default function Latest() {
                 <Typography gutterBottom variant="caption" component="div">
                   {article.tag.tag}
                 </Typography>
+
                 <TitleTypography
                   gutterBottom
                   variant="h6"
@@ -252,19 +255,22 @@ export default function Latest() {
                   tabIndex={0}
                   className={focusedCardIndex === index ? "Mui-focused" : ""}
                 >
+                  <Link to={`/post/${article.post_id}`}>
                   {article.title}
                   <NavigateNextRoundedIcon
                     className="arrow"
                     sx={{ fontSize: "1rem" }}
                   />
+                  </Link>
                 </TitleTypography>
                 <StyledTypography
                   variant="body2"
                   color="text.secondary"
                   gutterBottom
-                >
-                  {article.content}
-                </StyledTypography>
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(article.content)
+                  }}
+                />
 
                 <Author authors={article.author.username} />
               </Box>
