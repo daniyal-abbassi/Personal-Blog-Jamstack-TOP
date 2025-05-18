@@ -12,6 +12,14 @@ import { useEffect, useState } from "react";
 import usePosts from "../hooks/usePosts";
 import { Link } from "react-router-dom";
 
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: "inherit",
+  "&:hover": {
+    textDecoration: "none",
+  }
+})
+
 const articleInfo = [
   {
     tag: "Engineering",
@@ -255,13 +263,13 @@ export default function Latest() {
                   tabIndex={0}
                   className={focusedCardIndex === index ? "Mui-focused" : ""}
                 >
-                  <Link to={`/post/${article.post_id}`}>
+                  <StyledLink to={`/post/${article.post_id}`}>
                   {article.title}
                   <NavigateNextRoundedIcon
                     className="arrow"
                     sx={{ fontSize: "1rem" }}
                   />
-                  </Link>
+                  </StyledLink>
                 </TitleTypography>
                 <StyledTypography
                   variant="body2"
