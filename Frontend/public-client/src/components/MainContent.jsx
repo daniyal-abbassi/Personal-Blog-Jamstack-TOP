@@ -66,7 +66,7 @@ const StyledTypography = styled(Typography)({
   textOverflow: "ellipsis",
 });
 
-function Author({ authors }) {
+function Author({ author,date }) {
   return (
     <Box
       sx={{
@@ -89,9 +89,9 @@ function Author({ authors }) {
         <AvatarGroup max={3}>
           <Avatar alt="lain" src="lain" sx={{ width: 24, height: 24 }} />
         </AvatarGroup>
-        <Typography variant="caption">Lain</Typography>
+        <Typography variant="caption">{author}</Typography>
       </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
+      <Typography variant="caption">{date}</Typography>
     </Box>
   );
 }
@@ -429,14 +429,7 @@ export default function MainContent() {
                   />
                 </SyledCardContent>
                 {displayedPosts[0].author && (
-                  <Author
-                    authors={[
-                      {
-                        name: displayedPosts[0].author.username,
-                        avatar: displayedPosts[0].author.avatarUrl || "",
-                      },
-                    ]}
-                  />
+                  <Author author={displayedPosts[0].author.username} date={displayedPosts[0].created_at}/>
                 )}
               </SyledCard>
             </StyledLink>
@@ -485,14 +478,7 @@ export default function MainContent() {
                 />
               </SyledCardContent>
               {displayedPosts[1].author && (
-                <Author
-                  authors={[
-                    {
-                      name: displayedPosts[1].author.username,
-                      avatar: displayedPosts[1].author.avatarUrl || "",
-                    },
-                  ]}
-                />
+                <Author author={displayedPosts[1].author.username} date={displayedPosts[1].created_at}/>
               )}
             </SyledCard>
             </StyledLink>
@@ -541,14 +527,7 @@ export default function MainContent() {
                 />
               </SyledCardContent>
               {displayedPosts[2].author && (
-                <Author
-                  authors={[
-                    {
-                      name: displayedPosts[2].author.username,
-                      avatar: displayedPosts[2].author.avatarUrl || "",
-                    },
-                  ]}
-                />
+                <Author author={displayedPosts[2].author.username} date={displayedPosts[2].created_at}/>
               )}
             </SyledCard>
             </StyledLink>
@@ -611,14 +590,7 @@ export default function MainContent() {
                   </div>
                 </SyledCardContent>
                 {displayedPosts[3].author && (
-                  <Author
-                    authors={[
-                      {
-                        name: displayedPosts[3].author.username,
-                        avatar: displayedPosts[3].author.avatarUrl || "",
-                      },
-                    ]}
-                  />
+                  <Author author={displayedPosts[3].author.username} date={displayedPosts[3].created_at}/>
                 )}
               </SyledCard>
                 </StyledLink>
@@ -664,14 +636,7 @@ export default function MainContent() {
                   </div>
                 </SyledCardContent>
                 {displayedPosts[4].author && (
-                  <Author
-                    authors={[
-                      {
-                        name: displayedPosts[4].author.username,
-                        avatar: displayedPosts[4].author.avatarUrl || "",
-                      },
-                    ]}
-                  />
+                  <Author author={displayedPosts[4].author.username} date={displayedPosts[4].created_at}/>
                 )}
               </SyledCard>
               </StyledLink>
@@ -721,14 +686,7 @@ export default function MainContent() {
                 />
               </SyledCardContent>
               {displayedPosts[5].author && (
-                <Author
-                  authors={[
-                    {
-                      name: displayedPosts[5].author.username,
-                      avatar: displayedPosts[5].author.avatarUrl || "",
-                    },
-                  ]}
-                />
+                <Author author={displayedPosts[5].author.username} date={displayedPosts[5].created_at}/>
               )}
             </SyledCard>
             </StyledLink>
