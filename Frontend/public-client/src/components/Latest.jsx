@@ -147,7 +147,7 @@ const TitleTypography = styled(Typography)(({ theme }) => ({
   },
 }));
 
-function Author({ authors }) {
+function Author({ author,date }) {
   return (
     <Box
       sx={{
@@ -169,9 +169,9 @@ function Author({ authors }) {
         <AvatarGroup max={3}>
           <Avatar alt="Lain" src="Lain" sx={{ width: 24, height: 24 }} />
         </AvatarGroup>
-        <Typography variant="caption">Lain</Typography>
+        <Typography variant="caption">{author}</Typography>
       </Box>
-      <Typography variant="caption">July 14, 2021</Typography>
+      <Typography variant="caption">{date}</Typography>
     </Box>
   );
 }
@@ -280,7 +280,7 @@ export default function Latest() {
                   }}
                 />
 
-                <Author authors={article.author.username} />
+                <Author author={article.author.username} date={article.created_at} />
               </Box>
             </Grid>
           ))}
