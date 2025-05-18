@@ -1,5 +1,6 @@
 // RENDER POSTS COMPONENT
 import DOMPurify from "dompurify";
+import { format } from "date-fns";
 import PropTypes from "prop-types";
 import Avatar from "@mui/material/Avatar";
 import AvatarGroup from "@mui/material/AvatarGroup";
@@ -91,7 +92,7 @@ function Author({ author,date }) {
         </AvatarGroup>
         <Typography variant="caption">{author}</Typography>
       </Box>
-      <Typography variant="caption">{date}</Typography>
+      <Typography variant="caption">{format(new Date(date), 'dd MMMM yyyy')}</Typography>
     </Box>
   );
 }
