@@ -23,6 +23,13 @@ import usePosts from "../hooks/usePosts";
 import { Link, useSearchParams } from "react-router-dom";
 import { Button } from "@mui/material";
 //ISOLATE STYLINGS OF COMPONENTS
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: "inherit",
+  "&:hover": {
+    textDecoration: "none"
+  }
+});
 const SyledCard = styled(Card)(({ theme }) => ({
   display: "flex",
   flexDirection: "column",
@@ -383,7 +390,7 @@ export default function MainContent() {
         {displayedPosts[0] && (
           <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[0].post_id}>
             {/* navigate to specific post*/}
-            <Link to={`/post/${displayedPosts[0].post_id}`}>
+            <StyledLink to={`/post/${displayedPosts[0].post_id}`}>
               <SyledCard
                 variant="outlined"
                 onFocus={() => handleFocus(0)} // Index 0
@@ -432,14 +439,14 @@ export default function MainContent() {
                   />
                 )}
               </SyledCard>
-            </Link>
+            </StyledLink>
           </Grid>
         )}
 
         {/* Post 1 (Top Right) - md={6} */}
         {displayedPosts[1] && (
           <Grid item size={{ xs: 12, md: 6 }} key={displayedPosts[1].post_id}>
-            <Link to={`/post/${displayedPosts[1].post_id}`}>
+            <StyledLink to={`/post/${displayedPosts[1].post_id}`}>
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(1)} // Index 1
@@ -488,14 +495,14 @@ export default function MainContent() {
                 />
               )}
             </SyledCard>
-            </Link>
+            </StyledLink>
           </Grid>
         )}
 
         {/* Post 2 (Middle Left) - md={4} */}
         {displayedPosts[2] && (
           <Grid item size={{ xs: 12, md: 4 }} key={displayedPosts[2].post_id}>
-            <Link to={`/post/${displayedPosts[2].post_id}`}>
+            <StyledLink to={`/post/${displayedPosts[2].post_id}`}>
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(2)} // Index 2
@@ -544,7 +551,7 @@ export default function MainContent() {
                 />
               )}
             </SyledCard>
-            </Link>
+            </StyledLink>
           </Grid>
         )}
 
@@ -563,7 +570,7 @@ export default function MainContent() {
               }}
             >
               {/* Card for Post 3 (Above) - No Image */}
-              <Link to={`/post/${displayedPosts[3].post_id}`}>
+              <StyledLink to={`/post/${displayedPosts[3].post_id}`}>
               <SyledCard
                 variant="outlined"
                 onFocus={() => handleFocus(3)} // Index 3
@@ -614,9 +621,9 @@ export default function MainContent() {
                   />
                 )}
               </SyledCard>
-                </Link>
+                </StyledLink>
               {/* Card for Post 4 (Below) - No Image */}
-              <Link to={`/post/${displayedPosts[4].post_id}`}>
+              <StyledLink to={`/post/${displayedPosts[4].post_id}`}>
               <SyledCard
                 variant="outlined"
                 onFocus={() => handleFocus(4)} // Index 4
@@ -667,7 +674,7 @@ export default function MainContent() {
                   />
                 )}
               </SyledCard>
-              </Link>
+              </StyledLink>
             </Box>
           </Grid>
         )}
@@ -675,7 +682,7 @@ export default function MainContent() {
         {/* Post 5 (Middle Right / Bottom Left) - md={4} */}
         {displayedPosts[5] && (
           <Grid item size={{ xs: 12, md: 4 }} key={displayedPosts[5].post_id}>
-            <Link to={`/post/${displayedPosts[5].post_id}`}>
+            <StyledLink to={`/post/${displayedPosts[5].post_id}`}>
             <SyledCard
               variant="outlined"
               onFocus={() => handleFocus(5)} // Index 5
@@ -724,7 +731,7 @@ export default function MainContent() {
                 />
               )}
             </SyledCard>
-            </Link>
+            </StyledLink>
           </Grid>
         )}
       </Grid>
