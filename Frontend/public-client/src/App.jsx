@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import PagePost from "./pages/PagePost";
 import AppTheme from "./shared-theme/AppTheme";
 import { Container, CssBaseline } from "@mui/material";
+import AppAppBar from "./components/AppAppBar";
 
 export default function App() {
   const [isAuth, setIsAuth] = useState(false);
@@ -38,6 +39,7 @@ export default function App() {
           element={
             <AppTheme>
               <CssBaseline enableColorScheme />
+             
               <Container
                 maxWidth="lg"
                 component="main"
