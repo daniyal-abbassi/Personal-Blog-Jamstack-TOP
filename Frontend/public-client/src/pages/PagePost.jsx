@@ -13,6 +13,7 @@ import {
   Typography,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPost } from "../api/posts";
@@ -49,10 +50,11 @@ export default function PagePost() {
   return (
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <IconButton
-        color="error"
+        color="primary"
         edge="start"
         aria-label="ALL POSTS"
         sx={{ width: { xs: "100%", md: "fit-content", overflow: "auto" } }}
+        href="http://localhost:5174"
       >
         <ArrowBackIosNewIcon />
         <Typography>ALL POSTS</Typography>
@@ -88,6 +90,32 @@ export default function PagePost() {
           __html: DOMPurify.sanitize(post.content),
         }}
       />
+      <Box
+        sx={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 10,
+          justifyContent: "space-between",
+        }}
+      >
+        <IconButton
+          color="primary"
+          edge="start"
+          aria-label="ALL POSTS"
+          sx={{ width: { xs: "20%", overflow: "auto" } }}
+        >
+          <ArrowBackIosNewIcon />
+        </IconButton>
+
+        <IconButton
+          color="primary"
+          edge="start"
+          aria-label="ALL POSTS"
+          sx={{ width: { xs: "20%", overflow: "auto" } }}
+        >
+          <ArrowForwardIosIcon />
+        </IconButton>
+      </Box>
     </Box>
   );
 }
