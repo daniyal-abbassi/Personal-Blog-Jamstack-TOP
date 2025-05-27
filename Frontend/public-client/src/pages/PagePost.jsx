@@ -15,6 +15,7 @@ import {
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
+import ArrowBackIcon from "@mui/icons-material/ArrowBackIos"
 import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPost } from "../api/posts";
@@ -121,27 +122,29 @@ export default function PagePost() {
         }}
       >
         {/* NEXT AND PREVIOUS POST */}
-        <IconButton
+        <Box
           color="primary"
           edge="start"
           aria-label="ALL POSTS"
-          sx={{ width: { xs: "20%", overflow: "auto" } }}
-        >
-          <StyledLink to={`/post/${post.post_id - 1}`}>
-          <ArrowBackIosNewIcon />
+          sx={{ width: { xs: "fit-content",md:"fit-content", overflow: "auto" }}}
+          >
+          <StyledLink to={`/post/${post.post_id - 1}`} sx={{display: "flex",flexDirection: "row",gap:1,}}>
+          <ArrowBackIcon />
+          <Typography>Previous Post</Typography>
           </StyledLink>
-        </IconButton>
+        </Box>
 
-        <IconButton
+        <Box
           color="primary"
           edge="start"
           aria-label="ALL POSTS"
           sx={{ width: { xs: "20%", overflow: "auto" } }}
         >
-          <StyledLink to={`/post/${post.post_id + 1}`}>
+          <StyledLink to={`/post/${post.post_id + 1}`} sx={{display: "flex",flexDirection: "row",gap:1,}}>
+          <Typography>Next Post</Typography>
           <ArrowForwardIosIcon />
           </StyledLink>
-        </IconButton>
+        </Box>
       </Box>
     </Box>
   );
