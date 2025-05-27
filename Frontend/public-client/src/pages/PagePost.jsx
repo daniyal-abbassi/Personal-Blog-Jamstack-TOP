@@ -10,14 +10,22 @@ import {
   CardMedia,
   Chip,
   IconButton,
+  styled,
   Typography,
 } from "@mui/material";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getPost } from "../api/posts";
-
+//STYLES LINK 
+const StyledLink = styled(Link)({
+  textDecoration: "none",
+  color: "inherit",
+  "&:hover": {
+    textDecoration: "none"
+  }
+});
 export default function PagePost() {
   const { postId } = useParams();
   const [post, setPost] = useState(null);
@@ -44,7 +52,21 @@ export default function PagePost() {
     return <Typography color="error">{error}</Typography>;
   }
   if (!post) {
-    return <Typography>Post Not Found.</Typography>;
+    return (
+      <>
+    <Typography>Post Not Found, Please go back to All Posts.</Typography>
+    <IconButton
+        color="primary"
+        edge="start"
+        aria-label="ALL POSTS"
+        sx={{ width: { xs: "100%", md: "fit-content", overflow: "auto" } }}
+        href="http://localhost:5174"
+      >
+        <ArrowBackIosNewIcon />
+        <Typography>ALL POSTS</Typography>
+      </IconButton>
+      </>
+  )  
   }
 
   return (
@@ -98,13 +120,16 @@ export default function PagePost() {
           justifyContent: "space-between",
         }}
       >
+        {/* NEXT AND PREVIOUS POST */}
         <IconButton
           color="primary"
           edge="start"
           aria-label="ALL POSTS"
           sx={{ width: { xs: "20%", overflow: "auto" } }}
         >
+          <StyledLink to={`/post/${post.post_id - 1}`}>
           <ArrowBackIosNewIcon />
+          </StyledLink>
         </IconButton>
 
         <IconButton
@@ -113,7 +138,9 @@ export default function PagePost() {
           aria-label="ALL POSTS"
           sx={{ width: { xs: "20%", overflow: "auto" } }}
         >
+          <StyledLink to={`/post/${post.post_id + 1}`}>
           <ArrowForwardIosIcon />
+          </StyledLink>
         </IconButton>
       </Box>
     </Box>
