@@ -13,9 +13,10 @@ export default function Blog({ isAuth, setIsAuth }) {
       <CssBaseline enableColorScheme />
       <AppAppBar isAuth={isAuth} setIsAuth={setIsAuth} />
       <Container
+        
         maxWidth="lg"
         component="main"
-        sx={{ display: "flex", flexDirection: "column", my: 16, gap: 4 }}
+        sx={{display: "flex", flexDirection: "column", my: 16, gap: 4 }}
       >
         <MainContent />
         <Latest />
