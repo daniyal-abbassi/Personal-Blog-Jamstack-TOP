@@ -89,10 +89,7 @@ const dbClient = {
                     }
                 },
                 tag: true,
-            },
-            where: {
-                isPublished: true,
-            }    
+            } 
             });
             return posts;
         } catch (error) {
