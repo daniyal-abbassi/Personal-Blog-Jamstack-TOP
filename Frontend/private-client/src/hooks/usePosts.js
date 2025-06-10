@@ -14,7 +14,6 @@ const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
     search,
   }).toString();
 
-  console.log('this is from usePosts hook, posts are: ',posts)
   useEffect(() => {
     const fetchPosts = async () => {
       try {
