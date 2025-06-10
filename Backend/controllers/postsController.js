@@ -5,6 +5,12 @@ const postsController = {
     showPosts: async (req, res) => {
         try {
             const posts = await dbClient.showPosts();
+            const {isPublished: isPublishedQuery} = req.query;
+            const filters = {};
+            if(isPublishedQuery !== undefined) {
+                filters.isPublished = (isPublishedQuery==='true')
+            }
+            console.log('-----------    ',filters)
             res.json(posts)
         } catch (error) {
             res.status(500).json({ message: 'ERROR IN GETTING POSTS ROUTE' })

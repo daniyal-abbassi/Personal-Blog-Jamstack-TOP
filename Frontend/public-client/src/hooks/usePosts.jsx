@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getPosts } from "../api/posts";
 
-const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
+const usePosts = (sortValue = "created_at", order = "asc", search = "",isPublished="true") => {
   const [posts, setPosts] = useState([]);
   const [postsLoading, setPostsLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,6 +10,7 @@ const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
     sortValue,
     order,
     search,
+    isPublished,
   }).toString();
   const getTags = (posts) => {
     let tags = [];
