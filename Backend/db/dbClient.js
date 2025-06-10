@@ -84,6 +84,9 @@ const dbClient = {
             let {sortValue, order} = queries;
             let orderBy = new Map();
             orderBy.set(sortValue,order);
+            if(orderBy.has('comments')) {
+                orderBy.set('comments',{_count: order})
+            }
             const queryOptions = {
                 include: {
                     author: {
