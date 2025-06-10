@@ -81,6 +81,14 @@ const dbClient = {
     //POSTS
     showPosts: async (queries) => {
         try {
+            let {sortValue} = queries;
+            if(sortValue==='title') {
+                let orderBy = {title: 'asc'}
+            } else if(sortValue==='created_at') {
+                orderBy = {created_at: 'asc'}
+            } else if (sortValue==='comments') {
+                orderBy = {comments: 'asc'}
+            }
             const queryOptions = {
                 include: {
                     author: {
@@ -89,7 +97,8 @@ const dbClient = {
                         }
                     },
                     tag: true,
-                }
+                },
+                orderBy: orderBy
             };
             //DYNAMICALLY ADD QUERY
             if(queries.isPublished !== undefined) {
@@ -97,12 +106,7 @@ const dbClient = {
                     isPublished: queries.isPublished
                 }
             };
-            if(queries.sortValue !== undefined) {
-                queryOptions.orderBy = {
-                    created_at: 'asc'
-                }
-            };
-            console.log('----------prisma--------',queries)
+            console.log('----------prisma--------',queries,queryOptions)
             const posts = await prisma.post.findMany(queryOptions);
             return posts;
         } catch (error) {
