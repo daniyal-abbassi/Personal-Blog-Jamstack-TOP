@@ -9,7 +9,10 @@ const postsController = {
             if (isPublishedQuery !== undefined) {
                 filters.isPublished = (isPublishedQuery === 'true')
             }
-            console.log('-----------    ', req.query)
+            if (req.query.sortValue) {
+                filters.sortValue = req.query.sortValue;
+            }
+            console.log('-----------    ', filters)
             const posts = await dbClient.showPosts(filters);
             res.json(posts)
         } catch (error) {

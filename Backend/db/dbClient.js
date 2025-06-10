@@ -79,7 +79,7 @@ const dbClient = {
         }
     },
     //POSTS
-    showPosts: async ({ isPublished } = {}) => {
+    showPosts: async (queries) => {
         try {
             const queryOptions = {
                 include: {
@@ -92,11 +92,17 @@ const dbClient = {
                 }
             };
             //DYNAMICALLY ADD QUERY
-            if(isPublished !== undefined) {
+            if(queries.isPublished !== undefined) {
                 queryOptions.where = {
-                    isPublished: isPublished
+                    isPublished: queries.isPublished
                 }
-            }
+            };
+            if(queries.sortValue !== undefined) {
+                queryOptions.orderBy = {
+                    created_at: 'asc'
+                }
+            };
+            console.log('----------prisma--------',queries)
             const posts = await prisma.post.findMany(queryOptions);
             return posts;
         } catch (error) {
