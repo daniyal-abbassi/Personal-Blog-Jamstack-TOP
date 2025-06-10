@@ -4,16 +4,13 @@ const cloudinary = require('../utils/cloudinaryConfig');
 const postsController = {
     showPosts: async (req, res) => {
         try {
+            const queries = req.query;
             const { isPublished: isPublishedQuery } = req.query;
-            const filters = {};
             if (isPublishedQuery !== undefined) {
-                filters.isPublished = (isPublishedQuery === 'true')
+                queries.isPublished = (isPublishedQuery === 'true')
             }
-            if (req.query.sortValue) {
-                filters.sortValue = req.query.sortValue;
-            }
-            console.log('-----------    ', filters)
-            const posts = await dbClient.showPosts(filters);
+            
+            const posts = await dbClient.showPosts(queries);
             res.json(posts)
         } catch (error) {
             res.status(500).json({ message: 'ERROR IN GETTING POSTS ROUTE' })

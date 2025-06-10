@@ -16,8 +16,8 @@ function Sort({ setSortValue, setOrder }) {
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="title">Name</SelectItem>
-          <SelectItem value="createdAt">Date Added</SelectItem>
-          <SelectItem value="messages">Comments</SelectItem>
+          <SelectItem value="created_at">Date Added</SelectItem>
+          <SelectItem value="comments">Comments</SelectItem>
         </SelectContent>
       </Select>
       <Select onValueChange={(value) => setOrder(value)}>

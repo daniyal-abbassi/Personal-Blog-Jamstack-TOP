@@ -81,17 +81,9 @@ const dbClient = {
     //POSTS
     showPosts: async (queries) => {
         try {
-            let {sortValue} = queries;
-            if(sortValue==='title') {
-                let orderBy = {title: 'asc'}
-                console.log('orderBy is: ',orderBy)
-            } else if(sortValue==='created_at') {
-                orderBy = {created_at: 'asc'}
-                console.log('orderBy is: ',orderBy)
-            } else if (sortValue==='comments') {
-                orderBy = {comments: 'asc'}
-                console.log('orderBy is: ',orderBy)
-            }
+            let {sortValue, order} = queries;
+            let orderBy = new Map();
+            orderBy.set(sortValue,order);
             const queryOptions = {
                 include: {
                     author: {
@@ -101,7 +93,7 @@ const dbClient = {
                     },
                     tag: true,
                 },
-                orderBy: orderBy
+                orderBy: Object.fromEntries(orderBy)
             };
             //DYNAMICALLY ADD QUERY
             if(queries.isPublished !== undefined) {
@@ -109,9 +101,9 @@ const dbClient = {
                     isPublished: queries.isPublished
                 }
             };
-            // console.log('----------prisma--------',queries,queryOptions)
             const posts = await prisma.post.findMany(queryOptions);
-            // console.log('posts---------',posts)
+            console.log('posts are: ',posts);
+            console.log('queries oare: ',queryOptions)
             return posts;
         } catch (error) {
             console.error('ERROR GETTING ALL POSTS: ', error)
