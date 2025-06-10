@@ -30,7 +30,7 @@ const usePosts = (sortValue = "created_at", order = "asc", search = "") => {
       }
     };
     fetchPosts();
-    console.log('this is from usePosts hook in useEffect, posts are: ',posts)
+    console.log('this is from usePosts hook in useEffect, posts are: ',posts,queries)
 
   }, [queries]);
 

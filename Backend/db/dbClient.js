@@ -84,10 +84,13 @@ const dbClient = {
             let {sortValue} = queries;
             if(sortValue==='title') {
                 let orderBy = {title: 'asc'}
+                console.log('orderBy is: ',orderBy)
             } else if(sortValue==='created_at') {
                 orderBy = {created_at: 'asc'}
+                console.log('orderBy is: ',orderBy)
             } else if (sortValue==='comments') {
                 orderBy = {comments: 'asc'}
+                console.log('orderBy is: ',orderBy)
             }
             const queryOptions = {
                 include: {
@@ -106,8 +109,9 @@ const dbClient = {
                     isPublished: queries.isPublished
                 }
             };
-            console.log('----------prisma--------',queries,queryOptions)
+            // console.log('----------prisma--------',queries,queryOptions)
             const posts = await prisma.post.findMany(queryOptions);
+            // console.log('posts---------',posts)
             return posts;
         } catch (error) {
             console.error('ERROR GETTING ALL POSTS: ', error)
