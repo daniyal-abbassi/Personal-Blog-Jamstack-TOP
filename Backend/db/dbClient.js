@@ -81,9 +81,13 @@ const dbClient = {
     //POSTS
     showPosts: async (queries) => {
         try {
-            let {sortValue, order} = queries;
+            //EXTRACT QUERIES
+            let {sortValue, order, search} = queries;
+            //CREATING MAP 
             let orderBy = new Map();
+            //SET ORDERBY MAP VALUES
             orderBy.set(sortValue,order);
+            //HANDLE COMMENTS COUNT
             if(orderBy.has('comments')) {
                 orderBy.set('comments',{_count: order})
             }
@@ -96,17 +100,26 @@ const dbClient = {
                     },
                     tag: true,
                 },
+                //CREATING AN OBJECT FROM MAP
                 orderBy: Object.fromEntries(orderBy)
             };
-            //DYNAMICALLY ADD QUERY
+            //HANDLE SEARCH PARAMTER
+            if(search) {
+             queryOptions.where = {
+                title: {
+                    contains: search,
+                    mode: 'insensitive'
+                }
+             }   
+            }
+            //HANDLE IS PUBLISHED POSTS IN BLOG PAGE
             if(queries.isPublished !== undefined) {
                 queryOptions.where = {
                     isPublished: queries.isPublished
                 }
             };
             const posts = await prisma.post.findMany(queryOptions);
-            console.log('posts are: ',posts);
-            console.log('queries oare: ',queryOptions)
+           
             return posts;
         } catch (error) {
             console.error('ERROR GETTING ALL POSTS: ', error)
