@@ -16,12 +16,12 @@ function Admin() {
   
   
   // const { page } = useParams();
-  // const [sortValue, setSortValue] = useState("created_at");
+  const [sortValue, setSortValue] = useState("created_at");
   // const [order, setOrder] = useState("asc");
   // const [search, setSearch] = useState("");
   
   // const { postsLoading, posts, setPosts } = usePosts(sortValue, order, search);
-  const { postsLoading, posts, setPosts } = usePosts();
+  const { postsLoading, posts, setPosts } = usePosts(sortValue);
 
   // get user authentication
   const { loading, user, isAuthenticated, setUser } = useContext(UserContext);
@@ -79,7 +79,7 @@ function Admin() {
             </TabsTrigger>
           </TabsList>
           <PostsTableTab
-            // setSortValue={setSortValue}
+            setSortValue={setSortValue}
             // setOrder={setOrder}
             // setSearch={setSearch}
             // metadata={metadata}
