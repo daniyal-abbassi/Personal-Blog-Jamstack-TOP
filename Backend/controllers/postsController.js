@@ -10,7 +10,7 @@ const postsController = {
                 filters.isPublished = (isPublishedQuery === 'true')
             }
             console.log('-----------    ', filters)
-            const posts = await dbClient.showPosts();
+            const posts = await dbClient.showPosts(filters);
             res.json(posts)
         } catch (error) {
             res.status(500).json({ message: 'ERROR IN GETTING POSTS ROUTE' })

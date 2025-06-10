@@ -43,16 +43,16 @@ const dbClient = {
         }
     },
     //TAG
-    getTags: async()=>{
+    getTags: async () => {
         try {
             const tags = await prisma.tag.findMany();
             return tags;
         } catch (error) {
             console.error(`ERROR GETTING TAGS: ${error}`)
-            throw error 
+            throw error
         }
     },
-    createTag: async(tag)=>{
+    createTag: async (tag) => {
         try {
             const newTag = await prisma.tag.create({
                 data: {
@@ -63,41 +63,48 @@ const dbClient = {
         } catch (error) {
             console.error(`ERROR CREATING TAG: ${error}`)
             throw error
-            
+
         }
     },
-    searchTag: async(tag)=>{
+    searchTag: async (tag) => {
         try {
             const exiTag = await prisma.tag.findFirst({
-                where: {tag}
+                where: { tag }
             })
             return exiTag;
         } catch (error) {
             console.error(`ERROR SEARCHING TAG: ${error}`)
             throw error
-            
+
         }
     },
     //POSTS
-    showPosts: async()=>{
+    showPosts: async ({ isPublished } = {}) => {
         try {
-            const posts = await prisma.post.findMany({
-            include: {
-                author: {
-                    select: {
-                        username: true,
-                    }
-                },
-                tag: true,
-            } 
-            });
+            const queryOptions = {
+                include: {
+                    author: {
+                        select: {
+                            username: true,
+                        }
+                    },
+                    tag: true,
+                }
+            };
+            //DYNAMICALLY ADD QUERY
+            if(isPublished !== undefined) {
+                queryOptions.where = {
+                    isPublished: isPublished
+                }
+            }
+            const posts = await prisma.post.findMany(queryOptions);
             return posts;
         } catch (error) {
-            console.error('ERROR GETTING ALL POSTS: ',error)
+            console.error('ERROR GETTING ALL POSTS: ', error)
             throw error
         }
     },
-    getPost: async(postId)=>{
+    getPost: async (postId) => {
         const parsedPostId = parseInt(postId);
         try {
             const post = await prisma.post.findUnique({
@@ -115,13 +122,13 @@ const dbClient = {
             })
             return post;
         } catch (error) {
-            console.error('ERROR FINDING POST',error);
+            console.error('ERROR FINDING POST', error);
             throw error;
         }
     },
-    createPost: async(title,tag_id,content,isPublished,url,coudinaryId,author_id) => {
-        if(isPublished==="true") isPublished=true
-        else isPublished=false
+    createPost: async (title, tag_id, content, isPublished, url, coudinaryId, author_id) => {
+        if (isPublished === "true") isPublished = true
+        else isPublished = false
         try {
             const post = await prisma.post.create({
                 data: {
@@ -136,11 +143,11 @@ const dbClient = {
             })
             return post;
         } catch (error) {
-            console.error('ERROR CREATING POST: ',error)
+            console.error('ERROR CREATING POST: ', error)
             throw error
         }
     },
-    deletePost: async(post_id,user_id)=>{
+    deletePost: async (post_id, user_id) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(user_id);
         try {
@@ -152,15 +159,15 @@ const dbClient = {
             })
             return deletedPost;
         } catch (error) {
-            console.error('ERROR DELETING POST: ',error)
+            console.error('ERROR DELETING POST: ', error)
             throw error
         }
     },
-    editPostWithFile: async(post_id,title,tag_id,content,isPublished,url,coudinaryId,userId) => {
+    editPostWithFile: async (post_id, title, tag_id, content, isPublished, url, coudinaryId, userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
-        if(isPublished==="true") isPublished=true
-        else isPublished=false
+        if (isPublished === "true") isPublished = true
+        else isPublished = false
         try {
             const editedPost = await prisma.post.update({
                 where: {
@@ -178,15 +185,15 @@ const dbClient = {
             })
             return editedPost
         } catch (error) {
-            console.error('ERROR UPDATING POST: ',error)
+            console.error('ERROR UPDATING POST: ', error)
             throw error
         }
     },
-    editPostWithOutFile: async(post_id,title,tag_id,content,isPublished,userId) => {
+    editPostWithOutFile: async (post_id, title, tag_id, content, isPublished, userId) => {
         const parsedPostId = parseInt(post_id);
         const parsedUserId = parseInt(userId);
-        if(isPublished==="true") isPublished=true
-        else isPublished=false
+        if (isPublished === "true") isPublished = true
+        else isPublished = false
         try {
             const editedPost = await prisma.post.update({
                 where: {
@@ -202,12 +209,12 @@ const dbClient = {
             })
             return editedPost
         } catch (error) {
-            console.error('ERROR UPDATING POST: ',error)
+            console.error('ERROR UPDATING POST: ', error)
             throw error
         }
     },
     //comments 
-    getComments: async(postId)=>{
+    getComments: async (postId) => {
         try {
             const comments = await prisma.comment.findMany({
                 where: {
@@ -216,11 +223,11 @@ const dbClient = {
             })
             return comments;
         } catch (error) {
-            console.error('ERROR GETTING COMMENTS DATABASE: ',error)
+            console.error('ERROR GETTING COMMENTS DATABASE: ', error)
             throw error
         }
     },
-    deleteComment: async(postId,commentId)=>{
+    deleteComment: async (postId, commentId) => {
         try {
             const deletedComment = await prisma.comment.delete({
                 where: {
@@ -230,7 +237,7 @@ const dbClient = {
             })
             return deletedComment;
         } catch (error) {
-            console.error('ERROR DELETING COMMENT: ',error)
+            console.error('ERROR DELETING COMMENT: ', error)
             throw error
         }
     }
