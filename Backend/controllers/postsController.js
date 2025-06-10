@@ -4,29 +4,29 @@ const cloudinary = require('../utils/cloudinaryConfig');
 const postsController = {
     showPosts: async (req, res) => {
         try {
-            const posts = await dbClient.showPosts();
-            const {isPublished: isPublishedQuery} = req.query;
+            const { isPublished: isPublishedQuery } = req.query;
             const filters = {};
-            if(isPublishedQuery !== undefined) {
-                filters.isPublished = (isPublishedQuery==='true')
+            if (isPublishedQuery !== undefined) {
+                filters.isPublished = (isPublishedQuery === 'true')
             }
-            console.log('-----------    ',filters)
+            console.log('-----------    ', filters)
+            const posts = await dbClient.showPosts();
             res.json(posts)
         } catch (error) {
             res.status(500).json({ message: 'ERROR IN GETTING POSTS ROUTE' })
         }
     },
-    getPost: async(req,res) => {
-        const {postId} = req.params;
+    getPost: async (req, res) => {
+        const { postId } = req.params;
         //test
-        console.log('this is post id for single post: ',postId)
+        console.log('this is post id for single post: ', postId)
         try {
             const post = await dbClient.getPost(postId);
             //test
-            console.log('this is returned post: ',post)
+            console.log('this is returned post: ', post)
             res.json(post)
         } catch (error) {
-            res.status(500).json({message: 'ERROR GETTING POST'})
+            res.status(500).json({ message: 'ERROR GETTING POST' })
         }
     },
     createPost: async (req, res) => {
@@ -43,8 +43,8 @@ const postsController = {
                 var { tag_id } = await dbClient.createTag(tag);
             }
 
-            if(!file) {
-                const post = await dbClient.createPost(title, tag_id, content, isPublished, url=null, public_id=null, userId);
+            if (!file) {
+                const post = await dbClient.createPost(title, tag_id, content, isPublished, url = null, public_id = null, userId);
                 res.status(201).json({ post })
             }
             //upload to cloudinary
@@ -57,7 +57,7 @@ const postsController = {
                     }
                     const { url, public_id } = result;
                     const post = await dbClient.createPost(title, tag_id, content, isPublished, url, public_id, userId);
-                    
+
                     res.status(201).json({ post })
                 }
             )
