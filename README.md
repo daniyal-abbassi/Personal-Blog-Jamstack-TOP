@@ -65,8 +65,6 @@ You will need three separate terminal windows to run the full application.
   ```bash
   node app.js
   ```
-
-  ```
 - **Public Client** (from `/frontend/public-client`):
   ```bash
   npm run dev
