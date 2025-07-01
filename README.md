@@ -7,12 +7,13 @@ A modern blog platform built with Node.js/Express.js **backend** and React front
 
 ## Project Structure
 
+```
 .
 ├── backend/         # Node.js API, Prisma schema, etc.
 └── frontend/
     ├── private-client/  # Admin Panel (shadcn/ui)
     └── public-client/   # Public Blog (Material-UI)
-
+```
 
 ## Tech Stack
 
