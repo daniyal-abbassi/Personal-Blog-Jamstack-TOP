@@ -10,7 +10,6 @@ This directory contains the two separate React frontend applications for the Jam
 
 -   [Application Overview](#application-overview)
 -   [Shared Technologies](#shared-technologies)
--   [Running the Frontends](#running-the-frontends)
 
 ---
 
