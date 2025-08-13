@@ -98,6 +98,8 @@ You will need three separate terminal windows to run the full application.
 ![Single Post](./screenshots/one-post-page.png)
 ![Sign-up/Sign-in](./screenshots/sign-up.png)
 
+### Admin Panel
+![Admin Panel GIF](./screenshots/admin-panel.gif)
 ---
 
 ## Contributing
