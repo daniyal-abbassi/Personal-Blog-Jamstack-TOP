@@ -7,6 +7,17 @@ A modern blog platform built with Node.js/Express.js **backend** and React front
 
 ---
 
+## Screenshots
+
+![Main Page/Dark](./screenshots/all-post-page.png)
+![Main Page/Light](./screenshots/posts-page-llight.png)
+![Latest Section](./screenshots/latest-posts-page.png)
+![Admin Panel](./screenshots/admin-panel.png)
+![Single Post](./screenshots/one-post-page.png)
+![Sign-up/Sign-in](./screenshots/sign-up.png)
+
+---
+
 ## Table of Contents
 
 -   [Project Structure](#project-structure)
