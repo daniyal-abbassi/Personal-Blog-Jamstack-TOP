@@ -5,17 +5,8 @@
 
 A modern blog platform built with Node.js/Express.js **backend** and React frontends, following **JamStack principles**. Features a RESTfull API, PostgreSQL database with Prisma ORM, JWT authentication, and two distinct frontends: an **admin panel** and a **public blog**.
 
----
 
-## Screenshots
-
-![Main Page/Dark](./screenshots/all-post-page.png)
-![Main Page/Light](./screenshots/posts-page-llight.png)
-![Latest Section](./screenshots/latest-posts-page.png)
-![Admin Panel](./screenshots/admin-panel.png)
-![Single Post](./screenshots/one-post-page.png)
-![Sign-up/Sign-in](./screenshots/sign-up.png)
-
+![Posts](./screenshots/all-post-page.png)
 ---
 
 ## Table of Contents
@@ -23,6 +14,7 @@ A modern blog platform built with Node.js/Express.js **backend** and React front
 -   [Project Structure](#project-structure)
 -   [Tech Stack](#tech-stack)
 -   [Getting Started](#getting-started)
+-   [Screenshots](#screenshots)
 -   [Contributing](#contributing)
 
 ## Project Structure
@@ -94,6 +86,19 @@ You will need three separate terminal windows to run the full application.
   ```bash
   npm run dev
   ```
+
+---
+
+## Screenshots
+
+![Main Page/Dark](./screenshots/all-post-page.png)
+![Main Page/Light](./screenshots/posts-page-llight.png)
+![Latest Section](./screenshots/latest-posts-page.png)
+![Admin Panel](./screenshots/admin-panel.png)
+![Single Post](./screenshots/one-post-page.png)
+![Sign-up/Sign-in](./screenshots/sign-up.png)
+
+---
 
 ## Contributing
 
