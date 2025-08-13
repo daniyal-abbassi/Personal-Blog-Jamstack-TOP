@@ -306,9 +306,9 @@ export default function MainContent() {
     <Box sx={{ display: "flex", flexDirection: "column", gap: 4 }}>
       <div>
         <Typography variant="h1" gutterBottom>
-          Blog
+          Personal Blog
         </Typography>
-        <Typography>personal place for my life</Typography>
+        <Typography>Fail, Fail Again, Fail Better</Typography>
       </div>
       {/* SEARCH BOX */}
       <Box
