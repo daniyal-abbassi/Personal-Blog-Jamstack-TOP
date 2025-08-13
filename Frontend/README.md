@@ -10,7 +10,7 @@ This directory contains the two separate React frontend applications for the Jam
 
 -   [Application Overview](#application-overview)
 -   [Shared Technologies](#shared-technologies)
-
+-   [Screenshots](#screenshots)
 ---
 
 ## Application Overview
@@ -45,4 +45,10 @@ Both frontend applications are built upon a common foundation:
 
 ---
 
+## Screenshots
 
+Posts Page
+![Posts Page](../screenshots/all-post-page.png)
+
+Admin Panel
+![Admin Panel](../screenshots//admin-panel.png)
