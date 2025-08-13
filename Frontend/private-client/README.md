@@ -11,7 +11,7 @@ This directory contains the private client for the blog project—a secure and f
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
-- [Screenshots]
+- [Screenshots](#screenshots)
 ---
 
 ## Overview
