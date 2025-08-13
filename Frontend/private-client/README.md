@@ -11,7 +11,7 @@ This directory contains the private client for the blog project—a secure and f
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Getting Started](#getting-started)
-
+- [Screenshots]
 ---
 
 ## Overview
@@ -62,3 +62,15 @@ The Admin Panel provides authenticated users with the tools to manage all aspect
     ```
 
 The Admin Panel will be available at a local port, typically `http://localhost:5174` or the next available one.
+
+## Screenshots
+
+**Sign-up Page**
+![Sign-up Page](../../screenshots/sign-up.png)
+
+**Admin Panel**
+![Admin Panel](../../screenshots/admin-panel.png)
+
+**Create Post**
+![Create Post](../../screenshots/create-post.png)
+
